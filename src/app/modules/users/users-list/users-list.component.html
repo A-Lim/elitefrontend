@@ -1,0 +1,57 @@
+<div class="content-wrapper">
+  <div class="content-header row">
+    <div class="content-header-left col-12 mb-2 mt-1">
+      <shared-breadcrumb></shared-breadcrumb>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <shared-authorized-content 
+      [permissions]="['view.users', 'update.users']" 
+      [condition]="'or'">
+      <div class="card">
+        <!-- <div class="card-header">
+          <a *ngIf="'create' | ablePure: 'users' | async"
+            class="btn btn-primary float-right" [routerLink]="['/admin/users/create']">Create User</a>
+        </div> -->
+        <div class="card-content">
+          <div class="card-body">
+            <ag-grid-angular #agGrid style="width: 100%;" domLayout='autoHeight' class="ag-theme-balham"
+              (gridReady)="onGridReady($event)" 
+              [gridOptions]="gridOptions" 
+              [columnDefs]="columnDefs"
+              [defaultColDef]="defaultColDef">
+            </ag-grid-angular>
+          </div>
+        </div>
+      </div>
+    </shared-authorized-content>
+  </div>
+</div>
+
+<ng-template #actionsCell let-row>
+  <ng-container *ngIf="row">
+    <a class="btn btn-xs btn-icon btn-primary btn-action-icon" 
+      title="Edit"
+      (click)="navigateTo('/admin/users', row.id)">
+      <i class="bx bxs-edit"></i></a>&nbsp;
+    <a class="btn btn-xs btn-icon btn-warning btn-action-icon" 
+      title="Reset Password"
+      (click)="resetPassword(row.id)"> <i
+      class="bx bx-reset"></i></a>&nbsp;
+    <!-- <a class="btn btn-xs btn-icon rounded-circle btn-danger" [routerLink]="['/admin/users', row.id]"> <i class="bx bx-lock"></i></a> -->
+  </ng-container>
+</ng-template>
+
+<ng-template #statusCell let-row>
+  <ng-container *ngIf="row" [ngSwitch]="row.status">
+    <span *ngSwitchCase="'active'" class="badge badge-xs badge-light-success">{{ row.status | titlecase }}</span>
+    <span *ngSwitchCase="'unverified'"
+      class="badge badge-xs badge-light-warning">{{ row.status | titlecase }}</span>
+    <span *ngSwitchCase="'locked'" class="badge badge-xs badge-light-danger">{{ row.status | titlecase }}</span>
+    <span *ngSwitchCase="'banned'"
+      class="badge badge-xs badge-pill badge-light-danger">{{ row.status | titlecase }}</span>
+    <span *ngSwitchDefault class="badge badge-xs badge-pill badge-default">None</span>
+  </ng-container>
+</ng-template>
+<!-- END: Content-->

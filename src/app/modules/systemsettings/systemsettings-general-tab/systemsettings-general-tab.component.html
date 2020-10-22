@@ -1,0 +1,20 @@
+<!-- <form autocomplete="off" #form="ngForm">
+  <fieldset [disabled]="isLoading || !('update' | ablePure: 'systemsettings' | async)">
+    <div class="row">
+      <div class="col-md-6 form-group mb-50" [class.error]="(submitted || fileDirectory.dirty) && verificationType.errors">
+        <label class="text-bold-600" for="fileDirectory">Verification Type</label>
+        <input type="text" class="form-control"
+          #fileDirectory="ngModel"
+          [(ngModel)]="systemSettingVm.file_directory"
+          id="fileDirectory" name="fileDirectory" 
+          required />
+        <span class="text-muted"><small>File Directory where IWO pfd files are stored.</small></span>
+        <div *ngIf="submitted || fileDirectory.dirty" class="help-block">
+          <ul role="alert">
+            <li *ngIf="fileDirectory.errors?.required" class="text-danger" role="alert">File Directory is required.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</form> -->

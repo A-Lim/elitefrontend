@@ -1,0 +1,9 @@
+<ng-container *ngIf="isAuthorized; else forbidden">
+  <ng-content></ng-content>
+</ng-container>
+
+<ng-template #forbidden>
+  <ng-container *ngIf="type === 'inform'">
+    <shared-forbidden></shared-forbidden>
+  </ng-container>
+</ng-template>

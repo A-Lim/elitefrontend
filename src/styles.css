@@ -1,0 +1,309 @@
+/* You can add global styles to this file, and also import other style files */
+/*-------------------------*/
+/* Third Party             */
+/*-------------------------*/
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+
+/*-------------------------*/
+/* Angular CDK overlay     */
+/*-------------------------*/
+@import '~@angular/cdk/overlay-prebuilt.css';
+
+/*-------------------------*/
+/* AG GRID Override        */
+/*-------------------------*/
+.ag-theme-balham .ag-ltr .ag-cell {
+  display: flex;
+  align-items: center;
+}
+
+.ag-numeric-cell {
+  justify-content: flex-end;
+}
+
+/*-------------------------*/
+/* ng-select               */
+/*-------------------------*/
+.ng-select-container {
+  display: block;
+  width: 100%;
+  height: calc(1.4em + .94rem + 3.7px);
+  padding: .47rem .8rem;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #475F7B;
+  background-color: #FFF;
+  border: 1px solid #DFE3E7;
+  border-radius: .267rem;
+  -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.ng-select-disabled .ng-select-container {
+  background-color: #f2f4f4;
+  border: none;
+}
+
+.error > .ng-select > .ng-select-container {
+  border-color: #ff5b5c !important;
+}
+
+.ng-select-opened > .ng-select-container,
+.ng-select-focused > .ng-select-container {
+  color: #475F7B;
+  background-color: #FFF;
+  border-color: #5A8DEE;
+  outline: 0;
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,.1);
+}
+
+/* .ng-select.ng-select-opened .ng-select-container {
+  z-index: 10000;
+} */
+
+.ng-select.ng-select-opened.ng-select-bottom .ng-select-container {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.ng-select .ng-clear-wrapper {
+  width: auto !important;
+  color: #919191;
+}
+
+/* tag value start */
+.ng-select-container .ng-value {
+  background-color: #5a8dee;
+  padding: .2rem .6rem;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.ng-value .ng-value-icon {
+  float: right;
+  margin-left: .3rem;
+}
+/* tag value end */
+
+/* dropdown panel start */
+.ng-dropdown-panel {
+  background-color: white;
+  border: 1px solid #aaa;
+  box-sizing: border-box;
+  display: block;
+  z-index: 100 !important;
+}
+
+.ng-dropdown-panel.ng-select-bottom {
+  top: 100%;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top: none;
+  margin-top: -1px;
+}
+
+.ng-dropdown-panel.ng-select-top {
+  bottom: 100%;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  border-bottom: none;
+  margin-bottom: -1px;
+}
+
+/* dropdown panel end */
+
+/* dropdown options start */
+.ng-dropdown-panel-items .ng-option {
+  padding: 6px;
+}
+
+.ng-dropdown-panel-items .ng-option.ng-option-selected {
+  background-color: #ddd;
+}
+
+.ng-dropdown-panel-items .ng-option:hover {
+  background-color: #5897fb;
+  color: white;
+}
+/* dropdown options end */
+
+/*-------------------------*/
+/* sweetalert              */
+/*-------------------------*/
+.swal2-title {
+  font-size: 2.13rem !important;
+  color: #475F7B !important;
+  font-weight: 400 !important;
+}
+
+.swal2-content {
+  font-size: 1rem !important;
+  color: #727E8C !important;
+  font-weight: 400 !important;
+}
+
+.swal2-actions > .swal2-confirm,
+.swal2-actions > .swal2-cancel {
+  color: #FFF;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 0 solid transparent;
+  padding: .467rem 1.5rem;
+  font-size: 1rem;
+  line-height: 1.6rem;
+  border-radius: .267rem;
+  -webkit-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.swal2-actions > .swal2-confirm:hover {
+  background-color: #719DF0 !important;
+  color: #FFF;
+}
+
+.swal2-actions > .swal2-cancel:focus
+.swal2-actions > .swal2-confirm:focus {
+  box-shadow: none;
+}
+
+.swal2-actions > .swal2-confirm {
+  border-color: #2C6DE9 !important;
+  background-color: #5A8DEE !important;
+}
+
+/*-------------------------*/
+/* File Upload             */
+/*-------------------------*/
+.error > shared-fileinput > .custom-file > .custom-file-label {
+  border-color: #FF5B5C;
+}
+
+.error > shared-fileinput > .file-list > ul > li > a,
+.error > shared-fileinput > .custom-file > .custom-file-label::after {
+  color: #FF5B5C;
+}
+
+
+/*-------------------------*/
+/* CK Editor               */
+/*-------------------------*/
+.error .ck-content,
+.error .ck-toolbar {
+  border-color: #ff5b5c !important;
+}
+
+/*-------------------------*/
+/* Overlay Override        */
+/*-------------------------*/
+.modal {
+  display: block;
+  overflow-y: scroll;
+}
+
+.modal-backdrop {
+  opacity: .5 !important;
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal-sm { width: 300px; }
+.modal-lg { width: 800px; }
+.modal-xl { width: 1140px; }
+.modal-full { width: 94%; }
+
+/*-------------------------*/
+/* Form Validation         */
+/*-------------------------*/
+
+.form-group.error label {
+  color: #FF5B5C;
+}
+
+.form-group.error > .select2-container > .selection > .select2-selection { 
+  border-color: #FF5B5C;
+}
+
+.help-block > ul {
+  margin-bottom: 0;
+}
+
+/*-------------------------*/
+/* Tabs                    */
+/*-------------------------*/
+.nav.nav-pills~.tab-content {
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+/*-------------------------*/
+/* Badges                  */
+/*-------------------------*/
+.badge { text-transform: none; }
+.badge-xs { font-size: 11px; padding: 3px 10px; }
+.badge-light-default { background-color: #d5dfea; color: #545050; }
+
+/*-------------------------*/
+/* Nav Tabs                */
+/*-------------------------*/
+.nav-link.bg-danger {
+  color: #fff;
+}
+
+/*-------------------------*/
+/* Buttons                 */
+/*-------------------------*/
+.btn-xs i { top: 2px; }
+.btn-xs.btn-icon { padding: .2rem .4rem; }
+button:focus { outline: none; }
+
+.btn-action-icon {
+  border-radius: 50%;
+  color: #fff !important;
+}
+
+/*-------------------------*/
+/* Side Menu               */
+/*-------------------------*/
+.main-menu {
+  z-index: 1000;
+}
+
+.main-menu.menu-light .navigation .nav-item {
+  margin: 0 1rem;
+  -webkit-transition: background-color .5s ease;
+  transition: background-color .5s ease;
+}
+
+.main-menu .navigation .nav-item > a > i {
+  width: 1.6rem !important;
+  margin-right: 1rem;
+  float: left;
+  font-size: 1.4rem;
+}
+
+/*-------------------------*/
+/* Form Controls           */
+/*-------------------------*/
+/* .checkbox > label {
+  font-size: .8rem;
+} */
+
+/*-------------------------*/
+/* Auth Pages              */
+/*-------------------------*/
+.bg-authentication {
+  background-color: #F2F4F4;
+}
+

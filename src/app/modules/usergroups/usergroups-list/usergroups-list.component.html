@@ -1,0 +1,58 @@
+<!-- BEGIN: Content-->
+<div class="content-wrapper">
+  <div class="content-header row">
+    <div class="content-header-left col-12 mb-2 mt-1">
+      <shared-breadcrumb></shared-breadcrumb>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <shared-authorized-content 
+      [permissions]="['view.usergroups', 'update.usergroups']" 
+      [condition]="'or'">
+      <div class="card">
+        <div class="card-header">
+          <shared-authorized-content [permissions]="['create.usergroups']" [type]="'hide'">
+            <a class="btn btn-primary float-right" 
+              [routerLink]="['/admin/usergroups/create']">Create User Group
+            </a>
+          </shared-authorized-content>
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+            <ag-grid-angular #agGrid style="width: 100%;" domLayout='autoHeight' class="ag-theme-balham"
+              (gridReady)="onGridReady($event)" 
+              [gridOptions]="gridOptions" 
+              [columnDefs]="columnDefs"
+              [defaultColDef]="defaultColDef">
+            </ag-grid-angular>
+          </div>
+        </div>
+      </div>
+    </shared-authorized-content>
+  </div>
+</div>
+
+<ng-template #actionsCell let-row>
+  <ng-container *ngIf="row">
+
+    <a class="btn btn-xs btn-icon btn-primary btn-action-icon" 
+      (click)="navigateTo('/admin/usergroups', row.id)">
+      <i class="bx bxs-edit"></i>
+    </a> &nbsp;
+    
+    <a *ngIf="'delete' | ablePure: 'usergroups' | async"
+      class="btn btn-xs btn-icon btn-danger btn-action-icon" 
+      (click)="delete(row.id)">
+      <i class="bx bxs-trash"></i>
+    </a>
+
+  </ng-container>
+</ng-template>
+
+<ng-template #statusCell let-row>
+  <ng-container *ngIf="row" [ngSwitch]="row.status">
+    <span *ngSwitchCase="'inactive'" class="badge badge-xs badge-light-danger">{{ row.status | titlecase }}</span>
+    <span *ngSwitchCase="'active'" class="badge badge-xs badge-light-success">{{ row.status | titlecase }}</span>
+  </ng-container>
+</ng-template>

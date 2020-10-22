@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{ process.name | titlecase }}</h3>
+  <button type="button" class="close rounded-pill" aria-label="close" (click)="close()"><i class="bx bx-x"></i></button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <ng-container *ngFor="let status of process.statuses">
+      <button class="btn w-100 mb-1"
+        [disabled]="isLoading"
+        [class.btn-none]="status === 'None'"
+        [class.btn-warning]="status === 'Pending'"
+        [class.btn-success]="status === 'Completed'" (click)="updateProcess(status)">{{ status }}</button>
+    </ng-container>
+  </div>
+</div>

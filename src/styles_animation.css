@@ -1,0 +1,21 @@
+.cs-effect {
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+.cs-effect.cs-effect-bounce {
+  animation-name: cs-effect-bounce;
+  animation-timing-function: linear;
+}
+
+@keyframes cs-effect-bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(30px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

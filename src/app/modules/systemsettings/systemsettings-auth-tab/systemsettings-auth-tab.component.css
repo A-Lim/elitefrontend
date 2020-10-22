@@ -1,0 +1,4 @@
+.custom-control > .description {
+  margin-left: calc(42px + 1rem);
+  display: block;
+}

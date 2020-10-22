@@ -1,0 +1,88 @@
+<form autocomplete="off" #form="ngForm">
+  <fieldset [disabled]="isLoading || !('update' | ablePure: 'usergroups' | async)">
+    <div class="row">
+      <!-- name -->
+      <div class="col-md-6 form-group mb-50" [class.error]="(submitted || name.dirty) && name.errors">
+        <label class="text-bold-600" for="name">Name</label>
+        <input type="text" class="form-control" 
+          #name="ngModel" 
+          [(ngModel)]="userGroupVm.name"
+          [disabled]="userGroupVm.is_admin"
+          id="name" name="name" placeholder="Name"
+          required>
+        <div *ngIf="submitted || name.dirty" class="help-block">
+          <ul role="alert">
+            <li *ngIf="name.errors?.required" class="text-danger" role="alert">Name is required.</li>
+          </ul>
+        </div>
+      </div>
+  
+      <!-- code -->
+      <div class="col-md-6 form-group mb-50" [class.error]="(submitted || code.dirty) && code.errors">
+        <label class="text-bold-600" for="code">Code</label>
+        <input type="text" class="form-control" 
+          #code="ngModel"
+          [(ngModel)]="userGroupVm.code"
+          [disabled]="true"
+          id="code" name="code" placeholder="Code">
+        <div *ngIf="submitted || code.dirty" class="help-block">
+          <ul role="alert">
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- status -->
+      <div class="col-md-6 form-group mb-50" [class.error]="(submitted || status.dirty) && status.errors">
+        <label class="text-bold-600" for="status">Status</label>
+        <select class="form-control"
+          #status="ngModel"
+          [(ngModel)]="userGroupVm.status"
+          [disabled]="userGroupVm.is_admin"
+          id="status" name="status"
+          required>
+          <option value="active" selected>Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+        <div *ngIf="submitted || status.dirty" class="help-block" >
+          <ul role="alert">
+            <li *ngIf="status.errors?.required" class="text-danger" role="alert">Status is required.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+    <!-- permissions -->
+    <div class="row">
+      <div class="col-md-12">
+        <label class="text-bold-600">Permissions</label>
+      </div>
+      <div *ngFor="let group of checkBoxGroups" class="col-md-4 mb-1">
+        <!-- permission module -->
+        <div class="checkbox mb-50">
+          <input type="checkbox" class="checkbox-input"
+            [(ngModel)]="group.isChecked"
+            [disabled]="userGroupVm.is_admin"
+            (change)="onPermissionModuleChecked(group.value)"
+            id="permission_{{ group.value }}" name="permission_{{ group.value }}">
+          <label for="permission_{{ group.value }}"><small><strong>{{ group.name | uppercase }}</strong></small></label>
+        </div>
+  
+        <!-- permissions -->
+        <div class="row">
+          <div *ngFor="let checkbox of group.checkboxes" class="col-12 mb-10">
+            <div class="checkbox">
+              <input type="checkbox" class="checkbox-input"
+                [(ngModel)]="checkbox.isChecked"
+                [disabled]="userGroupVm.is_admin"
+                (change)="onPermissionChecked()"
+                id="permission_{{ checkbox.value }}" name="permission_{{ checkbox.value }}">
+              <label for="permission_{{ checkbox.value }}"><small>{{ checkbox.name }}</small></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</form>

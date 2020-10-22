@@ -1,0 +1,81 @@
+<!-- BEGIN: Content-->
+<div class="content-wrapper">
+  <div class="content-header row">
+    <div class="content-header-left col-12 mb-2 mt-1">
+      <div *ngIf="workflow" class="row breadcrumbs-top">
+        <div class="col-12">
+          <h5 class="content-header-title float-left pr-1 mb-0">{{ workflow.name }}</h5>
+          <div class="breadcrumb-wrapper col-12">
+            <ol class="breadcrumb p-0 mb-0">
+              <li class="breadcrumb-item">
+                <a [routerLink]="['admin/dashboard']"><i class="bx bx-home-alt"></i></a>
+              </li>
+              <li class="breadcrumb-item active">
+                <span>Orders</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <!-- <shared-authorized-content 
+      [permissions]="['view.workflows', 'update.workflows']" 
+      [condition]="'or'"> -->
+      <div class="card">
+        <div class="card-header">
+          <!-- <shared-authorized-content [permissions]="['create.workflows']" [type]="'hide'"> -->
+            <a *ngIf="workflow" class="btn btn-primary float-right" 
+              [routerLink]="['/admin/workflows', workflow.id, 'orders', 'create']">Create Order
+            </a>
+          <!-- </shared-authorized-content> -->
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+            <ag-grid-angular #agGrid style="width: 100%;" domLayout='autoHeight' class="ag-theme-balham"
+              [gridOptions]="gridOptions" 
+              [columnDefs]="columnDefs"
+              [defaultColDef]="defaultColDef">
+            </ag-grid-angular>
+          </div>
+        </div>
+      </div>
+    <!-- </shared-authorized-content> -->
+  </div>
+</div>
+
+<ng-template #actionsCell let-row>
+  <ng-container *ngIf="row">
+    <a class="btn btn-xs btn-icon btn-primary btn-action-icon" 
+      title="Edit"
+      (click)="navigateTo('/admin/workflows/' + workflow.id + '/orders', row.id)">
+      <i class="bx bxs-edit"></i>
+    </a> &nbsp;
+
+    <!-- *ngIf="'delete' | ablePure: 'orders' | async" -->
+    <ng-container>
+      <a class="btn btn-xs btn-icon btn-danger btn-action-icon" 
+        title="Delete"
+        (click)="delete(row.id)">
+        <i class="bx bxs-trash"></i>
+      </a>
+    </ng-container>
+    
+  </ng-container>
+</ng-template>
+
+<ng-template #iwoCell let-row>
+  <ng-container *ngIf="row">
+    <i class="bx bx-detail align-middle mr-1"></i> <label class="text-bold-600">{{ row.iwo }}</label>
+  </ng-container>
+</ng-template>
+
+<ng-template #statusCell let-row>
+  <span *ngIf="row" class="badge badge-xs"
+    [class.badge-light-primary]="row.status === 'in progress'"
+    [class.badge-light-success]="row.status === 'completed'">
+    {{ row.status | titlecase }}
+  </span>
+</ng-template>

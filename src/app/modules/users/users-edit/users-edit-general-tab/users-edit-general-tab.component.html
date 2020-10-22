@@ -1,0 +1,123 @@
+<div class="row">
+  <div class="col-md-3 user-profile-card">
+    <div class="card">
+      <div class="card-header mx-auto pt-3">
+        <div class="avatar bg-rgba-primary p-50">
+          <img class="img-fluid" src="assets/images/portrait/avatar-generic.png" height="134" width="134">
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-body text-center">
+          <h4 *ngIf="user">{{ user.name }}</h4>
+
+          <!-- <h6 class="text-bold-500 font-small-3">Status</h6> -->
+          <p *ngIf="user">
+            <span class="badge text-bold-500 py-10" [class.badge-light-success]="user.status === 'active'"
+              [class.badge-light-warning]="user.status === 'unverified'"
+              [class.badge-light-danger]="user.status === 'locked'"
+              [class.badge-light-danger]="user.status === 'banned'">{{ user.status | titlecase }}</span>
+          </p>
+
+          <h6 class="text-bold-500 font-small-3">User Groups</h6>
+          <ng-container *ngIf="user">
+            <div *ngFor="let usergroup of user.usergroups" class="badge badge-default usergroup-badge">{{ usergroup.name }}</div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <shared-alert></shared-alert>
+          <ng-container *ngIf="userVm">
+            <form #form="ngForm" autocomplete="off" 
+              (submit)="onSubmit()">
+              <fieldset [disabled]="isLoading || !('update' | ablePure: 'users' | async)">
+                <!-- name -->
+                <div class="form-group mb-50" [class.error]="(submitted || name.dirty) && name.errors">
+                  <label class="text-bold-600" for="name">Name</label>
+                  <input type="text" class="form-control" 
+                    #name="ngModel"
+                    [(ngModel)]="userVm.name"
+                    id="name" name="name" placeholder="Name"
+                    required>
+                  <div *ngIf="submitted || name.dirty" class="help-block" >
+                    <ul role="alert">
+                      <li *ngIf="name.errors?.required" class="text-danger" role="alert">Name is required.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- email -->
+                <div class="form-group mb-50" [class.error]="(submitted || email.dirty) && email.errors">
+                  <label class="text-bold-600" for="email">Email address</label>
+                  <input type="email" class="form-control" 
+                    #email="ngModel"
+                    [ngModel]="user.email"
+                    [disabled]="true"
+                    id="email" name="email" placeholder="Email address">
+                  <div *ngIf="submitted || email.dirty" class="help-block" >
+                    <ul role="alert">
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- status -->
+                <div class="form-group mb-50" [class.error]="(submitted || status.dirty) && status.errors">
+                  <label class="text-bold-600" for="status">Status</label>
+                  <select class="form-control"
+                    #status="ngModel"
+                    [(ngModel)]="userVm.status"
+                    id="status" name="status"
+                    required>
+                    <option value="active">Active</option>
+                    <option value="unverified">Unverified</option>
+                    <option value="locked">Locked</option>
+                  </select>
+
+                  <div *ngIf="submitted || status.dirty" class="help-block" >
+                    <ul role="alert">
+                      <li *ngIf="status.errors?.required" class="text-danger" role="alert">Status is required.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="form-group mb-50" [class.error]="(submitted || usergroups.dirty) && usergroups.errors">
+                  <label class="text-bold-600" for="usergroups">User Groups</label>
+                  <ng-select 
+                    #usergroups="ngModel"
+                    [(ngModel)]="userVm.usergroups" 
+                    [items]="userGroups$ | async"
+                    [multiple]="true"
+                    [trackByFn]="trackByFn"
+                    [loading]="userGroupsReqLoading"
+                    [typeahead]="userGroupInput$"
+                    bindLabel="name" bindValue="id"
+                    id="usergroups" name="usergroups"
+                    [disabled]="isLoading || !('update' | ablePure: 'usergroups' | async)"></ng-select>
+
+                  <div *ngIf="submitted || usergroups.dirty" class="help-block" >
+                    <ul role="alert">
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="form-actions d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary pull-right" [disabled]="isLoading">
+                    <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span> Edit
+                  </button>
+                </div>
+              </fieldset>
+            </form>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <span class="spinner-border spinner-border-sm"></span> Loading...
+</ng-template>

@@ -1,0 +1,26 @@
+<form autocomplete="off" #form="ngForm">
+  <fieldset [disabled]="isLoading || !('update' | ablePure: 'usergroups' | async)">
+    <div class="row">
+      <!-- name -->
+      <div class="col-md-12 form-group mb-50" [class.error]="(submitted || userIds.dirty) && userIds.errors">
+        <label class="text-bold-600" for="userIds">Users</label>
+        <ng-select 
+          #userIds="ngModel"
+          [(ngModel)]="userGroupVm.userIds" 
+          [items]="users$ | async"
+          [multiple]="true"
+          [trackByFn]="trackByFn"
+          [loading]="usersReqLoading"
+          [typeahead]="usersInput$"
+          bindLabel="name" bindValue="id"
+          id="userIds" name="userIds"
+          [disabled]="isLoading || !('update' | ablePure: 'usergroups' | async)"></ng-select>
+
+        <div *ngIf="submitted || userIds.dirty" class="help-block">
+          <ul role="alert">
+          </ul>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</form>

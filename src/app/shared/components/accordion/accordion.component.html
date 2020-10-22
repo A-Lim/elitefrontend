@@ -1,0 +1,16 @@
+<div class="collapsible collapse-icon accordion-icon-rotate">
+  <div class="card collapse-header bg-secondary text-white">
+    <div class="card-header" [attr.aria-expanded]="open"
+      [class.collapsed]="!open"
+      (click)="toggle()">
+      <ng-content select="[header]"></ng-content>
+    </div>
+    <div *ngIf="open" class="collapse show">
+      <div class="card-content bg-secondary bg-light">
+        <div class="card-body">
+          <ng-content select="[content]"></ng-content>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

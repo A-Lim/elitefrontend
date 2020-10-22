@@ -1,0 +1,99 @@
+<!-- BEGIN: Content-->
+<div class="app-content content">
+  <div class="content-overlay"></div>
+  <div class="content-wrapper">
+    <div class="content-header row">
+    </div>
+    <div class="content-body">
+      <!-- login page start -->
+      <section id="auth-login" class="row flexbox-container">
+        <div class="col-xl-4 col-md-6 col-10">
+          <div class="card bg-authentication mb-0">
+            <div class="row m-0">
+              <!-- left section-login -->
+              <div class="col-md-12 col-12 px-0">
+                <div class="card disable-rounded-right mb-0 p-2 h-100 d-flex justify-content-center">
+                  <div class="card-header pb-1">
+                    <div class="card-title">
+                      <h4 class="text-center mb-2">Elite Industries</h4>
+                    </div>
+                  </div>
+                  <div class="card-content">
+                    <div class="card-body">
+                      <shared-alert></shared-alert>
+                      <form #form="ngForm" autocomplete="off" (submit)="onSubmit()">
+                        <fieldset [disabled]="isLoading">
+                          <!-- email -->
+                          <div class="form-group mb-50" [class.error]="(submitted || email.dirty) && email.errors">
+                            <label class="text-bold-600" for="email">Email address</label>
+                            <input type="email" class="form-control" #email="ngModel" [(ngModel)]="loginVm.email"
+                              id="email" name="email" placeholder="Email address" required email>
+
+                            <div *ngIf="submitted || email.dirty" class="help-block">
+                              <ul role="alert">
+                                <li *ngIf="email.errors?.required" class="text-danger" role="alert">Email is required.
+                                </li>
+                                <li *ngIf="email.errors?.email " class="text-danger" role="alert">Email format invalid.
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+
+                          <!-- password -->
+                          <div class="form-group" [class.error]="(submitted || password.dirty) && password.errors">
+                            <label class="text-bold-600" for="password">Password</label>
+                            <input type="password" class="form-control" #password="ngModel"
+                              [(ngModel)]="loginVm.password" id="password" name="password" placeholder="Password"
+                              required minlength="6">
+
+                            <div *ngIf="submitted || password.dirty" class="help-block">
+                              <ul role="alert">
+                                <li *ngIf="password.errors?.required" class="text-danger" role="alert">Password is
+                                  required.</li>
+                                <li *ngIf="password.errors?.minlength " class="text-danger" role="alert">Password must
+                                  be at least 6 characters.</li>
+                              </ul>
+                            </div>
+                          </div>
+
+                          <!-- <div
+                            class="form-group d-flex flex-md-row flex-column justify-content-between align-items-center">
+                            <div class="text-left">
+                              <div class="checkbox checkbox-sm">
+                                <input type="checkbox" class="form-check-input" 
+                                  [(ngModel)]="loginVm.rememberMe"
+                                  id="rememberMe" name="rememberMe">
+                                <label class="checkboxsmall" for="rememberMe">
+                                  <small>Keep me logged in</small>
+                                </label>
+                              </div>
+                            </div>
+                            <div class="text-right"><a routerLink="/forgot-password" class="card-link"><small>Forgot
+                                  Password?</small></a></div>
+                          </div> -->
+
+                          <button type="submit" class="btn btn-primary glow w-100 position-relative"
+                            [disabled]="isLoading">
+                            <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span> Login
+                            <i id="icon-arrow" class="bx bx-right-arrow-alt"></i>
+                          </button>
+                        </fieldset>
+                      </form>
+
+                      <hr>
+                      <div class="text-center"><small class="mr-25">Don't have an account?</small><a
+                          routerLink="/register"><small>Sign up</small></a></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- login page ends -->
+
+    </div>
+  </div>
+</div>
+<!-- END: Content-->

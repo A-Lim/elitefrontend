@@ -1,0 +1,50 @@
+<div class="modal-header">
+  <h3 class="modal-title">Order Details</h3>
+  <button type="button" class="close rounded-pill" aria-label="close" (click)="close()"><i class="bx bx-x"></i></button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-6">
+      <table>
+        <tr>
+          <td><label class="text-bold-600 mr-1">IWO</label></td>
+          <td>{{ order.iwo }}</td>
+        </tr>
+        <tr>
+          <td><label class="text-bold-600 mr-1">Customer</label></td>
+          <td>{{ order.customer }}</td>
+        </tr>
+        <tr>
+          <td><label class="text-bold-600 mr-1">Delivery Date</label></td>
+          <td>{{ order.delivery_date | date: 'dd-MM-yyyy'}}</td>
+        </tr>
+        <tr>
+          <td><label class="text-bold-600 mr-1">Status</label></td>
+          <td>
+            <span class="badge badge-xs" 
+              [class.badge-light-primary]="order.status === 'in progress'"
+              [class.badge-light-success]="order.status === 'completed'">
+              {{ order.status | titlecase }}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td><label class="text-bold-600 mr-1">Remarks</label></td>
+          <td>{{ order.remark }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="col-6">
+      <table>
+        <tr>
+          <td><label class="text-bold-600 mr-1">Files</label></td>
+          <td>
+            <span *ngIf="order.files.length === 0" class="d-block text-muted">No files</span>
+            <a class="d-block" *ngFor="let file of order.files" href="{{ file.path }}" target="_blank"><i class="bx bxs-file"></i>{{ file.name }}</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

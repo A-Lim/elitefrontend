@@ -1,0 +1,60 @@
+<div class="content-wrapper">
+  <div class="content-header row">
+    <div class="content-header-left col-12 mb-2 mt-1">
+      <shared-breadcrumb></shared-breadcrumb>
+    </div>
+  </div>
+  <div class="content-body">
+    <shared-authorized-content 
+      [permissions]="['viewAny.systemsettings', 'update.systemsettings']" 
+      [condition]="'or'">
+
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body">
+            <shared-alert></shared-alert>
+            <ng-container *ngIf="systemSettingVm; else loading">
+              <!-- <ul class="nav nav-pills">
+                <li class="nav-item">
+                  <a class="nav-link active" [class.bg-danger]="submitted && !generalTabValid"
+                    id="general-tab" data-toggle="pill" href="#general"
+                    aria-expanded="true">General</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" [class.bg-danger]="submitted && !authTabValid"
+                    id="auth-tab" data-toggle="pill" href="#authentication"
+                    aria-expanded="true">Authentication</a>
+                </li>
+              </ul> -->
+  
+              <div class="tab-content">
+                <!-- <div role="tabpanel" class="tab-pane active" id="general" aria-labelledby="general-tab" aria-expanded="true">
+                  <systemsettings-general-tab [systemSettingVm]="systemSettingVm"></systemsettings-general-tab>
+                </div> -->
+                <div class="tab-pane active" id="authentication" role="tabpanel" aria-labelledby="settings-tab" aria-expanded="false">
+                  <systemsettings-auth-tab 
+                    [systemSettingVm]="systemSettingVm"
+                    [submitted]="submitted"
+                    [isLoading]="isLoading"
+                    (formValid)="onFormStatusChange(SystemSettingTab.General, $event)"></systemsettings-auth-tab>
+                </div>
+              </div>
+  
+              <div class="form-actions d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary pull-right" (click)="onSubmit()"
+                  [disabled]="isLoading || !('update' | ablePure: 'systemsettings' | async)">
+                  <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span> Edit
+                </button>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+    </shared-authorized-content>
+  </div>
+</div>
+
+<ng-template #loading>
+  <span class="spinner-border spinner-border-sm"></span> Loading...
+</ng-template>

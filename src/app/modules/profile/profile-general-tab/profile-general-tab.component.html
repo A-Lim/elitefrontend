@@ -1,0 +1,131 @@
+<div class="row">
+  <div class="col-md-3 user-profile-card">
+    <div class="card">
+      <div class="card-header mx-auto pt-3">
+        <div class="avatar bg-rgba-primary p-50">
+          <img class="img-fluid" src="assets/images/portrait/avatar-generic.png" height="134" width="134">
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-body text-center">
+          <h4 *ngIf="user">{{ user.name }}</h4>
+          <p *ngIf="user">
+            <span class="badge text-bold-500 py-10" [class.badge-light-success]="user.status === 'active'"
+              [class.badge-light-warning]="user.status === 'unverified'"
+              [class.badge-light-danger]="user.status === 'locked'"
+              [class.badge-light-danger]="user.status === 'banned'">{{ user.status }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <shared-alert></shared-alert>
+          <ng-container *ngIf="profileVm; else loading">
+            <form #form="ngForm" autocomplete="off" 
+              (submit)="onSubmit()"
+              [requiredIfEitherNotEmpty]="['oldPassword', 'newPassword']"
+              [matchValue]="['newPassword', 'confirmPassword']">
+
+              <fieldset [disabled]="isLoading">
+                <!-- name -->
+                <div class="form-group mb-50" [class.error]="(submitted || name.dirty) && name.errors">
+                  <label class="text-bold-600" for="name">Name</label>
+                  <input type="text" class="form-control" 
+                    #name="ngModel"
+                    [(ngModel)]="profileVm.name"
+                    id="name" name="name" placeholder="Name"
+                    required>
+
+                  <div *ngIf="submitted || name.dirty" class="help-block">
+                    <ul role="alert">
+                      <li *ngIf="name.errors?.required" class="text-danger" role="alert">Name is required.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- email -->
+                <div class="form-group mb-50" [class.error]="(submitted || email.dirty) && email.errors">
+                  <label class="text-bold-600" for="email">Email address</label>
+                  <!-- no two way binding for email cause email should not be updated -->
+                  <input type="email" class="form-control" 
+                    #email="ngModel"
+                    [ngModel]="user.email"
+                    id="email" name="email" placeholder="Email address" disabled>
+                    
+                  <div *ngIf="submitted || email.dirty" class="help-block">
+                    <ul role="alert">
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- oldpassword -->
+                <div class="form-group mb-50" [class.error]="(submitted || oldPassword.dirty) && oldPassword.errors">
+                  <label class="text-bold-600" for="oldPassword">Old Password</label>
+                  <input type="password" class="form-control" 
+                    #oldPassword="ngModel"
+                    [(ngModel)]="profileVm.oldPassword"
+                    id="oldPassword" name="oldPassword" placeholder="Old Password"
+                    minlength="6">
+
+                  <div *ngIf="submitted || oldPassword.dirty" class="help-block">
+                    <ul role="alert">
+                      <li *ngIf="oldPassword.errors?.requiredIfEitherNotEmpty" class="text-danger" role="alert">Old password is required.</li>
+                      <li *ngIf="oldPassword.errors?.minlength" class="text-danger" role="alert">Old Password must be at least 6 characters.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- newpassword -->
+                <div class="form-group mb-50" [class.error]="(submitted || newPassword.dirty) && newPassword.errors">
+                  <label class="text-bold-600" for="password">New Password</label>
+                  <input type="password" class="form-control" 
+                    #newPassword="ngModel"
+                    [(ngModel)]="profileVm.newPassword"
+                    id="newPassword" name="newPassword" placeholder="New Password"
+                    minlength="6">
+
+                  <div *ngIf="submitted || newPassword.dirty" class="help-block">
+                    <ul role="alert">
+                      <li *ngIf="newPassword.errors?.requiredIfEitherNotEmpty" class="text-danger" role="alert">New password is required.</li>
+                      <li *ngIf="newPassword.errors?.minlength" class="text-danger" role="alert">New Password must be at least 6 characters.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- confirm password -->
+                <div class="form-group mb-2" [class.error]="(submitted || confirmPassword.dirty) && confirmPassword.errors">
+                  <label class="text-bold-600" for="confirmPassword">Confirm Password</label>
+                  <input type="password" class="form-control" 
+                    #confirmPassword="ngModel"
+                    [(ngModel)]="profileVm.newPassword_confirmation"
+                    id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
+
+                  <div *ngIf="submitted || confirmPassword.dirty" class="help-block">
+                    <ul role="alert">
+                      <li *ngIf="confirmPassword.errors?.matchValue" class="text-danger" role="alert">Confirm password does not match.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="form-actions d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary pull-right" [disabled]="isLoading">
+                    <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span> Edit
+                  </button>
+                </div>
+
+              </fieldset>
+            </form>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <span class="spinner-border spinner-border-sm"></span> Loading..
+</ng-template>

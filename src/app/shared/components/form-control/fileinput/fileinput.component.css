@@ -1,0 +1,12 @@
+.custom-file-label { height: 37px; }
+
+.file-list > ul {
+  margin-top: 5px;
+  padding-left: 5px;
+  list-style: none;
+}
+
+.file-list > ul > li > i {
+  vertical-align: middle;
+  cursor: pointer;
+}

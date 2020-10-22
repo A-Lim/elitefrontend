@@ -1,0 +1,64 @@
+<div class="content-wrapper">
+  <div class="content-header row">
+    <div class="content-header-left col-12 mb-2 mt-1">
+      <shared-breadcrumb></shared-breadcrumb>
+    </div>
+  </div>
+  
+  <div class="content-body">
+    <shared-authorized-content 
+    [permissions]="['create.usergroups']">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="alert mb-1 alert-info" role="alert">
+              <span class="alert-message">Updates will only take effect after user logs in again.</span>
+            </div>
+            <!-- <shared-alert></shared-alert> -->
+            <ul class="nav nav-pills">
+              <li class="nav-item">
+                <a class="nav-link active" [class.bg-danger]="submitted && !generalTabValid"
+                  id="general-tab" data-toggle="pill" href="#general"
+                  aria-expanded="true">
+                  <span *ngIf="submitted && !generalTabValid">!</span> General
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" [class.bg-danger]="submitted && !usersTabValid"
+                  id="users-tab" data-toggle="pill" href="#users" 
+                  aria-expanded="false">
+                  <span *ngIf="submitted && !usersTabValid">!</span> Users
+                </a>
+              </li>
+            </ul>
+  
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="general" aria-labelledby="general-tab" aria-expanded="true">
+                <usergroups-create-general-tab 
+                  [userGroupVm]="userGroupVm"
+                  [permissionModules$]="permissionModules$"
+                  [submitted]="submitted"
+                  [isLoading]="isLoading"
+                  (formValid)="onFormStatusChange(UserGroupTab.General, $event)"></usergroups-create-general-tab>
+              </div>
+              <div class="tab-pane" id="users" role="tabpanel" aria-labelledby="users-tab" aria-expanded="false">
+                <usergroups-create-users-tab
+                  [userGroupVm]="userGroupVm"
+                  [submitted]="submitted"
+                  [isLoading]="isLoading"
+                  (formValid)="onFormStatusChange(UserGroupTab.Users, $event)"></usergroups-create-users-tab>
+              </div>
+            </div>
+  
+            <div class="form-actions d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary pull-right" (click)="onSubmit()"
+                [disabled]="isLoading">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span> Create
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </shared-authorized-content>
+  </div>
+</div>

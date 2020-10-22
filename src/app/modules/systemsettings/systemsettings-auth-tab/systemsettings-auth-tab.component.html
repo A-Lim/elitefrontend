@@ -1,0 +1,85 @@
+<form autocomplete="off" #form="ngForm">
+  <fieldset [disabled]="isLoading || !('update' | ablePure: 'systemsettings' | async)">
+    <!-- verification type -->
+    <div class="row">
+      <div class="col-md-6 form-group mb-50" [class.error]="(submitted || verificationType.dirty) && verificationType.errors">
+        <label class="text-bold-600" for="verificationType">Verification Type</label>
+        <select class="form-control"
+          #verificationType="ngModel"
+          [(ngModel)]="systemSettingVm.verification_type"
+          id="verificationType" name="verificationType" 
+          required>
+          <option value="none" selected>None</option>
+          <option value="email">Email</option>
+        </select>
+        <span class="text-muted"><small>Type of verification required before an account is allowed to logged in.</small></span>
+        <div *ngIf="submitted || verificationType.dirty" class="help-block">
+          <ul role="alert">
+            <li *ngIf="verificationType.errors?.required" class="text-danger" role="alert">Verification Type is required.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- default usergroup -->
+    <div class="row">
+      <div class="col-md-6 form-group mb-50" [class.error]="(submitted || usergroups.dirty) && usergroups.errors">
+        <label class="text-bold-600" for="usergroups">User Groups</label>
+        <ng-select 
+          #usergroups="ngModel"
+          [(ngModel)]="systemSettingVm.default_usergroups" 
+          [items]="userGroups$ | async"
+          [multiple]="true"
+          [trackByFn]="trackByFn"
+          [loading]="userGroupsReqLoading"
+          [typeahead]="userGroupInput$"
+          bindLabel="name" bindValue="id"
+          id="usergroups" name="usergroups"
+          [disabled]="isLoading || !('update' | ablePure: 'usergroups' | async)"></ng-select>
+        <span class="text-muted"><small>Assign user to user groups upon registration.</small></span>
+        <div *ngIf="submitted || usergroups.dirty" class="help-block" >
+          <ul role="alert">
+          </ul>
+        </div>
+      </div>
+      <!-- <div class="col-md-6 form-group mb-50" [class.error]="(submitted || verificationType.dirty) && verificationType.errors">
+        <label class="text-bold-600" for="verificationType">Verification Type</label>
+        <select class="form-control"
+          #verificationType="ngModel"
+          [(ngModel)]="systemSettingVm.verification_type"
+          id="verificationType" name="verificationType" 
+          required>
+          <option value="none" selected>None</option>
+          <option value="email">Email</option>
+        </select>
+        <div *ngIf="submitted || verificationType.dirty" class="help-block">
+          <ul role="alert">
+            <li *ngIf="verificationType.errors?.required" class="text-danger" role="alert">Verification Type is required.</li>
+          </ul>
+        </div>
+      </div> -->
+    </div>
+
+    <!-- allow public registration -->
+    <div class="row">
+      <div class="col-md-6 form-group mb-50" [class.error]="(submitted || publicRegistration.dirty) && publicRegistration.errors">
+        <div class="custom-control custom-switch mb-1">
+          <input type="checkbox" class="custom-control-input"
+            #publicRegistration="ngModel"
+            [(ngModel)]="systemSettingVm.allow_public_registration"
+            id="publicRegistration" name="publicRegistration">
+          <label class="custom-control-label mr-1" for="publicRegistration"></label>
+          <span>Allow Public Registration</span>
+          <small class="text-muted description">Allow public users to register to site.</small>
+        </div>
+        
+  
+        <div *ngIf="submitted || publicRegistration.dirty" class="help-block">
+          <ul role="alert">
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </fieldset>
+</form>

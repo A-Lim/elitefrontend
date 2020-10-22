@@ -1,0 +1,136 @@
+<!-- BEGIN: Content-->
+<div class="app-content content">
+  <div class="content-overlay"></div>
+  <div class="content-wrapper">
+    <div class="content-header row">
+    </div>
+    <div class="content-body">
+      <!-- register section starts -->
+      <section class="row flexbox-container">
+        <div class="col-xl-8 col-10">
+          <!-- if allow public registration -->
+          <ng-container *ngIf="allowPublicRegistration; else notAllowed">
+            <div class="card bg-authentication mb-0">
+              <div class="row m-0">
+                <!-- register section left -->
+                <div class="col-md-6 col-12 px-0">
+                  <div class="card disable-rounded-right mb-0 p-2 h-100 d-flex justify-content-center">
+                    <div class="card-header pb-1">
+                      <div class="card-title">
+                        <h4 class="text-center mb-2">Sign Up</h4>
+                      </div>
+                    </div>
+                    <div class="card-content">
+                      <div class="card-body">
+                        <shared-alert></shared-alert>
+                        <form #form="ngForm" autocomplete="off" 
+                          (submit)="onSubmit()"
+                          [matchValue]="['password', 'confirmPassword']">
+  
+                          <fieldset [disabled]="isLoading">
+                            <!-- name -->
+                            <div class="form-group mb-50" [class.error]="(submitted || name.dirty) && name.errors">
+                              <label class="text-bold-600" for="name">Name</label>
+                              <input type="text" class="form-control" 
+                                #name="ngModel"
+                                [(ngModel)]="registerVm.name"
+                                id="name" name="name" placeholder="Name"
+                                required>
+                              <div *ngIf="submitted || name.dirty" class="help-block">
+                                <ul role="alert">
+                                  <li *ngIf="name.errors?.required" class="text-danger" role="alert">Name is required.</li>
+                                </ul>
+                              </div>
+                            </div>
+  
+                            <!-- email -->
+                            <div class="form-group mb-50" [class.error]="(submitted || email.dirty) && email.errors">
+                              <label class="text-bold-600" for="email">Email address</label>
+                              <input type="email" class="form-control" 
+                                #email="ngModel" 
+                                [(ngModel)]="registerVm.email"
+                                id="email" name="email" placeholder="Email address"
+                                required email>
+  
+                              <div *ngIf="submitted || email.dirty" class="help-block">
+                                <ul role="alert">
+                                  <li *ngIf="email.errors?.required" class="text-danger" role="alert">Email is required.</li>
+                                  <li *ngIf="email.errors?.email " class="text-danger" role="alert">Email format invalid.</li>
+                                </ul>
+                              </div>
+                            </div>
+  
+                            <!-- password -->
+                            <div class="form-group mb-50" [class.error]="(submitted || password.dirty) && password.errors">
+                              <label class="text-bold-600" for="password">Password</label>
+                              <input type="password" class="form-control" 
+                                #password="ngModel"
+                                [(ngModel)]="registerVm.password"
+                                id="password" name="password" placeholder="Password"
+                                required minlength="6">
+  
+                              <div *ngIf="submitted || password.dirty" class="help-block">
+                                <ul role="alert">
+                                  <li *ngIf="password.errors?.required" class="text-danger" role="alert">Password is required.</li>
+                                  <li *ngIf="password.errors?.minlength " class="text-danger" role="alert">Password must be at least 6 characters.</li>
+                                </ul>
+                              </div>
+                            </div>
+  
+                            <!-- confirmPassword -->
+                            <div class="form-group mb-2" [class.error]="(submitted || confirmPassword.dirty) && confirmPassword.errors">
+                              <label class="text-bold-600" for="confirmPassword">Confirm Password</label>
+                              <input type="password" class="form-control"
+                                #confirmPassword="ngModel"
+                                [(ngModel)]="registerVm.password_confirmation"
+                                id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
+  
+                              <div *ngIf="submitted || confirmPassword.dirty" class="help-block">
+                                <ul role="alert">
+                                  <li *ngIf="confirmPassword.errors?.matchValue" class="text-danger" role="alert">Confirm password does not match.</li>
+                                </ul>
+                              </div>
+                            </div>
+  
+                            <button type="submit" class="btn btn-primary glow position-relative w-100"
+                              [disabled]="isLoading"><span *ngIf="isLoading"
+                              class="spinner-border spinner-border-sm"></span> SIGN UP<i id="icon-arrow"
+                              class="bx bx-right-arrow-alt"></i>
+                            </button>
+                          </fieldset>
+  
+                        </form>
+                        <hr>
+                        <div class="text-center"><small class="mr-25">Already have an account?</small><a
+                            routerLink="/login"><small>Sign in</small> </a></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- image section right -->
+                <div class="col-md-6 d-md-block d-none text-center align-self-center p-3">
+                  <img class="img-fluid" src="assets/images/pages/register.png" alt="branding logo">
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </section>
+      <!-- register section endss -->
+    </div>
+  </div>
+</div>
+
+
+<ng-template #notAllowed>
+  <div class="card">
+    <div class="card-content">
+      <div class="card-body text-center">
+        <h1 class="error-title">Registration is Closed</h1>
+        <p class="pb-3">Please contact the web administrator is you need access to the site.</p>
+        <img class="img-fluid" [style.height.px]="300" src="assets/images/pages/rocket.png" alt="closed-registration">
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- END: Content-->

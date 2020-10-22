@@ -1,0 +1,207 @@
+<div class="content-wrapper">
+  <div class="content-header row">
+    <div class="content-header-left col-12 mb-2 mt-1">
+      <shared-breadcrumb></shared-breadcrumb>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <shared-authorized-content [permissions]="['create.workflows']">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <shared-alert></shared-alert>
+              <form #workflowForm="ngForm" autocomplete="off" (submit)="onSubmit()">
+                <div class="row">
+                  <!-- name -->
+                  <div class="col-md-6 form-group mb-50" [class.error]="(wFormSubmitted || name.dirty) && name.errors">
+                    <label class="text-bold-600" for="name">Name</label>
+                    <input type="text" class="form-control" #name="ngModel" 
+                      [(ngModel)]="workflowVm.name" 
+                      workflowNameExists
+                      id="name" name="name" placeholder="Name" required>
+                    <div *ngIf="wFormSubmitted || name.dirty" class="help-block">
+                      <ul role="alert">
+                        <li *ngIf="name.errors?.required" class="text-danger" role="alert">Name is required.</li>
+                        <li *ngIf="name.errors?.workflowNameExists" class="text-danger" role="alert">Name is already taken.</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- status -->
+                  <div class="col-md-6 form-group mb-50" [class.error]="(wFormSubmitted || status.dirty) && status.errors">
+                    <label class="text-bold-600" for="name">Status</label>
+                    <select type="text" class="form-control" #status="ngModel" 
+                      [(ngModel)]="workflowVm.status" 
+                      id="status" name="status" required>
+                      <option [value]="'active'">Active</option>
+                      <option [value]="'inactive'">Inactive</option>
+                    </select>
+                    <div *ngIf="wFormSubmitted || status.dirty" class="help-block">
+                      <ul role="alert">
+                        <li *ngIf="status.errors?.required" class="text-danger" role="alert">Status is required.</li>
+                      </ul>
+                    </div>
+                  </div>
+  
+                  <!-- processes -->
+                  <div class="col-md-12 form-group mb-50">
+                    <label>Processes</label>
+                    <div *ngIf="workflowVm.processes.length === 0" class="text-muted">No processes added</div>
+                    <div class="process-list" cdkDropList (cdkDropListDropped)="drop($event)">
+                      <ng-container *ngFor="let process of workflowVm.processes; let i = index; trackBy: trackByWorkflow">
+                        <shared-accordion cdkDrag class="process">
+                          <small header>{{ process.name }}</small>
+                          <div content class="row">
+                            <!-- process name -->
+                            <div class="form-group col-md-6" [class.error]="(wFormSubmitted || name.dirty) && name.errors">
+                              <label class="small">Process Name</label>
+                              <input type="text" class="form-control form-control-sm" 
+                                #name="ngModel"
+                                [(ngModel)]="process.name" 
+                                id="name[{{i}}]" name="name[{{i}}]" required />
+
+                              <!-- validation errrors -->
+                              <div *ngIf="wFormSubmitted || name.dirty" class="help-block">
+                                <ul role="alert">
+                                  <li *ngIf="name.errors?.required" class="text-danger" role="alert">Status is required.</li>
+                                </ul>
+                              </div>
+                            </div>
+
+                            <!-- status -->
+                            <div class="form-group col-md-6">
+                              <label class="small">Statuses</label>
+                              <ng-container *ngFor="let status of process.statuses; let j = index; trackBy: trackByStatus">
+                                <div class="mb-1">
+                                  <div class="input-group">
+                                    <!-- default -->
+                                    <div class="input-group-prepend">
+                                      <div class="input-group-text">
+                                        <input type="radio"
+                                          [(ngModel)]="process.default"
+                                          [value]="status"
+                                          title="Default"
+                                          id="default[{{i}}][{{j}}]" name="default[{{i}}]"/>
+                                      </div>
+                                    </div>
+                                    <!-- process name -->
+                                    <input type="text" class="form-control form-control-sm" 
+                                      [readonly]="true"
+                                      #status="ngModel"
+                                      [(ngModel)]="process.statuses[j]"
+                                      id="status[{{i}}][{{j}}]" name="status[{{i}}][{{j}}]" required />
+                                    <!-- action -->
+                                    <!-- <div class="input-group-append">
+                                      <button *ngIf="j === 0" class="btn btn-primary" (click)="addWorkflowStatus(i)"><i class="bx bx-plus"></i></button>
+                                      <button *ngIf="j !== 0" class="btn btn-danger" (click)="removeWorkflowStatus(i,j)"><i class="bx bx-trash"></i></button>
+                                    </div> -->
+                                  </div>
+                                  <!-- validation errrors -->
+                                  <div *ngIf="wFormSubmitted || status.dirty" class="help-block">
+                                    <ul role="alert">
+                                      <li *ngIf="status.errors?.required" class="text-danger" role="alert">Status is required.</li>
+                                    </ul>
+                                  </div>
+                                </div>
+                                
+                              </ng-container>
+                            </div>
+
+                            <div class="col-md-12">
+                              <button type="button" class="btn btn-sm btn-danger float-right" (click)="removeWorkflowProcess(i)">Delete Process</button>
+                            </div>
+                          </div>
+                        </shared-accordion>
+                      </ng-container>
+                    </div>
+                  </div>
+
+                  <!-- submit -->
+                  <div class="col-md-12 form-actions d-flex justify-content-end">
+                    <button type="submit" [disabled]="!workflowForm.valid" class="btn btn-primary pull-right">Create</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <form #processForm="ngForm" autocomplete="off" 
+                (keydown.enter)="$event.preventDefault()"
+                (submit)="addProcess()">
+                <div class="row">
+                  <!-- name -->
+                  <div class="col-md-12 form-group mb-50" [class.error]="(pFormSubmitted || processName.dirty) && processName.errors">
+                    <label class="text-bold-600" for="processName">Process Name</label>
+                    <input type="text" class="form-control" 
+                      #processName="ngModel" 
+                      [(ngModel)]="processVm.name" 
+                      id="processName" name="processName" placeholder="Name" required>
+                    <div *ngIf="pFormSubmitted || processName.dirty" class="help-block">
+                      <ul role="alert">
+                        <li *ngIf="processName.errors?.required" class="text-danger" role="alert">Name is required.</li>
+                      </ul>
+                    </div>
+                  </div>
+  
+                  <!-- statuses -->
+                  <div class="col-md-12 form-group mb-50">
+                    <label>Statuses</label>
+                    <ng-container *ngFor="let status of processVm.statuses; let i = index; trackBy: trackByPStatus">
+                      <div class="mb-1">
+                        <div class="input-group">
+                          <!-- default -->
+                          <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              <input type="radio"
+                                [(ngModel)]="processVm.default"
+                                [value]="status"
+                                title="Default"
+                                id="default[{{i}}]" name="default"/>
+                            </div>
+                          </div>
+                          <!-- process name -->
+                          <input type="text" class="form-control" 
+                            [readonly]="true"
+                            #statusName="ngModel"
+                            [(ngModel)]="processVm.statuses[i]"
+                            id="statusName[{{i}}]" name="statusName[{{i}}]" required />
+                          <!-- action -->
+                          <!-- <div class="input-group-append">
+                            <button *ngIf="i === 0" class="btn btn-primary" (click)="addStatus()"><i class="bx bx-plus"></i></button>
+                            <button *ngIf="i !== 0" class="btn btn-danger" (click)="removeStatus(i)"><i class="bx bx-trash"></i></button>
+                          </div> -->
+                        </div>
+                        <!-- validation errrors -->
+                        <div *ngIf="pFormSubmitted || statusName.dirty" class="help-block">
+                          <ul role="alert">
+                            <li *ngIf="statusName.errors?.required" class="text-danger" role="alert">Status is required.</li>
+                          </ul>
+                        </div>
+                      </div>
+                      
+                    </ng-container>
+                  </div>
+  
+                  <!-- submit -->
+                  <div class="col-md-12 form-actions d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary pull-right">Add Process</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </shared-authorized-content>
+  </div>
+</div>
