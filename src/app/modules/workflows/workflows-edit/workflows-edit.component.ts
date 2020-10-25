@@ -55,8 +55,8 @@ export class WorkflowsEditComponent extends Base implements OnInit, OnDestroy {
         this.workflowVm = <WorkflowVm> {
           id: response.data.id,
           name: response.data.name,
-          processes: response.data.processes.sort(this.sortById),
-          status: response.data.status
+          status: response.data.status,
+          processes: response.data.processes,
         }
         this.isLoading = false;
       }, _ => { this.isLoading = false; });

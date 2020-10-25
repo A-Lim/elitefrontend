@@ -10,7 +10,7 @@
   <ul>
     <ng-container *ngIf="uploadFiles">
       <li *ngFor="let file of uploadFiles; let i = index; trackBy: trackByFn">
-        <i class="bx bx-x text-danger" (click)="removeFile(i)"></i>
+        <i class="bx bx-x text-danger" (click)="removeUploadFile(i)"></i>
         <a href="javascript:void(0)" (click)="viewFile(i)">{{ file.name }}</a>
       </li>
     </ng-container>

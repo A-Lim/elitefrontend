@@ -1,6 +1,7 @@
 import { FileDetail } from 'app/shared/models/filedetail.model';
 
 export class OrderVm {
+  _method: any;
   id?: number;
   iwo: string;
   customer: string;
@@ -13,6 +14,6 @@ export class OrderVm {
   uploadFiles: File[];
 
   constructor() {
-    this.status = 'in-progress';
+    this.status = 'in progress';
   }
 }

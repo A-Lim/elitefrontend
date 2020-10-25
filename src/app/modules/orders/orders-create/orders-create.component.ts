@@ -53,7 +53,7 @@ export class OrdersCreateComponent extends Base implements OnInit, OnDestroy {
       .pipe(switchMap(response => this.swalAlert('Success', response.message, 'success')))
       .subscribe(_ => { 
         this.isLoading = false;
-        this.router.navigate([`admin/workflows/${this.workflow.id}/orders`]);
+        this.router.navigate([`admin/orders/${this.workflow.id}`]);
       }, _ => this.isLoading = false);
   }
 

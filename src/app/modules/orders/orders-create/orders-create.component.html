@@ -11,7 +11,7 @@
                 <a [routerLink]="['admin/dashboard']"><i class="bx bx-home-alt"></i></a>
               </li>
               <li class="breadcrumb-item">
-                <a [routerLink]="['/admin/workflows', workflow.id, 'orders']">Orders</a>
+                <a [routerLink]="['/admin/orders', workflow.id]">Orders</a>
               </li>
               <li class="breadcrumb-item active">
                 <span>Create Orders</span>
@@ -24,9 +24,8 @@
   </div>
 
   <div class="content-body">
-    <!-- <shared-authorized-content 
-      [permissions]="['view.workflows', 'update.workflows']" 
-      [condition]="'or'"> -->
+    <shared-authorized-content 
+      [permissions]="['create.orders']">
       <div class="card">
         <div class="card-content">
           <div class="card-body">
@@ -158,6 +157,6 @@
           </div>
         </div>
       </div>
-    <!-- </shared-authorized-content> -->
+    </shared-authorized-content>
   </div>
 </div>

@@ -11,7 +11,7 @@
                 <a [routerLink]="['admin/dashboard']"><i class="bx bx-home-alt"></i></a>
               </li>
               <li class="breadcrumb-item">
-                <a [routerLink]="['/admin/workflows', workflow.id, 'orders']">Orders</a>
+                <a [routerLink]="['/admin/orders', workflow.id]">Orders</a>
               </li>
               <li class="breadcrumb-item active">
                 <span>Edit Orders</span>
@@ -24,13 +24,17 @@
   </div>
 
   <div class="content-body">
+    <shared-authorized-content 
+      [permissions]="['view.orders', 'update.orders']" 
+      [condition]="'or'">
+    </shared-authorized-content>
     <div class="row">
       <div class="col-8">
         <div class="card">
           <div class="card-content">
             <div class="card-body">
               <form *ngIf="workflow" autocomplete="off" #form="ngForm" (submit)="onSubmit()">
-                <fieldset [disabled]="isLoading">
+                <fieldset [disabled]="isLoading || !('update' | ablePure: 'orders' | async)">
                   <div class="row">
                     <!-- iwo -->
                     <div class="col-md-6 form-group mb-50" [class.error]="(submitted || iwo.dirty) && iwo.errors">

@@ -7,7 +7,10 @@ export class IsRouteActivePipe implements PipeTransform {
   constructor(private router: Router) {
   }
 
-  transform(url: string): boolean {
-    return this.router.url === url;
+  transform(url: string, strict: boolean = true): boolean {
+    if (strict)
+      return this.router.url === url;
+    else
+      return url.includes(this.router.url);
   }
 }

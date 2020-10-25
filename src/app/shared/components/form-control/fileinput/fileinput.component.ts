@@ -88,6 +88,13 @@ export class FileInputComponent implements OnInit, OnDestroy, ControlValueAccess
 
   removeFile(index: number) {
     this.onTouched();
+    this.files.splice(index, 1);
+    this.updateFileName();
+    this.onChanged(this.uploadFiles);
+  }
+
+  removeUploadFile(index: number) {
+    this.onTouched();
     this.uploadFiles.splice(index, 1);
     this.updateFileName();
     this.onChanged(this.uploadFiles);

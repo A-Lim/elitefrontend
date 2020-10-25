@@ -1,28 +1,38 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { WorkflowService } from 'app/modules/workflows/workflows.service';
 import { Workflow } from 'app/modules/workflows/models/workflow.model';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Base } from '../base.component';
+import { takeUntil, debounce, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'shared-side-menu',
   templateUrl: './side-menu.component.html',
   styleUrls: ['./side-menu.component.css']
 })
-export class SideMenuComponent implements OnInit {
+export class SideMenuComponent extends Base implements OnInit, OnDestroy {
   public menuIsOpened: boolean = false;
   public isHoverOver: boolean = false;
-
+  
   sideMenuWorkflow$: Observable<Workflow[]>;
 
-  constructor(private renderer: Renderer2, private workflowSvc: WorkflowService) { 
+  constructor(private renderer: Renderer2,
+    private workflowSvc: WorkflowService) { 
+    super();
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.workflowSvc.getWorkflowsForSideMenu()
       .subscribe();
-
+      
     this.updateSideMenuState();
     this.sideMenuWorkflow$ = this.workflowSvc.sideMenuWorkflow$;
+  }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
   }
 
   toggleMenu() {

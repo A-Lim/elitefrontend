@@ -52,11 +52,11 @@ export class OrdersEditComponent extends Base implements OnInit, OnDestroy {
       return;
 
     this.isLoading = true;
-    this.orderSvc.createOrder(this.workflow.id, this.orderVm)
+    this.orderSvc.updateOrder(this.workflow.id, this.order.id, this.orderVm)
       .pipe(switchMap(response => this.swalAlert('Success', response.message, 'success')))
       .subscribe(_ => { 
         this.isLoading = false;
-        this.router.navigate([`admin/workflows/${this.workflow.id}/orders`]);
+        this.router.navigate([`admin/orders/${this.workflow.id}`]);
       }, _ => this.isLoading = false);
   }
 
@@ -90,5 +90,4 @@ export class OrdersEditComponent extends Base implements OnInit, OnDestroy {
         this.isLoading = false;
       }, _ => { this.isLoading = false; });
   }
-
 }

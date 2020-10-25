@@ -79,7 +79,7 @@
         [permissions]="['view.workflows', 'viewAny.workflows']" 
         [condition]="'or'" 
         [type]="'hide'">
-        <li class="nav-item" routerLinkActive="active">
+        <li class="nav-item" routerLinkActive="active"> 
           <a href="#" [routerLink]="['/admin/workflows']">
             <i class="bx bx-git-merge"></i>
             <span class="menu-title" data-i18n="Workflows">Workflows</span>
@@ -87,9 +87,10 @@
         </li>
       </shared-authorized-content>
 
+      <!-- orders -->
       <ng-container *ngFor="let workflow of sideMenuWorkflow$ | async">
-        <li class="nav-item" routerLinkActive="active">
-          <a href="#" [routerLink]="['/admin/workflows/', workflow.id, 'orders']">
+        <li class="nav-item" routerLinkActive="active"> 
+          <a href="#" [routerLink]="['/admin/orders/', workflow.id]">
             <i class="bx bx-list-check"></i>
             <span class="menu-title">{{ workflow.name }}</span>
           </a>

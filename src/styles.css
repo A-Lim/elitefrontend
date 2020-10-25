@@ -293,6 +293,12 @@ button:focus { outline: none; }
   font-size: 1.4rem;
 }
 
+.main-menu.menu-light .navigation li.active:not(.sidebar-group-active) > a {
+  background: #E2ECFF;
+  color: #5A8DEE;
+  border-radius: .267rem;
+}
+
 /*-------------------------*/
 /* Form Controls           */
 /*-------------------------*/

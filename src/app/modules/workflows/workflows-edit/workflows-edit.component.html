@@ -54,7 +54,7 @@
                     <div class="process-list" cdkDropList (cdkDropListDropped)="drop($event)">
                       <ng-container *ngFor="let process of workflowVm.processes; let i = index; trackBy: trackByWorkflow">
                         <shared-accordion cdkDrag class="process">
-                          <small header>{{ process.name }}</small>
+                          <small header><i class="bx bx-grid-vertical"></i>{{ process.name }}</small>
                           <div content class="row">
                             <!-- process name -->
                             <div class="form-group col-md-6" [class.error]="(wFormSubmitted || name.dirty) && name.errors">

@@ -46,7 +46,7 @@ const routes: Routes = [
         loadChildren: () => import('app/modules/workflows/workflows.module').then(m => m.WorkflowsModule), 
       },
       { 
-        path: 'admin/workflows', 
+        path: 'admin/orders', 
         data: { breadcrumb: 'orders', module: 'orders' },
         loadChildren: () => import('app/modules/orders/orders.module').then(m => m.OrdersModule), 
       },

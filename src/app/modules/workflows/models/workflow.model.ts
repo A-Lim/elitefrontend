@@ -12,4 +12,5 @@ export interface Process {
   statuses: string[];
   default: string;
   seq: number;
+  is_published: boolean;
 }

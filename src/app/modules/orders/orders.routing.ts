@@ -8,17 +8,17 @@ import { OrdersEditComponent } from './orders-edit/orders-edit.component';
 
 const routes: Routes = [
   { 
-    path: ':wid/orders', 
+    path: ':wid', 
     component: OrdersListComponent, 
     canActivate: [AuthGuard] 
   },
   { 
-    path: ':wid/orders/create', 
+    path: ':wid/create', 
     component: OrdersCreateComponent,
     canActivate: [AuthGuard] 
   },
   { 
-    path: ':wid/orders/:oid', 
+    path: ':wid/:oid', 
     component: OrdersEditComponent,
     canActivate: [AuthGuard] 
   },

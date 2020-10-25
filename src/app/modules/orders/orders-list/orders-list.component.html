@@ -21,28 +21,24 @@
   </div>
 
   <div class="content-body">
-    <!-- <shared-authorized-content 
-      [permissions]="['view.workflows', 'update.workflows']" 
-      [condition]="'or'"> -->
-      <div class="card">
-        <div class="card-header">
-          <!-- <shared-authorized-content [permissions]="['create.workflows']" [type]="'hide'"> -->
-            <a *ngIf="workflow" class="btn btn-primary float-right" 
-              [routerLink]="['/admin/workflows', workflow.id, 'orders', 'create']">Create Order
-            </a>
-          <!-- </shared-authorized-content> -->
-        </div>
-        <div class="card-content">
-          <div class="card-body">
-            <ag-grid-angular #agGrid style="width: 100%;" domLayout='autoHeight' class="ag-theme-balham"
-              [gridOptions]="gridOptions" 
-              [columnDefs]="columnDefs"
-              [defaultColDef]="defaultColDef">
-            </ag-grid-angular>
-          </div>
+    <div class="card">
+      <div class="card-header">
+        <shared-authorized-content [permissions]="['create.orders']" [type]="'hide'">
+          <a *ngIf="workflow" class="btn btn-primary float-right" 
+            [routerLink]="['/admin/orders', workflow.id, 'create']">Create Order
+          </a>
+        </shared-authorized-content>
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+          <ag-grid-angular #agGrid style="width: 100%;" domLayout='autoHeight' class="ag-theme-balham"
+            [gridOptions]="gridOptions" 
+            [columnDefs]="columnDefs"
+            [defaultColDef]="defaultColDef">
+          </ag-grid-angular>
         </div>
       </div>
-    <!-- </shared-authorized-content> -->
+    </div>
   </div>
 </div>
 
@@ -50,12 +46,11 @@
   <ng-container *ngIf="row">
     <a class="btn btn-xs btn-icon btn-primary btn-action-icon" 
       title="Edit"
-      (click)="navigateTo('/admin/workflows/' + workflow.id + '/orders', row.id)">
+      (click)="navigateTo('/admin/orders/' + workflow.id + '/', row.id)">
       <i class="bx bxs-edit"></i>
     </a> &nbsp;
 
-    <!-- *ngIf="'delete' | ablePure: 'orders' | async" -->
-    <ng-container>
+    <ng-container *ngIf="'delete' | ablePure: 'orders' | async">
       <a class="btn btn-xs btn-icon btn-danger btn-action-icon" 
         title="Delete"
         (click)="delete(row.id)">

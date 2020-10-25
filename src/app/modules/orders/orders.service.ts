@@ -33,6 +33,13 @@ export class OrderService {
     return this.http.get<ResponseResult<Order>>(`${this.orderUrl}/${workflowId}/orders/${orderId}`);
   }
 
+  updateOrder(workflowId: number, orderId: number, orderVm: OrderVm) {
+    orderVm._method = 'PATCH';
+    var formData = new FormData();
+    this.appendFormData(formData, orderVm, '');
+    return this.http.post<ResponseResult<Order>>(`${this.orderUrl}/${workflowId}/orders/${orderId}`, formData);
+  }
+
   updateOrderProcess(workflowId: number, orderId: number, data: any) {
     return this.http.patch<ResponseResult<void>>(`${this.orderUrl}/${workflowId}/orders/${orderId}/updateprocess`, data);
   }
