@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AlertService } from 'app/shared/services/alert.service';
-import { API_BASE_URL } from 'app/configs/app.config';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -14,7 +14,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    return next.handle(req)
      .pipe(
        catchError((error: HttpErrorResponse) => {
-         if (error.url !== `${API_BASE_URL}/token/refresh`) {
+         if (error.url !== `${environment.apiUrl}/token/refresh`) {
           if (error.error.errors) {
             const errorMessages = Object.values(error.error.errors);
             this.alertService.error(errorMessages);

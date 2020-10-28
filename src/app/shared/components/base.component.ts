@@ -5,7 +5,7 @@ import { Subject, from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import Swal, { SweetAlertIcon } from 'sweetalert2'
 
-import { App } from 'app/configs/app.config';
+import { environment } from 'environments/environment';
 import { AlertService } from 'app/shared/services/alert.service';
 import { ModalService } from 'app/shared/services/modal.service';
 import { ServiceLocator } from 'app/shared/services/servicelocator';
@@ -39,7 +39,7 @@ export abstract class Base implements OnInit, OnDestroy {
   }
 
   setTitle(title: string) {
-    this.titleSvc.setTitle(`${App.NAME} | ${title}`);
+    this.titleSvc.setTitle(`${environment.name} | ${title}`);
   }
 
   navigateTo(path: string, id?: string) {

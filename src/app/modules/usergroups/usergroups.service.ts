@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { environment } from 'environments/environment';
 import { UserGroup } from 'app/modules/usergroups/models/usergroup.model';
-import { API_BASE_URL, API_VERSION } from 'app/configs/app.config';
 import { PaginationResponse } from 'app/shared/models/responses/pagination.response';
 import { ResponseResult } from 'app/shared/models/responses/responseresult.model';
 import { PermissionModule } from 'app/modules/usergroups/models/permissionmodule.model';
 import { UserGroupVm } from './models/usergroup.model.vm';
-import { map, tap } from 'rxjs/operators';
-
 
 @Injectable({ providedIn: 'root' })
 export class UserGroupService {
-  private userGroupUrl = `${API_BASE_URL}/api/${API_VERSION}/usergroups`;
-  private permissionUrl = `${API_BASE_URL}/api/${API_VERSION}/permissions`;
+  private userGroupUrl = `${environment.apiUrl}/api/${environment.apiVersion}/usergroups`;
+  private permissionUrl = `${environment.apiUrl}/api/${environment.apiVersion}/permissions`;
 
   constructor(private http: HttpClient) {
   }

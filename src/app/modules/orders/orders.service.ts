@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { API_BASE_URL, API_VERSION } from 'app/configs/app.config';
+import { environment } from 'environments/environment';
 import { Order } from 'app/modules/orders/models/order.model';
 import { OrderVm } from 'app/modules/orders/models/order.model.vm';
 import { Workflow } from 'app/modules/workflows/models/workflow.model';
@@ -10,7 +10,7 @@ import { PaginationResponse } from 'app/shared/models/responses/pagination.respo
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
-  private orderUrl = `${API_BASE_URL}/api/${API_VERSION}/workflows`;
+  private orderUrl = `${environment.apiUrl}/api/${environment.apiVersion}/workflows`;
 
   constructor(private http: HttpClient) {
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { App } from 'app/configs/app.config';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'shared-footer',
@@ -11,7 +11,7 @@ export class FooterComponent implements OnInit {
   public year: number = 0;
 
   constructor() {
-    this.appName = App.NAME;
+    this.appName = environment.name;
     this.year = (new Date()).getFullYear();
   }
 

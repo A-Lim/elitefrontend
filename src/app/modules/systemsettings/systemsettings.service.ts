@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { API_BASE_URL, API_VERSION } from 'app/configs/app.config';
-
+import { environment } from 'environments/environment';
 import { ResponseResult } from 'app/shared/models/responses/responseresult.model';
 import { SystemSettingVm } from 'app/modules/systemsettings/models/systemsetting.model.vm';
 import { SystemSettingModule } from 'app/modules/systemsettings/models/systemsettingmodule.model';
 
 @Injectable({ providedIn: 'root' })
 export class SystemSettingService {
-  private systemSettingUrl = `${API_BASE_URL}/api/${API_VERSION}/systemsettings`;
+  private systemSettingUrl = `${environment.apiUrl}/api/${environment.apiVersion}/systemsettings`;
 
   constructor(private http: HttpClient) {
   }

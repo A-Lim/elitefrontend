@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from './core/services/auth.service';
 
 import { Router } from '@angular/router';
-import { App } from 'app/configs/app.config';
+import { environment } from 'environments/environment';
 import { User } from 'app/modules/users/models/user.model';
 
 @Component({
@@ -12,7 +12,7 @@ import { User } from 'app/modules/users/models/user.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = App.NAME;
+  title = environment.name;
 
   public isAuthenticated$: Observable<boolean>;
   public user$: Observable<User>;

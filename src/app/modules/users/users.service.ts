@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { environment } from 'environments/environment';
 import { User } from 'app/modules/users/models/user.model';
 import { UserVm } from 'app/modules/users/models/user.model.vm';
-import { API_BASE_URL, API_VERSION } from 'app/configs/app.config';
 import { PaginationResponse } from 'app/shared/models/responses/pagination.response';
 import { ResponseResult } from 'app/shared/models/responses/responseresult.model';
 
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  private userUrl = `${API_BASE_URL}/api/${API_VERSION}/users`;
+  private userUrl = `${environment.apiUrl}/api/${environment.apiVersion}/users`;
 
   constructor(private http: HttpClient) {
   }

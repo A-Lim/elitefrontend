@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
+import { environment } from 'environments/environment';
 import { WorkflowVm } from 'app/modules/workflows/models/workflow.model.vm';
 import { Workflow, Process } from 'app/modules/workflows/models/workflow.model';
-import { API_BASE_URL, API_VERSION } from 'app/configs/app.config';
 import { ResponseResult } from 'app/shared/models/responses/responseresult.model';
 import { PaginationResponse } from 'app/shared/models/responses/pagination.response';
 import { tap } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class WorkflowService {
-  private workflowUrl = `${API_BASE_URL}/api/${API_VERSION}/workflows`;
+  private workflowUrl = `${environment.apiUrl}/api/${environment.apiVersion}/workflows`;
 
   private sideMenuWorkflowsBS = new BehaviorSubject<Workflow[]>([]);
   public readonly sideMenuWorkflow$ = this.sideMenuWorkflowsBS.asObservable();

@@ -1,12 +1,8 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Title } from '@angular/platform-browser';
-import { FormBuilder, Validators, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 
-import { App } from 'app/configs/app.config';
 import { AuthService } from 'app/core/services/auth.service';
-import { AlertService } from 'app/shared/services/alert.service';
-import ValidationUtil from 'app/shared/helpers/validation.util';
 import { Base } from 'app/shared/components/base.component';
 import { ResetPasswordVm } from '../models/resetpassword.model.vm';
 

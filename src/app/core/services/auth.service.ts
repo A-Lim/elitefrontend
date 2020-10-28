@@ -5,9 +5,8 @@ import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AbilityBuilder, Ability } from '@casl/ability';
 
-import { API_BASE_URL, API_VERSION } from 'app/configs/app.config';
+import { environment } from 'environments/environment';
 import { User } from 'app/modules/users/models/user.model';
-import { TokenData } from 'app/shared/models/responses/tokendata.model';
 import { LoginData } from 'app/shared/models/responses/logindata.model';
 import { ResponseResult } from 'app/shared/models/responses/responseresult.model';
 
@@ -19,7 +18,7 @@ import { ResetPasswordVm } from 'app/modules/auth/models/resetpassword.model.vm'
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private _url = `${API_BASE_URL}/api/${API_VERSION}`;
+  private _url = `${environment.apiUrl}/api/${environment.apiVersion}`;
   private _accessToken: string;
   private _headers = new HttpHeaders().set('X-Skip-Interceptor', '');
   // private _refreshToken: string;

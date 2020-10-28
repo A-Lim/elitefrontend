@@ -1,9 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { App } from 'app/configs/app.config';
-import { DynamicScriptLoaderService } from 'app/shared/services/dynamicscriptloader.service';
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -15,6 +12,5 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.titleService.setTitle(`${App.NAME} | Dashboard`);
   }
 }
