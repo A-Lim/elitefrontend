@@ -61,7 +61,7 @@ export class UserGroupsEditComponent extends Base implements OnInit, OnDestroy {
           is_admin: response.data.is_admin,
           status: response.data.status,
           userIds: response.data.users.map(x => x.id),
-          permissions: response.data.permissions.map(x => x.code),
+          permissions: response.data.permissions.map(x => x.id),
         }
         this.isLoading = false;
       }, _ => { this.isLoading = false; });

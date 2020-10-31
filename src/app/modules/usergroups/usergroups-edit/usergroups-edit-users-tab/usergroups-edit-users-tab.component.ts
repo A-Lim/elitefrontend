@@ -75,7 +75,7 @@ export class UserGroupsEditUsersTabComponent extends Base implements OnInit, OnD
     let params: any = { limit: 10, page: 1 };
 
     if (searchStr != null && searchStr != '')
-      params.name = `contains:${searchStr}`;
+      params.email = `contains:${searchStr}`;
 
     if (ids && ids.length > 0) {
       ids.forEach(function (id, index) {

@@ -75,7 +75,7 @@ export class UserGroupsCreateUsersTabComponent extends Base implements OnInit, O
     let params: any = { limit: 10, page: 1 };
 
     if (searchStr != '')
-      params.name = `contains:${searchStr}`;
+      params.email = `contains:${searchStr}`;
 
     return this.userSvc.getUsers(params).pipe(
       tap(_ => this.usersReqLoading = false),

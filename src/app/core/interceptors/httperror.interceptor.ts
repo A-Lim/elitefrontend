@@ -14,16 +14,14 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    return next.handle(req)
      .pipe(
        catchError((error: HttpErrorResponse) => {
-         if (error.url !== `${environment.apiUrl}/token/refresh`) {
-          if (error.error.errors) {
-            const errorMessages = Object.values(error.error.errors);
-            this.alertService.error(errorMessages);
-          } else if (error.error.message) {
-            this.alertService.error(error.error.message);
-          } else {
-            this.alertService.error('Oops, unable to process request currently');
-          }
-         }
+        if (error.error.errors) {
+          const errorMessages = Object.values(error.error.errors);
+          this.alertService.error(errorMessages);
+        } else if (error.error.message) {
+          this.alertService.error(error.error.message);
+        } else {
+          this.alertService.error('Oops, unable to process request currently');
+        }
         return throwError(error);
        })
      );

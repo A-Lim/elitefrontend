@@ -4,7 +4,7 @@ export class UserGroupVm {
   is_admin: boolean;
   status: string;
   userIds: number[];
-  permissions: string[]
+  permissions: number[]
 
   constructor() {
     this.name = '';
