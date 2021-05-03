@@ -4,6 +4,8 @@ export class ProcessVm {
   statuses: string[];
   default: string;
   seq: number;
+  width: number;
+  pinned: string;
   is_published: boolean;
 
   constructor() {

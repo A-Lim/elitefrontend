@@ -23,8 +23,7 @@
             <ag-grid-angular #agGrid style="width: 100%;" domLayout='autoHeight' class="ag-theme-balham"
               (gridReady)="onGridReady($event)" 
               [gridOptions]="gridOptions" 
-              [columnDefs]="columnDefs"
-              [defaultColDef]="defaultColDef">
+              [columnDefs]="columnDefs">
             </ag-grid-angular>
           </div>
         </div>
@@ -40,14 +39,14 @@
       title="Edit"
       (click)="navigateTo('/admin/workflows', row.id)">
       <i class="bx bxs-edit"></i>
-    </a> &nbsp;
+    </a>
 
     <ng-container *ngIf="row.status === 'inactive'" >
       <a class="btn btn-xs btn-icon btn-success btn-action-icon" 
         title="Activate"
         (click)="activate(row.id)">
         <i class="bx bxs-check-circle"></i>
-      </a> &nbsp;
+      </a>
     </ng-container>
     
     <ng-container *ngIf="row.status === 'active'" >
@@ -55,7 +54,7 @@
         title="Deactivate"
         (click)="deactivate(row.id)">
         <i class="bx bxs-x-circle"></i>
-      </a> &nbsp;
+      </a>
     </ng-container>
 
     <!-- *ngIf="'delete' | ablePure: 'workflows' | async" -->

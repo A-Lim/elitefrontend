@@ -1,9 +1,9 @@
 export class UserGroupVm {
+  id: number;
   name: string;
   code: string;
   is_admin: boolean;
   status: string;
-  userIds: number[];
   permissions: number[]
 
   constructor() {

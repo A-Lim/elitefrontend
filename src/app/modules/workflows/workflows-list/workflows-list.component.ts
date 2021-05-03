@@ -11,7 +11,6 @@ import { filter, switchMap } from 'rxjs/operators';
   styleUrls: ['./workflows-list.component.css']
 })
 export class WorkflowsListComponent extends BaseAgGrid implements OnInit {
-  @ViewChild('agGrid') agGrid: AgGridAngular;
   @ViewChild('actionsCell', { static: true }) actionsCell: TemplateRef<any>;
   @ViewChild('statusCell', { static: true }) statusCell: TemplateRef<any>;
   
@@ -43,7 +42,7 @@ export class WorkflowsListComponent extends BaseAgGrid implements OnInit {
         filter(isConfirmed => isConfirmed),
         switchMap(_ => this.workflowSvc.deleteWorkflow(id)),
         switchMap(response => this.swalAlert('Success', response.message, 'success'))
-      ).subscribe(_ => this.agGrid.gridOptions.api.refreshInfiniteCache());
+      ).subscribe(_ => this.refreshTable());
   }
 
   activate(id: number) {
@@ -52,7 +51,7 @@ export class WorkflowsListComponent extends BaseAgGrid implements OnInit {
         filter(isConfirmed => isConfirmed),
         switchMap(_ => this.workflowSvc.activateWorkflow(id)),
         switchMap(response => this.swalAlert('Success', response.message, 'success'))
-      ).subscribe(_ => this.agGrid.gridOptions.api.refreshInfiniteCache());
+      ).subscribe(_ => this.refreshTable());
   }
 
   deactivate(id: number) {
@@ -61,6 +60,6 @@ export class WorkflowsListComponent extends BaseAgGrid implements OnInit {
         filter(isConfirmed => isConfirmed),
         switchMap(_ => this.workflowSvc.deactivateWorkflow(id)),
         switchMap(response => this.swalAlert('Success', response.message, 'success'))
-      ).subscribe(_ => this.agGrid.gridOptions.api.refreshInfiniteCache());
+      ).subscribe(_ => this.refreshTable());
   }
 }

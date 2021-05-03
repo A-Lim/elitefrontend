@@ -9,6 +9,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AbilityModule } from '@casl/angular';
 import { Ability, PureAbility } from '@casl/ability';
+import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 
 import { DefaultModalComponent } from 'app/shared/components/modal/default.modal.component';
 import { AlertComponent } from 'app/shared/components/alert/alert.component';
@@ -18,6 +19,7 @@ import { SideMenuComponent } from 'app/shared/components/side-menu/side-menu.com
 import { BreadCrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { FileInputComponent } from 'app/shared/components/form-control/fileinput/fileinput.component';
+import { DatepickerComponent } from 'app/shared/components/form-control/datepicker/datepicker.component';
 
 import { TemplateRendererComponent } from 'app/shared/components/template-renderer.component';
 import { AdminLayoutComponent } from 'app/shared/components/layouts/admin/admin.layout.component';
@@ -31,12 +33,12 @@ import { IsIntegerValidator } from 'app/shared//validators/isinteger.validator';
 import { MatchValueValidator } from 'app/shared//validators/matchvalue.validator';
 import { RequiredIfEitherNotEmptyValidator } from 'app/shared/validators/requiredifnotempty.validator';
 import { FileTypesValidator } from 'app/shared/components/form-control/fileinput/validators/filetype.validator';
+import { DateRequiredValidator } from 'app/shared/components/form-control/datepicker/validators/daterequired.validator';
 
 // pages
 import { PageNotFoundComponent } from 'app/shared/pages/pagenotfound/pagenotfound.component';
 import { ForbiddenComponent } from 'app/shared/components/forbidden/forbidden.component';
 import { AuthorizedContentComponent } from 'app/shared/components/authorized-content/authorized-content/authorized-content.component';
-
 
 
 @NgModule({
@@ -53,6 +55,7 @@ import { AuthorizedContentComponent } from 'app/shared/components/authorized-con
     TemplateRendererComponent,
     // Form Input
     FileInputComponent,
+    DatepickerComponent,
 
     AdminLayoutComponent,
     DefaultLayoutComponent,
@@ -68,6 +71,7 @@ import { AuthorizedContentComponent } from 'app/shared/components/authorized-con
     MatchValueValidator,
     RequiredIfEitherNotEmptyValidator,
     AuthorizedContentComponent,
+    DateRequiredValidator
   ],
   imports: [
     CommonModule,
@@ -78,6 +82,8 @@ import { AuthorizedContentComponent } from 'app/shared/components/authorized-con
     AgGridModule.withComponents([
       TemplateRendererComponent
     ]),
+    AngularMyDatePickerModule,
+    
     OverlayModule,
     NgSelectModule,
     AbilityModule,
@@ -106,6 +112,7 @@ import { AuthorizedContentComponent } from 'app/shared/components/authorized-con
 
     // form controls
     FileInputComponent,
+    DatepickerComponent,
     // Directives
 
     // Pipes
@@ -116,6 +123,7 @@ import { AuthorizedContentComponent } from 'app/shared/components/authorized-con
     IsIntegerValidator,
     MatchValueValidator,
     RequiredIfEitherNotEmptyValidator,
+    DateRequiredValidator,
   ],
   providers: [
     { provide: Ability, useValue: new Ability() },

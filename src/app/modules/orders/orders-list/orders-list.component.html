@@ -21,56 +21,60 @@
   </div>
 
   <div class="content-body">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link active"
+          id="inprogress-tab" data-toggle="pill" href="#inprogress"
+          aria-expanded="true">
+          In Progress
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link"
+          id="completed-tab" data-toggle="pill" href="#completed" 
+          (click)="onTabClick(OrdersTab.Completed)"
+          aria-expanded="false">
+          Completed
+        </a>
+      </li>
+    </ul>
+    
     <div class="card">
-      <div class="card-header">
-        <shared-authorized-content [permissions]="['create.orders']" [type]="'hide'">
-          <a *ngIf="workflow" class="btn btn-primary float-right" 
-            [routerLink]="['/admin/orders', workflow.id, 'create']">Create Order
-          </a>
-        </shared-authorized-content>
-      </div>
-      <div class="card-content">
-        <div class="card-body">
-          <ag-grid-angular #agGrid style="width: 100%;" domLayout='autoHeight' class="ag-theme-balham"
-            [gridOptions]="gridOptions" 
-            [columnDefs]="columnDefs"
-            [defaultColDef]="defaultColDef">
-          </ag-grid-angular>
+      <div class="tab-content">
+        <div class="tab-pane active" id="inprogress" role="tabpanel" aria-labelledby="inprogress-tab" aria-expanded="true">
+          <div class="card-header text-right">
+            <shared-authorized-content [permissions]="['create.orders']" [type]="'hide'">
+              <a *ngIf="workflow" class="btn btn-primary" 
+                [routerLink]="['/admin/orders', workflow.id, 'create']">Create Order
+              </a>
+              <button class="btn btn-info ml-1" (click)="fileUpload.click()">
+                <i class="bx bx-upload"></i> Import Orders
+              </button>
+            </shared-authorized-content>
+              
+            <button class="btn btn-warning ml-1" (click)="fullScreenMode()">
+              <i class="bx bx-expand"></i> Full Screen
+            </button>
+          </div>
+          <div class="card-content">
+            <div class="card-body">
+              <orders-list-table *ngIf="workflow; else loading" [workflow]="workflow"></orders-list-table>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="completed" role="tabpanel" aria-labelledby="completed-tab" aria-expanded="false">
+          <orders-completed-tab *ngIf="isCompletedTabLoaded" [workflow]="workflow"></orders-completed-tab>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<ng-template #actionsCell let-row>
-  <ng-container *ngIf="row">
-    <a class="btn btn-xs btn-icon btn-primary btn-action-icon" 
-      title="Edit"
-      (click)="navigateTo('/admin/orders/' + workflow.id + '/', row.id)">
-      <i class="bx bxs-edit"></i>
-    </a> &nbsp;
-
-    <ng-container *ngIf="'delete' | ablePure: 'orders' | async">
-      <a class="btn btn-xs btn-icon btn-danger btn-action-icon" 
-        title="Delete"
-        (click)="delete(row.id)">
-        <i class="bx bxs-trash"></i>
-      </a>
-    </ng-container>
-    
-  </ng-container>
+<ng-template #loading>
+  <span class="spinner-border spinner-border-sm"></span> Loading..
 </ng-template>
 
-<ng-template #iwoCell let-row>
-  <ng-container *ngIf="row">
-    <i class="bx bx-detail align-middle mr-1"></i> <label class="text-bold-600">{{ row.iwo }}</label>
-  </ng-container>
-</ng-template>
-
-<ng-template #statusCell let-row>
-  <span *ngIf="row" class="badge badge-xs"
-    [class.badge-light-primary]="row.status === 'in progress'"
-    [class.badge-light-success]="row.status === 'completed'">
-    {{ row.status | titlecase }}
-  </span>
-</ng-template>
+<input type="file" class="d-none" accept=".xlsx" 
+  #fileUpload 
+  (change)="importOrders($event.target.files)" />

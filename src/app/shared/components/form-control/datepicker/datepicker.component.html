@@ -1,0 +1,24 @@
+<div class="input-group">
+  <div class="position-relative has-icon-right">
+    <input class="form-control date-control" 
+      angular-mydatepicker 
+      #dp="angular-mydatepicker" 
+      [(ngModel)]="model" 
+      [options]="myDpOptions" 
+      [disabled]="disabled"
+      (dateChanged)="onDateChanged($event)"
+      placeholder="Select a date"
+      readonly />
+
+    <div *ngIf="model?.singleDate?.jsDate" class="form-control-position">
+      <i class="bx bx-x text-danger" (click)="dp.clearDate()"></i>
+    </div>
+  </div>
+  
+  <div class="input-group-append">
+    <span class="input-group-text btn-calendar-alt" 
+      (click)="dp.toggleCalendar()">
+      <i class="bx bx-calendar-alt"></i>
+    </span>
+  </div>
+</div>

@@ -75,12 +75,15 @@ export class OrdersEditComponent extends Base implements OnInit, OnDestroy {
         this.orderVm = <OrderVm> {
           id: this.order.id,
           iwo: this.order.iwo,
-          customer: this.order.customer,
+          company: this.order.company,
+          description: this.order.description,
+          quantity: this.order.quantity,
           remark: this.order.remark,
           status: this.order.status,
           delivery_date: this.order.delivery_date,
           files: this.order.files,
           uploadFiles: [],
+          person_in_charge: this.order.person_in_charge
         };
 
         this.workflow.processes.forEach(process => {

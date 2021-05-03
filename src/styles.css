@@ -18,6 +18,21 @@
   align-items: center;
 }
 
+.ag-header-cell-text {
+  text-overflow: unset;
+}
+
+.ag-header-cell,
+.ag-theme-balham .ag-header-cell,
+.ag-theme-balham .ag-cell {
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+/* .ag-theme-balham .ag-ltr .ag-cell {
+  border-right: 1px solid lightgray !important;
+} */
+
 .ag-numeric-cell {
   justify-content: flex-end;
 }
@@ -40,6 +55,18 @@
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
+  left: 0.8rem !important;
+  right: 0.8rem !important;
+  width: auto !important;
+}
+
+/* hide blinking cursor indicator when ng-select is single and has value */
+.ng-select-single > .ng-select-container.ng-has-value > .ng-value-container > .ng-input > input {
+  caret-color: transparent;
+}
+
+
 .ng-select-disabled .ng-select-container {
   background-color: #f2f4f4;
   border: none;
@@ -57,10 +84,6 @@
   outline: 0;
   box-shadow: 0 3px 8px 0 rgba(0,0,0,.1);
 }
-
-/* .ng-select.ng-select-opened .ng-select-container {
-  z-index: 10000;
-} */
 
 .ng-select.ng-select-opened.ng-select-bottom .ng-select-container {
   border-bottom-left-radius: 0;
@@ -80,7 +103,13 @@
   font-size: 12px;
   border-radius: 4px;
   margin-right: 5px;
+  /* display: flex; */
 }
+
+/* .ng-value-label {
+  display: flex;
+  align-self: center;
+} */
 
 .ng-value .ng-value-icon {
   float: right;
@@ -116,6 +145,15 @@
 /* dropdown panel end */
 
 /* dropdown options start */
+.ng-option.ng-option-disabled {
+  opacity: 0.5;
+}
+
+.ng-option.ng-option-disabled:hover {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+
 .ng-dropdown-panel-items .ng-option {
   padding: 6px;
 }
@@ -200,6 +238,14 @@
   border-color: #ff5b5c !important;
 }
 
+.ck-editor__editable_inline {
+  min-height: 250px;
+}
+
+.ck-read-only {
+  background-color: #F2F4F4 !important;
+}
+
 /*-------------------------*/
 /* Overlay Override        */
 /*-------------------------*/
@@ -219,17 +265,28 @@
 .modal-sm { width: 300px; }
 .modal-lg { width: 800px; }
 .modal-xl { width: 1140px; }
-.modal-full { width: 94%; }
+.modal-full { 
+  margin: 0 !important;
+  height: 100%;
+  width: 100%;
+  min-width: 100%;
+}
+
+.modal-full > .modal-content {
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}
 
 /*-------------------------*/
 /* Form Validation         */
 /*-------------------------*/
 
-.form-group.error label {
+.error label {
   color: #FF5B5C;
 }
 
-.form-group.error > .select2-container > .selection > .select2-selection { 
+.error > .select2-container > .selection > .select2-selection { 
   border-color: #FF5B5C;
 }
 
@@ -251,7 +308,7 @@
 /* Badges                  */
 /*-------------------------*/
 .badge { text-transform: none; }
-.badge-xs { font-size: 11px; padding: 3px 10px; }
+.badge-xs { font-size: 11px; padding: 3px 5px; }
 .badge-light-default { background-color: #d5dfea; color: #545050; }
 
 /*-------------------------*/
@@ -264,7 +321,7 @@
 /*-------------------------*/
 /* Buttons                 */
 /*-------------------------*/
-.btn-xs i { top: 2px; }
+.btn-xs i { top: 2px !important; }
 .btn-xs.btn-icon { padding: .2rem .4rem; }
 button:focus { outline: none; }
 
@@ -313,3 +370,7 @@ button:focus { outline: none; }
   background-color: #F2F4F4;
 }
 
+.btn-action-icon {
+  cursor: pointer;
+  margin-right: 5px;
+}

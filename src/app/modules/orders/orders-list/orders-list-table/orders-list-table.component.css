@@ -1,0 +1,17 @@
+.ag-header-cell-menu-button {
+  display: none;
+}
+
+.ag-header-cell-label {
+  padding: 0 !important;
+  justify-content: center;
+}
+
+.process-cell {
+  border-right: 1px solid lightgray !important;
+}
+
+/* .process-cell-header {
+  transform: rotate(-90deg);
+  display: inline-block;
+} */

@@ -9,6 +9,7 @@ import { ResetPasswordComponent } from 'app/modules/auth/reset-password/reset-pa
 import { ForgotPasswordComponent } from 'app/modules/auth/forgot-password/forgot-password.component';
 
 const routes: Routes = [
+  { path: '', component: LoginComponent, canActivate: [GuestGuard] },
   { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [GuestGuard] },
   { path: 'verify-email', component: VerifyEmailComponent, canActivate: [GuestGuard] },

@@ -3,3 +3,13 @@
 }
 
 .timeline-items > .bx-right-arrow-circle { margin: 0 4px; }
+
+.table-processes thead td { 
+  padding: 10px;
+  font-weight: bold;
+}
+
+.table-processes td {
+  padding: 10px;
+  font-size: .8rem;
+}

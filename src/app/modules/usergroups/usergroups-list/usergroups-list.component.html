@@ -23,8 +23,7 @@
             <ag-grid-angular #agGrid style="width: 100%;" domLayout='autoHeight' class="ag-theme-balham"
               (gridReady)="onGridReady($event)" 
               [gridOptions]="gridOptions" 
-              [columnDefs]="columnDefs"
-              [defaultColDef]="defaultColDef">
+              [columnDefs]="columnDefs">
             </ag-grid-angular>
           </div>
         </div>
@@ -39,7 +38,7 @@
     <a class="btn btn-xs btn-icon btn-primary btn-action-icon" 
       (click)="navigateTo('/admin/usergroups', row.id)">
       <i class="bx bxs-edit"></i>
-    </a> &nbsp;
+    </a>
     
     <a *ngIf="'delete' | ablePure: 'usergroups' | async"
       class="btn btn-xs btn-icon btn-danger btn-action-icon" 

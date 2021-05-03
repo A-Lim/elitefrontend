@@ -5,7 +5,7 @@ import { ModalSize } from 'app/shared/models/modalsize.enum';
 @Component({
   selector: 'shared-default-modal',
   templateUrl: './default.modal.component.html',
-  styleUrls: ['./default.modal.component.scss']
+  styleUrls: ['./default.modal.component.css']
 })
 export class DefaultModalComponent implements OnInit {
   contentType: 'template' | 'string' | 'component';

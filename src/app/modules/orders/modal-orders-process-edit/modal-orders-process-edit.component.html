@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">{{ process.name | titlecase }}</h3>
+  <h3 class="modal-title">{{ process.name.toUpperCase() }}</h3>
   <button type="button" class="close rounded-pill" aria-label="close" (click)="close()"><i class="bx bx-x"></i></button>
 </div>
 <div class="modal-body">
@@ -9,7 +9,8 @@
         [disabled]="isLoading"
         [class.btn-none]="status === 'None'"
         [class.btn-warning]="status === 'Pending'"
-        [class.btn-success]="status === 'Completed'" (click)="updateProcess(status)">{{ status }}</button>
+        [class.btn-success]="status === 'Completed'"
+        [class.btn-danger]="status === 'Urgent'" (click)="updateProcess(status)">{{ status }}</button>
     </ng-container>
   </div>
 </div>

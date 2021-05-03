@@ -1,0 +1,24 @@
+.btn-calendar {
+  cursor: pointer;
+}
+
+.has-icon-right {
+  flex: 1;
+}
+
+.input-group > .has-icon-right > input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.date-control[readonly] {
+  background-color: transparent;
+}
+
+.myDpSelector {
+  margin-top: -8px;
+}
+
+.myDpSelector::before {
+  content: none;
+}

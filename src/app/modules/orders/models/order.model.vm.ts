@@ -4,9 +4,13 @@ export class OrderVm {
   _method: any;
   id?: number;
   iwo: string;
-  customer: string;
+  company: string;
+  description: string;
+  quantity: number;
   remark: string;
   status: string;
+  person_in_charge: string;
+
   delivery_date: string;
   // file details
   files: FileDetail[];

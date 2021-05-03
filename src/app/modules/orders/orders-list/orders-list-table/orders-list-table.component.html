@@ -1,0 +1,51 @@
+<ng-container *ngIf="isModalLayout">
+  <div class="modal-header">
+    <h3 class="modal-title">{{ workflow.name }}</h3>
+    <button type="button" class="close rounded-pill" aria-label="close" (click)="close()"><i class="bx bx-x"></i></button>
+  </div>
+  <div class="modal-body">
+    <ng-container *ngTemplateOutlet="gridTable"></ng-container>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!isModalLayout">
+  <ng-container *ngTemplateOutlet="gridTable"></ng-container>
+</ng-container>
+
+<ng-template #gridTable>
+  <ag-grid-angular #agGrid style="width: 100%;" domLayout='autoHeight' class="ag-theme-balham"
+    (gridReady)="onGridReady($event)" 
+    [gridOptions]="gridOptions" 
+    [columnDefs]="columnDefs">
+  </ag-grid-angular>
+</ng-template>
+
+<ng-template #actionsCell let-row>
+  <ng-container *ngIf="row">
+    <a class="btn btn-xs btn-icon btn-primary btn-action-icon" 
+      title="Edit"
+      (click)="navigateTo('/admin/orders/' + workflow.id + '/', row.id)">
+      <i class="bx bxs-edit"></i>
+    </a>
+
+    <ng-container *ngIf="'delete' | ablePure: 'orders' | async">
+      <a class="btn btn-xs btn-icon btn-danger btn-action-icon mr-0" 
+        title="Delete"
+        (click)="delete(row.id)">
+        <i class="bx bxs-trash"></i>
+      </a>
+    </ng-container>
+    
+  </ng-container>
+</ng-template>
+
+<ng-template #processCell let-row>
+</ng-template>
+
+<ng-template #statusCell let-row>
+  <span *ngIf="row" class="badge badge-xs"
+    [class.badge-light-primary]="row.status === 'in progress'"
+    [class.badge-light-success]="row.status === 'completed'">
+    {{ row.status | titlecase }}
+  </span>
+</ng-template>

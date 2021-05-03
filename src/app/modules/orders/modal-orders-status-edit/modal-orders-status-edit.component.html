@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <h3 class="modal-title">Update Order Status</h3>
+  <button type="button" class="close rounded-pill" aria-label="close" (click)="close()"><i class="bx bx-x"></i></button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <ng-container *ngFor="let status of statuses">
+      <button class="btn w-100 mb-1"
+        [disabled]="isLoading"
+        [class.btn-primary]="status === 'in progress'"
+        [class.btn-success]="status === 'completed'" (click)="updateStatus(status)">{{ status | titlecase }}</button>
+    </ng-container>
+  </div>
+</div>

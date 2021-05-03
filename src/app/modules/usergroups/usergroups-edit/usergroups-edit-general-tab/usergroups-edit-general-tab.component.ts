@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { takeUntil, debounceTime } from 'rxjs/operators';
+import { takeUntil, debounceTime, switchMap } from 'rxjs/operators';
 
 import { Base } from 'app/shared/components/base.component';
 import { UserGroupVm } from 'app/modules/usergroups/models/usergroup.model.vm';
 import { CheckBoxGroup, CheckBox } from 'app/shared/models/checkbox.model';
 import { PermissionModule } from 'app/modules/usergroups/models/permissionmodule.model';
 import { FORMSTATUS } from 'app/shared/constants/formstatus.constants';
+import { UserGroupService } from '../../usergroups.service';
 
 @Component({
   selector: 'usergroups-edit-general-tab',
@@ -22,9 +23,6 @@ export class UserGroupsEditGeneralTabComponent extends Base implements OnInit, O
   userGroupVm: UserGroupVm;
 
   @Input()
-  permissionModules$: Observable<PermissionModule[]>;
-
-  @Input()
   submitted: boolean;
 
   @Input()
@@ -35,16 +33,16 @@ export class UserGroupsEditGeneralTabComponent extends Base implements OnInit, O
 
   checkBoxGroups: CheckBoxGroup[];
 
-  constructor() {
+  constructor(private userGroupSvc: UserGroupService) {
     super();
   }
 
   ngOnInit() {
     super.ngOnInit();
 
-    this.permissionModules$
+    this.userGroupSvc.getPermissions()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(permissionModules => this.mapPermissionToCheckBoxes(permissionModules));
+      .subscribe(response => this.mapPermissionToCheckBoxes(response.data));
   }
 
   ngOnDestroy() {
@@ -58,12 +56,28 @@ export class UserGroupsEditGeneralTabComponent extends Base implements OnInit, O
     ).subscribe(status => this.formValid.emit(status !== FORMSTATUS.INVALID));
   }
 
+  onSubmit() {
+    this.submitted = true;
+  
+    // validate form
+    if (!this.form)
+      return;
+
+    this.isLoading = true;
+    this.userGroupSvc.updateUserGroup(this.userGroupVm.id, this.userGroupVm)
+      .pipe(switchMap(response => this.swalAlert('Success', response.message, 'success')))
+      .subscribe(_ => {
+        this.isLoading = false;
+        this.router.navigate(['admin/usergroups']);
+      }, _ => { this.isLoading = false; });
+  }
+
   mapPermissionToCheckBoxes(permissionModules: PermissionModule[]) {
     this.checkBoxGroups = permissionModules.map(function (module) {
       const checkboxes = module.permissions.map(function (permission) {
         // if is_admin all permissions checked
         let isChecked = this.userGroupVm.is_admin ? true :
-          this.userGroupVm.permissions.includes(permission.code);
+          this.userGroupVm.permissions.includes(permission.id);
 
         return <CheckBox> {
           name: permission.name,

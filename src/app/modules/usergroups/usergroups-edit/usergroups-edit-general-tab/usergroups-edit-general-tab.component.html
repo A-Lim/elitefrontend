@@ -1,8 +1,9 @@
-<form autocomplete="off" #form="ngForm">
+<form autocomplete="off" #form="ngForm" (submit)="onSubmit()">
+  <shared-alert></shared-alert>
   <fieldset [disabled]="isLoading || !('update' | ablePure: 'usergroups' | async)">
     <div class="row">
       <!-- name -->
-      <div class="col-md-6 form-group mb-50" [class.error]="(submitted || name.dirty) && name.errors">
+      <div class="col-md-6 form-group" [class.error]="(submitted || name.dirty) && name.errors">
         <label class="text-bold-600" for="name">Name</label>
         <input type="text" class="form-control" 
           #name="ngModel" 
@@ -18,7 +19,7 @@
       </div>
   
       <!-- code -->
-      <div class="col-md-6 form-group mb-50" [class.error]="(submitted || code.dirty) && code.errors">
+      <div class="col-md-6 form-group" [class.error]="(submitted || code.dirty) && code.errors">
         <label class="text-bold-600" for="code">Code</label>
         <input type="text" class="form-control" 
           #code="ngModel"
@@ -32,9 +33,9 @@
       </div>
     </div>
   
+    <!-- status -->
     <div class="row">
-      <!-- status -->
-      <div class="col-md-6 form-group mb-50" [class.error]="(submitted || status.dirty) && status.errors">
+      <div class="col-md-6 form-group" [class.error]="(submitted || status.dirty) && status.errors">
         <label class="text-bold-600" for="status">Status</label>
         <select class="form-control"
           #status="ngModel"
@@ -60,7 +61,7 @@
       </div>
       <div *ngFor="let group of checkBoxGroups" class="col-md-4 mb-1">
         <!-- permission module -->
-        <div class="checkbox mb-50">
+        <div class="checkbox">
           <input type="checkbox" class="checkbox-input"
             [(ngModel)]="group.isChecked"
             [disabled]="userGroupVm.is_admin"
@@ -83,6 +84,13 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="form-actions d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary pull-right"
+        [disabled]="isLoading || !('update' | ablePure: 'usergroups' | async)">
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span> Edit
+      </button>
     </div>
   </fieldset>
 </form>

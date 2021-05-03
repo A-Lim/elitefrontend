@@ -1,0 +1,54 @@
+<div class="row">
+  <!-- pending orders -->
+  <div class="col-sm-3 col-6">
+    <div class="card text-center">
+      <div class="card-body py-1">
+        <div class="badge-circle badge-circle-lg badge-circle-light-success mx-auto mb-50">
+          <i class="bx bx-user font-medium-5"></i>
+        </div>
+        <div class="text-muted">Pending Orders</div>
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span>
+        <h3 *ngIf="!isLoading" class="mb-0">{{ generalStat.pending_order_count }}</h3>
+      </div>
+    </div>
+  </div>
+  <!-- overdue orders -->
+  <div class="col-sm-3 col-6">
+    <div class="card text-center">
+      <div class="card-body py-1">
+        <div class="badge-circle badge-circle-lg badge-circle-light-danger mx-auto mb-50">
+          <i class="bx bx-timer font-medium-5"></i>
+        </div>
+        <div class="text-muted">Overdue Orders</div>
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span>
+        <h3 *ngIf="!isLoading" class="mb-0">{{ generalStat.overdue_order_count }}</h3>
+      </div>
+    </div>
+  </div>
+  <!-- completed today -->
+  <div class="col-sm-3 col-6">
+    <div class="card text-center">
+      <div class="card-body py-1">
+        <div class="badge-circle badge-circle-lg badge-circle-light-info mx-auto mb-50">
+          <i class="bx bx-check-circle font-medium-5"></i>
+        </div>
+        <div class="text-muted">Tasks completed today</div>
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span>
+        <h3 *ngIf="!isLoading" class="mb-0">{{ generalStat.completed_today_count }}</h3>
+      </div>
+    </div>
+  </div>
+  <!-- overdue this week -->
+  <div class="col-sm-3 col-6">
+    <div class="card text-center">
+      <div class="card-body py-1">
+        <div class="badge-circle badge-circle-lg badge-circle-light-warning mx-auto mb-50">
+          <i class="bx bx-time-five font-medium-5"></i>
+        </div>
+        <div class="text-muted">Overdue This Week</div>
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span>
+        <h3 *ngIf="!isLoading" class="mb-0">{{ generalStat.overdue_this_week_count }}</h3>
+      </div>
+    </div>
+  </div>
+</div>

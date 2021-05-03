@@ -1,0 +1,55 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <div class="card-title">Orders Overdue Soon</div>
+    <div class="dropdown">
+      <button class="btn btn-sm btn-outline-secondary dropdown-toggle text-white" type="button" id="dropdownMenuButtonSec" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <ng-container [ngSwitch]="filterRange">
+          <ng-container *ngSwitchCase="'today'">Today</ng-container>
+          <ng-container *ngSwitchCase="'week'">This Week</ng-container>
+          <ng-container *ngSwitchCase="'month'">This Month</ng-container>
+        </ng-container>
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonSec">
+        <a class="dropdown-item" href="javascript:void(0)" (click)="onFilterRangeChanged('today')">Today</a>
+        <a class="dropdown-item" href="javascript:void(0)" (click)="onFilterRangeChanged('week')">This Week</a>
+        <a class="dropdown-item" href="javascript:void(0)" (click)="onFilterRangeChanged('month')">This Month</a>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th>Orders</th>
+          <th>Customer</th>
+          <th>Delivery Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- orders -->
+        <ng-container *ngIf="!isLoading && overDueSoonOrders">
+          <tr *ngFor="let order of overDueSoonOrders" 
+            class="clickable-row" 
+            (click)="navigateTo('/admin/orders/' + order.workflow_id + '/' + order.order_id)">
+            <td>{{ order.iwo }}</td>
+            <td>{{ order.company }}</td>
+            <td>
+              {{ order.delivery_date }} 
+              <span *ngIf="order.expired" class="badge badge-xs badge-light-danger ml-1">Overdue</span>
+            </td>
+          </tr>
+        </ng-container>
+        <!-- no orders -->
+        <tr *ngIf="!isLoading && overDueSoonOrders.length === 0">
+          <td colspan="3">No Overdue Orders</td>
+        </tr>
+        <!-- loading -->
+        <tr *ngIf="isLoading">
+          <td colspan="3">
+            <span class="spinner-border spinner-border-sm"></span> Loading...
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

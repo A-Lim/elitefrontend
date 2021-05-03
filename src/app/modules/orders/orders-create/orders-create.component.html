@@ -24,139 +24,195 @@
   </div>
 
   <div class="content-body">
-    <shared-authorized-content 
-      [permissions]="['create.orders']">
-      <div class="card">
-        <div class="card-content">
-          <div class="card-body">
-            <form *ngIf="workflow" autocomplete="off" #form="ngForm" (submit)="onSubmit()">
-              <fieldset [disabled]="isLoading">
-                <div class="row">
-                  <!-- iwo -->
-                  <div class="col-md-6 form-group mb-50" [class.error]="(submitted || iwo.dirty) && iwo.errors">
-                    <label class="text-bold-600" for="iwo">IWO</label>
-                    <input type="text" class="form-control" 
-                      #iwo="ngModel" 
-                      [(ngModel)]="orderVm.iwo"
-                      id="iwo" name="iwo" placeholder="IWO #"
-                      orderIWOExists
-                      [workflowId]="workflow.id"
-                      [orderId]="orderVm.id"
-                      required>
-                    <div *ngIf="submitted || iwo.dirty" class="help-block">
-                      <ul role="alert">
-                        <li *ngIf="iwo.errors?.required" class="text-danger" role="alert">IWO is required.</li>
-                        <li *ngIf="iwo.errors?.orderIWOExists" class="text-danger" role="alert">IWO is already taken.</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <!-- customer -->
-                  <div class="col-md-6 form-group mb-50" [class.error]="(submitted || customer.dirty) && customer.errors">
-                    <label class="text-bold-600" for="customer">Customer</label>
-                    <input type="text" class="form-control" 
-                      #customer="ngModel" 
-                      [(ngModel)]="orderVm.customer"
-                      id="customer" name="customer" placeholder="Customer"
-                      required>
-                    <div *ngIf="submitted || customer.dirty" class="help-block">
-                      <ul role="alert">
-                        <li *ngIf="customer.errors?.required" class="text-danger" role="alert">Customer is required.</li>
-                      </ul>
-                    </div>
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <shared-alert></shared-alert>
+          <form *ngIf="workflow" autocomplete="off" #form="ngForm" (submit)="onSubmit()">
+            <fieldset [disabled]="isLoading || !('create' | ablePure: 'orders' | async)">
+              <div class="row">
+                <!-- iwo -->
+                <div class="col-md-6 form-group mb-50" [class.error]="(submitted || iwo.dirty) && iwo.errors">
+                  <label class="text-bold-600" for="iwo">IWO</label>
+                  <input type="text" class="form-control" 
+                    #iwo="ngModel" 
+                    [(ngModel)]="orderVm.iwo"
+                    id="iwo" name="iwo" placeholder="IWO #"
+                    orderIWOExists
+                    [workflowId]="workflow.id"
+                    [orderId]="orderVm.id"
+                    required>
+                  <div *ngIf="submitted || iwo.dirty" class="help-block">
+                    <ul role="alert">
+                      <li *ngIf="iwo.errors?.required" class="text-danger" role="alert">IWO is required.</li>
+                      <li *ngIf="iwo.errors?.orderIWOExists" class="text-danger" role="alert">IWO is already taken.</li>
+                    </ul>
                   </div>
                 </div>
 
-                <div class="row">
-                  <!-- delivery date -->
-                  <div class="col-md-6 form-group mb-50" [class.error]="(submitted || deliveryDate.dirty) && deliveryDate.errors">
-                    <label class="text-bold-600" for="deliveryDate">Delivery Date</label>
-                    <input type="date" class="form-control" 
-                      #deliveryDate="ngModel" 
-                      [(ngModel)]="orderVm.delivery_date"
-                      id="deliveryDate" name="deliveryDate"
-                      required>
-                    <div *ngIf="submitted || deliveryDate.dirty" class="help-block">
-                      <ul role="alert">
-                        <li *ngIf="deliveryDate.errors?.required" class="text-danger" role="alert">Delivery Date is required.</li>
-                      </ul>
-                    </div>
+                <!-- status -->
+                <div class="col-md-6 form-group mb-50" [class.error]="(submitted || status.dirty) && status.errors">
+                  <label class="text-bold-600" for="status">Status</label>
+                  <select class="form-control" 
+                    #status="ngModel" 
+                    [(ngModel)]="orderVm.status"
+                    id="status" name="status"
+                    required>
+                    <option value="in progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                  <div *ngIf="submitted || status.dirty" class="help-block">
+                    <ul role="alert">
+                      <li *ngIf="status.errors?.required" class="text-danger" role="alert">Status is required.</li>
+                    </ul>
                   </div>
-
-                  <!-- status -->
-                  <div class="col-md-6 form-group mb-50" [class.error]="(submitted || status.dirty) && status.errors">
-                    <label class="text-bold-600" for="status">Status</label>
-                    <select class="form-control" 
-                      #status="ngModel" 
-                      [(ngModel)]="orderVm.status"
-                      id="status" name="status"
-                      required>
-                      <option value="in progress">In Progress</option>
-                      <option value="completed">Completed</option>
-                    </select>
-                    <div *ngIf="submitted || status.dirty" class="help-block">
-                      <ul role="alert">
-                        <li *ngIf="status.errors?.required" class="text-danger" role="alert">Status is required.</li>
-                      </ul>
-                    </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <!-- company -->
+                <div class="col-md-6 form-group mb-50" [class.error]="(submitted || company.dirty) && company.errors">
+                  <label class="text-bold-600" for="company">Company</label>
+                  <input type="text" class="form-control" 
+                    #company="ngModel" 
+                    [(ngModel)]="orderVm.company"
+                    id="company" name="company" placeholder="Company"
+                    required>
+                  <div *ngIf="submitted || company.dirty" class="help-block">
+                    <ul role="alert">
+                      <li *ngIf="company.errors?.required" class="text-danger" role="alert">Company is required.</li>
+                    </ul>
                   </div>
                 </div>
 
-                <div class="row">
-                  <!-- files -->
-                  <div class="col-md-6 form-group mb-50" [class.error]="(submitted || uploadFiles.dirty) && uploadFiles.errors">
-                    <label class="text-bold-600" for="uploadFiles">Files</label>
-                    <shared-fileinput
-                      [(ngModel)]="orderVm.uploadFiles"
-                      #uploadFiles="ngModel"
-                      [multiple]="true"
-                      [fileTypes]="['.pdf']"
-                      id="uploadFiles" name="uploadFiles"></shared-fileinput>
-                    <div *ngIf="submitted || uploadFiles.dirty" class="help-block">
-                      <ul role="alert">
-                        <li *ngIf="uploadFiles.errors?.fileTypes" class="text-danger" role="alert">Invalid file type.</li>
-                      </ul>
-                    </div>
+                <!-- person_in_charge -->
+                <div class="col-md-6 form-group mb-50" [class.error]="(submitted || pic.dirty) && pic.errors">
+                  <label class="text-bold-600" for="pic">Person In Charge</label>
+                  <input type="text" class="form-control" 
+                    #pic="ngModel" 
+                    [(ngModel)]="orderVm.person_in_charge"
+                    id="pic" name="pic" placeholder="Person In Charge"
+                    required>
+                  <div *ngIf="submitted || pic.dirty" class="help-block">
+                    <ul role="alert">
+                      <li *ngIf="pic.errors?.required" class="text-danger" role="alert">Person in charge is required.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- quantity -->
+                <div class="col-md-6 form-group mb-50" [class.error]="(submitted || quantity.dirty) && quantity.errors">
+                  <label class="text-bold-600" for="quantity">Quantity</label>
+                  <input type="number" class="form-control" 
+                    #quantity="ngModel" 
+                    [(ngModel)]="orderVm.quantity"
+                    id="quantity" name="quantity" placeholder="Quantity"
+                    required />
+
+                  <div *ngIf="submitted || quantity.dirty" class="help-block">
+                    <ul role="alert">
+                      <li *ngIf="quantity.errors?.required" class="text-danger" role="alert">Quantity is required.</li>
+                    </ul>
                   </div>
                 </div>
 
-                <div class="row">
-                  <!-- remarks -->
-                  <div class="col-md-12 form-group mb-50" [class.error]="(submitted || remark.dirty) && remark.errors">
-                    <label class="text-bold-600" for="remark">Remark</label>
-                    <textarea class="form-control" 
-                      #remark="ngModel" 
-                      [(ngModel)]="orderVm.remark"
-                      id="remark" name="remark" rows="5">
-                    </textarea>
+                <!-- delivery date -->
+                <div class="col-md-6 form-group mb-50" [class.error]="(submitted || deliveryDate.dirty) && deliveryDate.errors">
+                  <label class="text-bold-600" for="deliveryDate">Delivery Date</label>
+                  <shared-datepicker
+                    #deliveryDate="ngModel"
+                    [(ngModel)]="orderVm.delivery_date"
+                    id="deliveryDate" name="deliveryDate"
+                    required>
+                  </shared-datepicker>
+                  <div *ngIf="submitted || deliveryDate.dirty" class="help-block">
+                    <ul role="alert">
+                      <li *ngIf="deliveryDate.errors?.required" class="text-danger" role="alert">Delivery Date is required.</li>
+                    </ul>
                   </div>
                 </div>
+              </div>
 
-                <ng-container *ngIf="workflow">
-                  <ng-container *ngFor="let process of workflow.processes; let i = index">
+              <div class="row">
+                <!-- files -->
+                <div class="col-md-6 form-group mb-50" [class.error]="(submitted || uploadFiles.dirty) && uploadFiles.errors">
+                  <label class="text-bold-600" for="uploadFiles">Files</label>
+                  <shared-fileinput
+                    [(ngModel)]="orderVm.uploadFiles"
+                    #uploadFiles="ngModel"
+                    [multiple]="true"
+                    [fileTypes]="['.pdf']"
+                    id="uploadFiles" name="uploadFiles"></shared-fileinput>
+                  <div *ngIf="submitted || uploadFiles.dirty" class="help-block">
+                    <ul role="alert">
+                      <li *ngIf="uploadFiles.errors?.fileTypes" class="text-danger" role="alert">Invalid file type.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- description -->
+                <div class="col-md-12 form-group mb-50" [class.error]="(submitted || description.dirty) && description.errors">
+                  <label class="text-bold-600" for="description">Description</label>
+                  <textarea type="text" class="form-control" 
+                    #description="ngModel" 
+                    [(ngModel)]="orderVm.description"
+                    id="description" name="description" placeholder="Description"
+                    rows="3"
+                    required></textarea>
+
+                  <div *ngIf="submitted || description.dirty" class="help-block">
+                    <ul role="alert">
+                      <li *ngIf="description.errors?.required" class="text-danger" role="alert">Description is required.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- remarks -->
+                <div class="col-md-12 form-group mb-50" [class.error]="(submitted || remark.dirty) && remark.errors">
+                  <label class="text-bold-600" for="remark">Remark</label>
+                  <textarea class="form-control" 
+                    #remark="ngModel" 
+                    [(ngModel)]="orderVm.remark"
+                    id="remark" name="remark" rows="3">
+                  </textarea>
+                </div>
+              </div>
+
+              <!-- processes -->
+              <ng-container *ngIf="workflow">
+                <div class="row">
+                  <div class="col-md-6">
                     <div class="row">
-                      <div class="col-md-6 form-group mb-50">
-                        <label class="text-bold-600">{{ process.name }}</label>
-                        <select class="form-control"
-                          [(ngModel)]="orderVm[process.code]"
-                          [id]="process.code" [name]="process.code">
-                          <option *ngFor="let status of process.statuses" [value]="status">{{ status }}</option>
-                        </select>
+                      <div class="col-12 form-group mb-50">
+                        <ng-container *ngFor="let process of workflow.processes; let i = index">
+                          <label class="text-bold-600">{{ process.name }}</label>
+                          <select class="form-control"
+                            [(ngModel)]="orderVm[process.code]"
+                            [id]="process.code" [name]="process.code">
+                            <option *ngFor="let status of process.statuses" [value]="status">{{ status }}</option>
+                          </select>
+                        </ng-container>
                       </div>
                     </div>
-                  </ng-container>
-                </ng-container>
-
-                <div class="form-actions d-flex justify-content-end">
-                  <button type="submit" class="btn btn-primary pull-right">
-                    <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span> Create
-                  </button>
+                  </div>
                 </div>
-              </fieldset>
-            </form>
-          </div>
+              </ng-container>
+
+              <div class="form-actions d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary pull-right">
+                  <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span> Create
+                </button>
+              </div>
+            </fieldset>
+          </form>
         </div>
       </div>
-    </shared-authorized-content>
+    </div>
   </div>
 </div>

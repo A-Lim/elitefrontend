@@ -70,5 +70,4 @@ export class OrdersCreateComponent extends Base implements OnInit, OnDestroy {
         this.isLoading = false;
       }, _ => { this.isLoading = false; });
   }
-
 }

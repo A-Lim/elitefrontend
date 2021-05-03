@@ -12,5 +12,7 @@ export interface Process {
   statuses: string[];
   default: string;
   seq: number;
+  pinned: string;
+  width: number;
   is_published: boolean;
 }

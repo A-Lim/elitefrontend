@@ -1,0 +1,21 @@
+.btn-outline-secondary:not(:disabled):not(.disabled).active, 
+.btn-outline-secondary:not(:disabled):not(.disabled):active, 
+.show > .btn-outline-secondary.dropdown-toggle {
+  color: #fff !important;
+}
+
+table {
+  font-size: 12px;
+}
+
+th, td {
+  padding: 10px;
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+.card-body {
+  padding-top: 0;
+}

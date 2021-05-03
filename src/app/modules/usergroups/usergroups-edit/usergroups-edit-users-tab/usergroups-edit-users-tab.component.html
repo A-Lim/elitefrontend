@@ -1,26 +1,83 @@
-<form autocomplete="off" #form="ngForm">
+<form class="mb-2" autocomplete="off" #form="ngForm" (submit)="addUsers()">
   <fieldset [disabled]="isLoading || !('update' | ablePure: 'usergroups' | async)">
     <div class="row">
-      <!-- name -->
-      <div class="col-md-12 form-group mb-50" [class.error]="(submitted || userIds.dirty) && userIds.errors">
+      <!-- users -->
+      <div class="col-md-10 form-group" [class.error]="(submitted || users.dirty) && users.errors">
         <label class="text-bold-600" for="userIds">Users</label>
+        
         <ng-select 
-          #userIds="ngModel"
-          [(ngModel)]="userGroupVm.userIds" 
+          #users="ngModel"
+          [(ngModel)]="userIds" 
           [items]="users$ | async"
           [multiple]="true"
           [trackByFn]="trackByFn"
           [loading]="usersReqLoading"
           [typeahead]="usersInput$"
-          bindLabel="name" bindValue="id"
-          id="userIds" name="userIds"
-          [disabled]="isLoading || !('update' | ablePure: 'usergroups' | async)"></ng-select>
+          bindLabel="email" bindValue="id"
+          id="users" name="users"
+          [disabled]="isLoading || !('update' | ablePure: 'usergroups' | async)"
+          required>
 
-        <div *ngIf="submitted || userIds.dirty" class="help-block">
+          <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+            <div class="ng-value" *ngFor="let item of items | slice:0:4">
+              <span class="ng-value-label">{{item.email}}</span>
+              <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+            </div>
+            <div class="ng-value" *ngIf="items.length > 4">
+              <span class="ng-value-label">{{items.length - 4}} more...</span>
+            </div>
+          </ng-template>
+
+          <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+            <div>
+              <span class="d-block">{{ item.email }}</span>
+              <small>{{ item.name }}</small>
+            </div>
+          </ng-template>
+        
+        </ng-select>
+
+        <div *ngIf="submitted || users.dirty" class="help-block">
           <ul role="alert">
           </ul>
         </div>
       </div>
+      <div class="col-md-2 form-group col-add-users">
+        <button type="submit" class="btn btn-primary">Add Users</button>
+      </div>
     </div>
   </fieldset>
 </form>
+
+<ag-grid-angular #agGrid style="width: 100%;" domLayout='autoHeight' class="ag-theme-balham"
+  (gridReady)="onGridReady($event)" 
+  [gridOptions]="gridOptions" 
+  [columnDefs]="columnDefs">
+</ag-grid-angular>
+
+<ng-template #actionsCell let-row>
+  <ng-container *ngIf="row">
+    <a class="btn btn-xs btn-icon btn-primary btn-action-icon" 
+      title="Edit"
+      (click)="navigateTo('/admin/users', row.id)">
+      <i class="bx bxs-edit"></i>
+    </a>
+
+    <a class="btn btn-xs btn-icon btn-danger btn-action-icon" 
+      title="Remove"
+      (click)="removeUser(row.id)">
+      <i class="bx bxs-trash"></i>
+    </a>
+  </ng-container>
+</ng-template>
+
+<ng-template #statusCell let-row>
+  <ng-container *ngIf="row">
+    <span [ngClass]="{
+        'badge-light-success': row.status === 'active',
+        'badge-light-warning': row.status === 'inactive' || row.status === 'unverified',
+        'badge-light-danger': row.status === 'locked'
+      }"
+      class="badge badge-xs badge-light-success">{{ row.status | titlecase }}</span>
+  </ng-container>
+</ng-template>

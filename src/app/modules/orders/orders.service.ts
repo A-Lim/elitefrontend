@@ -33,11 +33,26 @@ export class OrderService {
     return this.http.get<ResponseResult<Order>>(`${this.orderUrl}/${workflowId}/orders/${orderId}`);
   }
 
+  importOrders(workflowId: number, file: File) {
+    var formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<ResponseResult<Order>>(`${this.orderUrl}/${workflowId}/orders/import`, formData);
+  }
+
   updateOrder(workflowId: number, orderId: number, orderVm: OrderVm) {
     orderVm._method = 'PATCH';
     var formData = new FormData();
     this.appendFormData(formData, orderVm, '');
     return this.http.post<ResponseResult<Order>>(`${this.orderUrl}/${workflowId}/orders/${orderId}`, formData);
+  }
+
+  updateOrderStatus(workflowId: number, orderId: number, status: string) {
+    var formData = new FormData();
+    formData.append('_method', 'PATCH');
+    formData.append('workflowId', workflowId.toString());
+    formData.append('orderId', orderId.toString());
+    formData.append('status', status);
+    return this.http.post<ResponseResult<void>>(`${this.orderUrl}/${workflowId}/orders/${orderId}/status`, formData);
   }
 
   updateOrderProcess(workflowId: number, orderId: number, data: any) {

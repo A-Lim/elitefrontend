@@ -41,7 +41,7 @@ export class WorkflowsEditComponent extends Base implements OnInit, OnDestroy {
     this.workflowVm = new WorkflowVm();
     this.loadWorkflow();
     this.processVm = <ProcessVm> {
-      statuses: ['Pending', 'Completed', 'None'],
+      statuses: ['Pending', 'Completed', 'Urgent', 'None'],
       default: 'Pending',
     };
   }
@@ -80,7 +80,7 @@ export class WorkflowsEditComponent extends Base implements OnInit, OnDestroy {
 
     this.swalConfirm(
       'Confirm', 
-      'Are you sure you want to perform this action. It may result in lost of data.', 
+      'Are you sure you want to perform this action.', 
       'info',
       'Confirm')
       .pipe(
@@ -149,13 +149,13 @@ export class WorkflowsEditComponent extends Base implements OnInit, OnDestroy {
     this.workflowVm.processes.forEach((x, index) => x.seq = index + 1);
   }
 
-  private sortById(a: Process, b: Process) {
-    if (a.seq < b.seq)
-      return -1;
+  // private sortById(a: Process, b: Process) {
+  //   if (a.seq < b.seq)
+  //     return -1;
     
-    if (a.seq > b.seq)
-      return 1;
+  //   if (a.seq > b.seq)
+  //     return 1;
 
-    return 0;
-  }
+  //   return 0;
+  // }
 }

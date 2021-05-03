@@ -6,59 +6,107 @@
   </div>
   
   <div class="content-body">
-    <shared-authorized-content 
-    [permissions]="['create.usergroups']">
-      <div class="card">
-        <div class="card-content">
-          <div class="card-body">
-            <div class="alert mb-1 alert-info" role="alert">
-              <span class="alert-message">Updates will only take effect after user logs in again.</span>
-            </div>
-            <shared-alert></shared-alert>
-            <ul class="nav nav-pills">
-              <li class="nav-item">
-                <a class="nav-link active" [class.bg-danger]="submitted && !generalTabValid"
-                  id="general-tab" data-toggle="pill" href="#general"
-                  aria-expanded="true">
-                  <span *ngIf="submitted && !generalTabValid">!</span> General
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" [class.bg-danger]="submitted && !usersTabValid"
-                  id="users-tab" data-toggle="pill" href="#users" 
-                  aria-expanded="false">
-                  <span *ngIf="submitted && !usersTabValid">!</span> Users
-                </a>
-              </li>
-            </ul>
-  
-            <div class="tab-content">
-              <div role="tabpanel" class="tab-pane active" id="general" aria-labelledby="general-tab" aria-expanded="true">
-                <usergroups-create-general-tab 
-                  [userGroupVm]="userGroupVm"
-                  [permissionModules$]="permissionModules$"
-                  [submitted]="submitted"
-                  [isLoading]="isLoading"
-                  (formValid)="onFormStatusChange(UserGroupTab.General, $event)"></usergroups-create-general-tab>
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <shared-alert></shared-alert>
+          <form autocomplete="off" #form="ngForm">
+            <fieldset [disabled]="isLoading">
+              <div class="row">
+                <!-- name -->
+                <div class="col-md-6 form-group" [class.error]="(submitted || name.dirty) && name.errors">
+                  <label class="text-bold-600" for="name">Name</label>
+                  <input type="text" class="form-control" 
+                    #name="ngModel" 
+                    [(ngModel)]="userGroupVm.name"
+                    id="name" name="name" placeholder="Name"
+                    required>
+                  <div *ngIf="submitted || name.dirty" class="help-block">
+                    <ul role="alert">
+                      <li *ngIf="name.errors?.required" class="text-danger" role="alert">Name is required.</li>
+                    </ul>
+                  </div>
+                </div>
+            
+                <!-- code -->
+                <div class="col-md-6 form-group" [class.error]="(submitted || code.dirty) && code.errors">
+                  <label class="text-bold-600" for="code">Code</label>
+                  <input type="text" class="form-control" 
+                    #code="ngModel"
+                    [(ngModel)]="userGroupVm.code"
+                    id="code" name="code" placeholder="Code"
+                    pattern="^[a-zA-Z0-9]+$"
+                    required userGroupCodeInUse>
+                  <div *ngIf="submitted || code.dirty" class="help-block">
+                    <ul role="alert">
+                      <li *ngIf="code.errors?.required" class="text-danger" role="alert">Code is required.</li>
+                      <li *ngIf="code.errors?.pattern" class="text-danger" role="alert">Only alphanumeric characters allowed.</li>
+                      <li *ngIf="code.errors?.userGroupCodeInUse" class="text-danger" role="alert">Code has been taken.</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <div class="tab-pane" id="users" role="tabpanel" aria-labelledby="users-tab" aria-expanded="false">
-                <usergroups-create-users-tab
-                  [userGroupVm]="userGroupVm"
-                  [submitted]="submitted"
-                  [isLoading]="isLoading"
-                  (formValid)="onFormStatusChange(UserGroupTab.Users, $event)"></usergroups-create-users-tab>
+            
+              <!-- status -->
+              <div class="row">
+                <div class="col-md-6 form-group" [class.error]="(submitted || status.dirty) && status.errors">
+                  <label class="text-bold-600" for="status">Status</label>
+                  <select class="form-control"
+                    #status="ngModel"
+                    [(ngModel)]="userGroupVm.status"
+                    id="status" name="status"
+                    required>
+                    <option value="active" selected>Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                  <div *ngIf="submitted || status.dirty" class="help-block" >
+                    <ul role="alert">
+                      <li *ngIf="status.errors?.required" class="text-danger" role="alert">Status is required.</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-            </div>
-  
-            <div class="form-actions d-flex justify-content-end">
-              <button type="submit" class="btn btn-primary pull-right" (click)="onSubmit()"
-                [disabled]="isLoading">
-                <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span> Create
-              </button>
-            </div>
-          </div>
+            
+              <!-- permissions -->
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="text-bold-600">Permissions</label>
+                </div>
+                <div *ngFor="let group of checkBoxGroups" class="col-md-4 mb-1">
+                  <!-- permission module -->
+                  <div class="checkbox">
+                    <input type="checkbox" class="checkbox-input"
+                      [(ngModel)]="group.isChecked"
+                      (change)="onPermissionModuleChecked(group.value)"
+                      id="permission_{{ group.value }}" name="permission_{{ group.value }}">
+                    <label for="permission_{{ group.value }}"><small><strong>{{ group.name | uppercase }}</strong></small></label>
+                  </div>
+            
+                  <!-- permissions -->
+                  <div class="row">
+                    <div *ngFor="let checkbox of group.checkboxes" class="col-12 mb-10">
+                      <div class="checkbox">
+                        <input type="checkbox" class="checkbox-input"
+                          [(ngModel)]="checkbox.isChecked"
+                          (change)="onPermissionChecked()"
+                          id="permission_{{ checkbox.value }}" name="permission_{{ checkbox.value }}">
+                        <label for="permission_{{ checkbox.value }}"><small>{{ checkbox.name }}</small></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary pull-right" (click)="onSubmit()"
+                  [disabled]="isLoading">
+                  <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span> Create
+                </button>
+              </div>
+            </fieldset>
+          </form>
         </div>
       </div>
-    </shared-authorized-content>
+    </div>
   </div>
 </div>

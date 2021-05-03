@@ -8,6 +8,7 @@ import { Workflow, Process } from 'app/modules/workflows/models/workflow.model';
 import { ResponseResult } from 'app/shared/models/responses/responseresult.model';
 import { PaginationResponse } from 'app/shared/models/responses/pagination.response';
 import { tap } from 'rxjs/operators';
+import { ColumnSettingVm } from '../orders/models/columnsetting.model.vm';
 
 
 
@@ -51,6 +52,10 @@ export class WorkflowService {
   updateWorkflow(id: number, workflowVm: WorkflowVm) {
     return this.http.patch<ResponseResult<Workflow>>(`${this.workflowUrl}/${id}`, workflowVm)
       .pipe(tap(_ => this.getWorkflowsForSideMenu().subscribe()));;
+  }
+
+  updateColumnWidth(id: number, data: ColumnSettingVm) {
+    return this.http.patch<ResponseResult<null>>(`${this.workflowUrl}/${id}/columnwidth`, data);
   }
 
   deleteWorkflow(id: number) {

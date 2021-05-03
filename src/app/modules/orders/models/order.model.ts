@@ -4,9 +4,13 @@ import { OrderLog } from 'app/modules/orders/models/orderlog.model';
 export interface Order {
   id: number;
   iwo: string;
-  customer: string;
+  company: string;
+  description: string;
+  quantity: number;
   remark: string;
   status: string;
+  person_in_charge: string;
+
   files: FileDetail[];
   delivery_date: string;
   created_at: string;

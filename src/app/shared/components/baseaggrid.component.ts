@@ -1,20 +1,31 @@
-import { OnInit, OnDestroy, Directive, TemplateRef } from '@angular/core';
+import { OnInit, OnDestroy, Directive, TemplateRef, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AgGridAngular } from 'ag-grid-angular';
 import { GridOptions, IDatasource, ColDef, IGetRowsParams } from 'ag-grid-community';
 
-import { ServiceLocator } from 'app/shared/services/servicelocator';
 import { Base } from 'app/shared/components/base.component';
 import { TemplateRendererComponent } from './template-renderer.component';
 import UrlQueryBuilder from 'app/shared/helpers/urlquerybuilder';
 
-
 @Directive()
 export abstract class BaseAgGrid extends Base implements OnInit, OnDestroy {
+  @ViewChild('agGrid') agGrid: AgGridAngular;
+  
   // default grid options
   public gridOptions: GridOptions = {
     defaultColDef: {
-      sortable: true
+      sortable: false,
+      filter: false,
+      floatingFilter: true,
+      resizable: true,
+      suppressMenu: true,
+      // wrapText: true,
+      autoHeight: true,
+      cellStyle: { 'white-space': 'normal', 'line-height': '14px' },
+      floatingFilterComponentParams: {
+        suppressFilterButton: true,
+      },
     },
     animateRows: true,
     pagination: true,
@@ -23,17 +34,11 @@ export abstract class BaseAgGrid extends Base implements OnInit, OnDestroy {
     cacheBlockSize: 10,
     paginationPageSize: 10,
     suppressCellSelection: true,
+    enableCellTextSelection: true,
   };
 
   public dataSource: IDatasource;
   public columnDefs: ColDef[];
-
-  public defaultColDef = {
-    sortable: false,
-    filter: false,
-    floatingFilter: true,
-    resizable: true,
-  };
 
   public dataSourceCallBack: (qParams: any) => Observable<any>;
 
@@ -52,6 +57,10 @@ export abstract class BaseAgGrid extends Base implements OnInit, OnDestroy {
   onGridReady(params) {
     params.api.sizeColumnsToFit();
     params.api.setDatasource(this.dataSource);
+  }
+
+  refreshTable() {
+    this.agGrid.api.setDatasource(this.dataSource);
   }
 
   getIndexColDef(headerName: string = '#', width: number = 30): ColDef {
@@ -75,9 +84,6 @@ export abstract class BaseAgGrid extends Base implements OnInit, OnDestroy {
       sortable: sortable,
       suppressMenu: true,
     };
-
-    if (filter)
-      colDef.filterParams = { suppressAndOrCondition: true, filterOptions: ['contains', 'equals'] }
 
     if (type != '')
       colDef.type = type;
@@ -151,7 +157,6 @@ export abstract class BaseAgGrid extends Base implements OnInit, OnDestroy {
       cellRendererParams: {
         ngTemplate: template
       },
-      minWidth: 100,
     }
   }
 

@@ -38,8 +38,8 @@ export class WorkflowsCreateComponent extends Base implements OnInit, OnDestroy 
     this.workflowVm = new WorkflowVm();
     this.workflowVm.status = 'active';
     this.processVm = <ProcessVm> {
-      statuses: ['Pending', 'Completed', 'None'],
-      default: 'Pending',
+      statuses: ['Pending', 'Completed', 'Urgent', 'None'],
+      default: 'None',
     };
   }
 
@@ -83,6 +83,8 @@ export class WorkflowsCreateComponent extends Base implements OnInit, OnDestroy 
 
     const newProcessVm: ProcessVm = cloneDeep(this.processVm);
     newProcessVm.seq = this.workflowVm.processes.length + 1;
+    newProcessVm.width = 55;
+    newProcessVm.pinned = '0';
     this.workflowVm.processes.push(newProcessVm);
     
     this.processVm.name = '';

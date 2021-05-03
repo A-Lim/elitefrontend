@@ -1,0 +1,54 @@
+<div class="card-header">
+  <div class="d-flex flex-row-reverse">
+    <button class="btn btn-info">
+      <i class="bx bx-download"></i> Export
+    </button>
+  </div>
+</div>
+<div class="card-content">
+  <div class="card-body">
+    <ag-grid-angular #agGrid style="width: 100%;" domLayout='autoHeight' class="ag-theme-balham"
+      (gridReady)="onGridReady($event)" 
+      [gridOptions]="gridOptions" 
+      [columnDefs]="columnDefs">
+    </ag-grid-angular>
+  </div>
+</div>
+
+<ng-template #actionsCell let-row>
+  <ng-container *ngIf="row">
+    <a class="btn btn-xs btn-icon btn-primary btn-action-icon" 
+      title="Edit"
+      (click)="navigateTo('/admin/orders/' + workflow.id + '/', row.id)">
+      <i class="bx bxs-edit"></i>
+    </a>
+
+    <ng-container *ngIf="'delete' | ablePure: 'orders' | async">
+      <a class="btn btn-xs btn-icon btn-danger btn-action-icon" 
+        title="Delete"
+        (click)="delete(row.id)">
+        <i class="bx bxs-trash"></i>
+      </a>
+    </ng-container>
+    
+  </ng-container>
+</ng-template>
+
+<!-- <ng-template #iwoCell let-row>
+  <ng-container *ngIf="row">
+    <label class="text-bold-600 d-block m-0">{{ row.iwo }}</label>
+    <span *ngIf="row" class="badge badge-xs"
+      [class.badge-light-primary]="row.status === 'in progress'"
+      [class.badge-light-success]="row.status === 'completed'">
+      {{ row.status | titlecase }}
+    </span>
+  </ng-container>
+</ng-template> -->
+
+<ng-template #statusCell let-row>
+  <span *ngIf="row" class="badge badge-xs"
+    [class.badge-light-primary]="row.status === 'in progress'"
+    [class.badge-light-success]="row.status === 'completed'">
+    {{ row.status | titlecase }}
+  </span>
+</ng-template>

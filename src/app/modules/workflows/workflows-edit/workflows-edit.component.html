@@ -56,22 +56,63 @@
                         <shared-accordion cdkDrag class="process">
                           <small header><i class="bx bx-grid-vertical"></i>{{ process.name }}</small>
                           <div content class="row">
-                            <!-- process name -->
-                            <div class="form-group col-md-6" [class.error]="(wFormSubmitted || name.dirty) && name.errors">
-                              <label class="small">Process Name</label>
-                              <input type="text" class="form-control form-control-sm" 
-                                #name="ngModel"
-                                [(ngModel)]="process.name" 
-                                [disabled]="process.is_published"
-                                id="name[{{i}}]" name="name[{{i}}]" required />
+                            <div class="col-md-6">
+                              <div class="row">
+                                <!-- process name -->
+                                <div class="form-group col-12" [class.error]="(wFormSubmitted || name.dirty) && name.errors">
+                                  <label class="small">Process Name</label>
+                                  <input type="text" class="form-control form-control-sm" 
+                                    #name="ngModel"
+                                    [(ngModel)]="process.name" 
+                                    id="name[{{i}}]" name="name[{{i}}]" required />
 
-                              <!-- validation errrors -->
-                              <div *ngIf="wFormSubmitted || name.dirty" class="help-block">
-                                <ul role="alert">
-                                  <li *ngIf="name.errors?.required" class="text-danger" role="alert">Status is required.</li>
-                                </ul>
+                                  <!-- validation errrors -->
+                                  <div *ngIf="wFormSubmitted || name.dirty" class="help-block">
+                                    <ul role="alert">
+                                      <li *ngIf="name.errors?.required" class="text-danger" role="alert">Status is required.</li>
+                                    </ul>
+                                  </div>
+                                </div>
+
+                                <!-- pinned -->
+                                <div class="form-group col-12" [class.error]="(wFormSubmitted || pinned.dirty) && pinned.errors">
+                                  <label class="small">Pinned</label>
+                                  <select class="form-control form-control-sm" 
+                                    #pinned="ngModel"
+                                    [(ngModel)]="process.pinned" 
+                                    id="pinned[{{i}}]" name="pinned[{{i}}]" required>
+                                    <option value="0">None</option>
+                                    <option value="left">Left</option>
+                                    <option value="left">Right</option>
+                                  </select>
+
+                                  <!-- validation errrors -->
+                                  <div *ngIf="wFormSubmitted || pinned.dirty" class="help-block">
+                                    <ul role="alert">
+                                      <li *ngIf="pinned.errors?.required" class="text-danger" role="alert">Pinned is required.</li>
+                                    </ul>
+                                  </div>
+                                </div>
+
+                                <!-- width -->
+                                <div class="form-group col-12" [class.error]="(wFormSubmitted || width.dirty) && width.errors">
+                                  <label class="small">Width</label>
+                                  <input type="number" class="form-control form-control-sm" 
+                                    #width="ngModel"
+                                    [(ngModel)]="process.width" 
+                                    id="width[{{i}}]" name="width[{{i}}]" required />
+
+                                  <!-- validation errrors -->
+                                  <div *ngIf="wFormSubmitted || width.dirty" class="help-block">
+                                    <ul role="alert">
+                                      <li *ngIf="width.errors?.required" class="text-danger" role="alert">Width is required.</li>
+                                    </ul>
+                                  </div>
+                                </div>
                               </div>
                             </div>
+                            
+                            
 
                             <!-- status -->
                             <div class="form-group col-md-6">
@@ -123,7 +164,7 @@
 
                   <!-- submit -->
                   <div class="col-md-12 form-actions d-flex justify-content-end">
-                    <button [disabled]="!workflowForm.valid" type="submit" class="btn btn-primary pull-right">Edit</button>
+                    <button type="submit" class="btn btn-primary pull-right">Edit</button>
                   </div>
                 </div>
               </form>
