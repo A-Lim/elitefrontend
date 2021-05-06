@@ -11,6 +11,10 @@
   border-right: 1px solid lightgray !important;
 }
 
+.desc-cell .ag-cell-wrapper {
+  width: 100%;
+}
+
 /* .process-cell-header {
   transform: rotate(-90deg);
   display: inline-block;

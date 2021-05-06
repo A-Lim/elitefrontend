@@ -247,19 +247,34 @@
                 <li *ngFor="let orderLog of order.orderLogs" 
                   class="timeline-items timeline-icon-primary active">
                   <div class="timeline-time"><small>{{ orderLog.created_at | date: 'dd/MM/y h:mm a' }}</small></div>
-                  <h6 class="timeline-title">{{ orderLog.process.name }}</h6>
+                  <!-- title -->
+                  <ng-container *ngIf="orderLog.process">
+                    <h6 class="timeline-title">{{ orderLog.process.name }}</h6>
+                  </ng-container>
+                  <ng-container *ngIf="!orderLog.process">
+                    <h6 class="timeline-title">
+                      Order 
+                      <span class="badge badge-xs"
+                        [class.badge-light-success]="orderLog.to_status === 'completed'"
+                        [class.badge-light-primary]="orderLog.to_status === 'in progress'">{{ orderLog.to_status | titlecase }}</span>
+                    </h6>
+                  </ng-container>
+                
                   <p class="timeline-text">{{ orderLog.user.name }}</p>
-                  <span class="badge badge-xs"
-                    [class.badge-light-default]="orderLog.from_status === 'None'"
-                    [class.badge-light-warning]="orderLog.from_status === 'Pending'"
-                    [class.badge-light-success]="orderLog.from_status === 'Completed'"
-                    [class.badge-light-danger]="orderLog.from_status === 'Urgent'">{{ orderLog.from_status }}</span>
-                  <i class="bx bx-right-arrow-circle align-middle"></i>
-                  <span class="badge badge-xs"
-                    [class.badge-light-default]="orderLog.to_status === 'None'"
-                    [class.badge-light-warning]="orderLog.to_status === 'Pending'"
-                    [class.badge-light-success]="orderLog.to_status === 'Completed'"
-                    [class.badge-light-danger]="orderLog.to_status === 'Urgent'">{{ orderLog.to_status }}</span>
+                  <!-- status transition -->
+                  <ng-container *ngIf="orderLog.process">
+                    <span class="badge badge-xs"
+                      [class.badge-light-default]="orderLog.from_status === 'None'"
+                      [class.badge-light-warning]="orderLog.from_status === 'Pending'"
+                      [class.badge-light-success]="orderLog.from_status === 'Completed'"
+                      [class.badge-light-danger]="orderLog.from_status === 'Urgent'">{{ orderLog.from_status | titlecase }}</span>
+                    <i class="bx bx-right-arrow-circle align-middle"></i>
+                    <span class="badge badge-xs"
+                      [class.badge-light-default]="orderLog.to_status === 'None'"
+                      [class.badge-light-warning]="orderLog.to_status === 'Pending'"
+                      [class.badge-light-success]="orderLog.to_status === 'Completed'"
+                      [class.badge-light-danger]="orderLog.to_status === 'Urgent'">{{ orderLog.to_status | titlecase }}</span>
+                  </ng-container>
                 </li>
               </ul>
             </div>

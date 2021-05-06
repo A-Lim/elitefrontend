@@ -1,9 +1,7 @@
-import { Component, OnInit, OnDestroy, ViewChild, TemplateRef, ChangeDetectorRef, Input } from '@angular/core';
-import { TitleCasePipe, DatePipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, ViewChild, TemplateRef, Input } from '@angular/core';
 import { switchMap, filter } from 'rxjs/operators';
 import { Ability } from '@casl/ability';
-import { CellClickedEvent, ColDef } from 'ag-grid-community';
+import { CellClickedEvent } from 'ag-grid-community';
 
 import { BaseAgGrid } from 'app/shared/components/baseaggrid.component';
 import { OrderService } from 'app/modules/orders/orders.service';
@@ -28,6 +26,8 @@ export class OrdersCompletedTabComponent extends BaseAgGrid implements OnInit, O
   
   @Input()
   workflow: Workflow;
+
+  isExporting: boolean = false;
   
   constructor(private ability: Ability, 
     private orderSvc: OrderService,
@@ -79,8 +79,8 @@ export class OrdersCompletedTabComponent extends BaseAgGrid implements OnInit, O
       {
         headerName: 'DESC',
         field: 'description',
-        filter: true,
-        sortable: true,
+        filter: false,
+        sortable: false,
       },
       {
         headerName: 'QTY',
@@ -161,17 +161,19 @@ export class OrdersCompletedTabComponent extends BaseAgGrid implements OnInit, O
     });
   }
 
-  // updateOrderStatus(event: CellClickedEvent) {
-  //   const colId = event.column.getColId();
-  //   const data = {
-  //     workflow: this.workflow,
-  //     order: event.data,
-  //   };
-
-  //   const modal = this.modalService.open(ModalOrdersStatusEditComponent, data, ModalSize.Small);
-  //   modal.afterClosed$.subscribe(res => {
-  //     if (res.data)
-  //       this.refreshTable();
-  //   });
-  // }
+  exportOrders() {
+    this.isExporting = true;
+    this.orderSvc.exportOrders(this.workflow.id)
+      .subscribe(data => {
+        const blob = new Blob([data], { 
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' 
+        });
+        const url = window.URL.createObjectURL(blob);
+        const anchor = document.createElement("a");
+        anchor.download = "orders.xlsx";
+        anchor.href = url;
+        anchor.click();
+        this.isExporting = false
+      }, _ => this.isExporting = false)
+  }
 }

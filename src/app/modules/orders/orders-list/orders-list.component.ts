@@ -20,6 +20,7 @@ export class OrdersListComponent extends Base implements OnInit, OnDestroy {
   fileUpload: ElementRef;
   
   workflow: Workflow;
+  isImporting: boolean = false;
   isInProgressTabLoaded: boolean = false;
   isCompletedTabLoaded: boolean = false;
   
@@ -45,16 +46,6 @@ export class OrdersListComponent extends Base implements OnInit, OnDestroy {
       .pipe(switchMap(params => this.workflowSvc.getWorkflow(params['wid'])))
       .subscribe(response => {
         this.workflow = response.data;
-        // this.buildColumns();
-      
-        // this.dataSourceCallBack = (params: any) => {
-        //   params['status'] = 'equals:in progress';
-        //   return this.orderSvc.getOrders(this.workflow.id, params);
-        // }
-        // this.setDataSource();
-        // this.agGrid.api.sizeColumnsToFit();
-        // this.agGrid.api.setDatasource(this.dataSource);
-
         this.isLoading = false;
       }, _ => { this.isLoading = false; });
   }
@@ -83,19 +74,47 @@ export class OrdersListComponent extends Base implements OnInit, OnDestroy {
       this.swalAlert('Error', 'No files found.' ,'error');
 
     const file = fileList[0];
-    this.orderSvc.importOrders(this.workflow.id, file)
-      .pipe(switchMap(response => this.swalAlert('Success', response.message, 'success')))
-      .subscribe(_ => {
-      }, error => {
-        const errors = error.error.errors;
 
-        const errorMsg = errors.join('. ');
-        this.swalAlert('Error', errorMsg, 'error')
+    this.isImporting = true;
+    this.orderSvc.importOrders(this.workflow.id, file)
+      .subscribe(response => {
+        this.swalAlert('Success', response.message, 'success');
+        this.isImporting = false;
+        this.orderSvc.reloadOrders();
+      }, error => {
+        this.isImporting = false;
+        const errors = error.error.errors;
+        let errorDesc = [];
+
+        for (const key in errors) {
+          errors[key].forEach(error => errorDesc.push(error));
+        }
+
+        const html = this.errorsHTMLTable(errorDesc);
+        this.swalAlert('Error', html, 'error');
       });
 
     // reset file input
     this.fileUpload.nativeElement.value = null;
+  }
 
+  private errorsHTMLTable(errors: string[]) {
+    const rowsHtml = errors.map((value, index) => `<tr>
+      <td class="small">${index + 1}</td>
+      <td class="small">${value}</td>
+    </tr>`).join('');
+
+    const html = `
+      <table class="table table-sm table-bordered">
+        <thead>
+          <tr><th>#</th><th>Errors</th></tr>
+        </thead>
+        <tbody>
+          ${rowsHtml}
+        </tbody>
+      </table>
+    `;
+    return html;
   }
 
   get OrdersTab() {

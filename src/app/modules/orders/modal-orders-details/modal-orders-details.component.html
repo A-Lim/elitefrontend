@@ -38,7 +38,7 @@
           <label class="text-bold-600">Description</label>
         </div>
         <div class="col-8 form-group">
-          <textarea class="form-control" [value]="order.description" disabled></textarea>
+          <textarea class="form-control" [value]="order.description" rows="5" disabled></textarea>
         </div>
 
         <div class="col-4">
@@ -62,13 +62,38 @@
     </div>
 
     <div class="col-6">
-      <div class="col-4">
-        <label class="text-bold-600">Files</label>
+      <div class="row">
+        <div class="col-4">
+          <label class="text-bold-600">Files</label>
+        </div>
+        <div class="col-8 form-group">
+          <input *ngIf="order.files.length === 0" type="text" class="form-control" value="No Files" disabled />
+          <a class="d-block" *ngFor="let file of order.files" href="{{ file.path }}" target="_blank"><i class="bx bxs-file"></i>{{ file.name }}</a>
+        </div>
       </div>
-      <div class="col-8 form-group">
-        <span *ngIf="order.files.length === 0" class="d-block text-muted">No files</span>
-            <a class="d-block" *ngFor="let file of order.files" href="{{ file.path }}" target="_blank"><i class="bx bxs-file"></i>{{ file.name }}</a>
-      </div>
+      <table class="table table-sm table-hover table-bordered">
+        <thead>
+          <tr class="bg-secondary bg-light">
+            <th>Process</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let process of workflow.processes; let i = index"
+            class="process-row">
+            <td>{{ process.name }}</td>
+            <td class="text-white"
+              [ngClass]="{
+                'bg-danger': order[process.code] === 'Urgent',
+                'bg-success': order[process.code] === 'Completed',
+                'bg-warning': order[process.code] === 'Pending',
+                'bg-secondary': order[process.code] === 'None'
+              }">
+              {{ order[process.code] }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

@@ -7,12 +7,20 @@ import { OrderVm } from 'app/modules/orders/models/order.model.vm';
 import { Workflow } from 'app/modules/workflows/models/workflow.model';
 import { ResponseResult } from 'app/shared/models/responses/responseresult.model';
 import { PaginationResponse } from 'app/shared/models/responses/pagination.response';
+import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
   private orderUrl = `${environment.apiUrl}/api/${environment.apiVersion}/workflows`;
 
+  private _reloadSub = new Subject<void>();
+  public reload$ = this._reloadSub.asObservable();
+
   constructor(private http: HttpClient) {
+  }
+
+  reloadOrders() {
+    this._reloadSub.next();
   }
 
   createOrder(workflowId: number, orderVm: OrderVm) {
@@ -63,6 +71,11 @@ export class OrderService {
     return this.http.delete<ResponseResult<void>>(`${this.orderUrl}/${workflowId}/orders/${orderId}`);
   }
 
+  exportOrders(workflowId: number) {
+    return this.http.get(`${this.orderUrl}/${workflowId}/orders/export`, {
+      responseType: 'blob'
+    });
+  }
 
   private appendFormData(formData, data, rootName) {
     let root = rootName || '';

@@ -1,7 +1,8 @@
 <div class="card-header">
   <div class="d-flex flex-row-reverse">
-    <button class="btn btn-info">
-      <i class="bx bx-download"></i> Export
+    <button class="btn btn-info" (click)="exportOrders()">
+      <span *ngIf="isExporting" class="spinner-border spinner-border-sm"></span>
+      <i *ngIf="!isExporting" class="bx bx-download"></i> Export
     </button>
   </div>
 </div>

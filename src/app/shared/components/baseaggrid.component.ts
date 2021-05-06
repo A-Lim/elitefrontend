@@ -21,7 +21,7 @@ export abstract class BaseAgGrid extends Base implements OnInit, OnDestroy {
       resizable: true,
       suppressMenu: true,
       // wrapText: true,
-      autoHeight: true,
+      // autoHeight: true,
       cellStyle: { 'white-space': 'normal', 'line-height': '14px' },
       floatingFilterComponentParams: {
         suppressFilterButton: true,

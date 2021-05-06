@@ -59,6 +59,11 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
       switchMap(data => this.workflowSvc.updateColumnWidth(this.workflow.id, data))
     ).subscribe();
 
+    this.orderSvc.reload$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(_ => this.refreshTable());
+      
+
     this.initGridOptions();
     this.buildColumns();
     this.dataSourceCallBack = (params: any) => {
@@ -83,8 +88,8 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
     };
 
     this.gridOptions.defaultColDef.cellStyle = { 
-      'white-space': 'normal', 
       'line-height': '14px',
+      'white-space': 'normal',
       'text-align': 'center',
       'justify-content': 'center'
     };
@@ -144,7 +149,7 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
         sortable: true,
         suppressMenu: true,
         pinned: 'left',
-        width: 50,
+        width: 60,
         onCellClicked: (event: CellClickedEvent) => {
           this.showFiles(event.data);
         },
@@ -154,7 +159,7 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
         field: 'company',
         filter: true,
         sortable: true,
-        width: 70,
+        width: 75,
         pinned: 'left',
       },
       {
@@ -178,7 +183,7 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
         field: 'delivery_date',
         filter: 'agDateColumnFilter',
         sortable: true,
-        width: 75,
+        width: 80,
         pinned: 'left',
       },
       ...processesDef,
@@ -231,7 +236,8 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
   }
 
   showFiles(order: Order) {
-    const modal = this.modalService.open(ModalOrdersDetailsComponent, order);
+    const data = { workflow: this.workflow, order: order };
+    const modal = this.modalService.open(ModalOrdersDetailsComponent, data);
     modal.afterClosed$.subscribe(res => {
     });
   }

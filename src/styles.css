@@ -37,6 +37,12 @@
   justify-content: flex-end;
 }
 
+.ag-cell-value {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
 /*-------------------------*/
 /* ng-select               */
 /*-------------------------*/
@@ -267,13 +273,14 @@
 .modal-xl { width: 1140px; }
 .modal-full { 
   margin: 0 !important;
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   min-width: 100%;
 }
 
 .modal-full > .modal-content {
   height: 100%;
+  min-height: 100vh;
   border: none;
   border-radius: 0;
 }

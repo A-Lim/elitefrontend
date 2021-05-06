@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
   name: 'Elite',
-  apiUrl: 'http://54.169.103.105:8080',
+  apiUrl: 'http://3.0.104.12:8002',
   apiVersion: 'v1'
 };

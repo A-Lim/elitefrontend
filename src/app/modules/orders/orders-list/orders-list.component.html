@@ -48,8 +48,9 @@
               <a *ngIf="workflow" class="btn btn-primary" 
                 [routerLink]="['/admin/orders', workflow.id, 'create']">Create Order
               </a>
-              <button class="btn btn-info ml-1" (click)="fileUpload.click()">
-                <i class="bx bx-upload"></i> Import Orders
+              <button class="btn btn-info ml-1" (click)="fileUpload.click()" [disabled]="isImporting">
+                <span *ngIf="isImporting" class="spinner-border spinner-border-sm"></span>
+                <i *ngIf="!isImporting" class="bx bx-upload"></i> Import Orders
               </button>
             </shared-authorized-content>
               
