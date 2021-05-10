@@ -106,7 +106,7 @@ export class WorkflowsEditComponent extends Base implements OnInit, OnDestroy {
 
     const newProcessVm: ProcessVm = cloneDeep(this.processVm);
     newProcessVm.seq = this.workflowVm.processes.length + 1;
-    this.workflowVm.processes.push();
+    this.workflowVm.processes.push(newProcessVm);
     
     this.processVm.name = '';
     this.pFormSubmitted = false;
