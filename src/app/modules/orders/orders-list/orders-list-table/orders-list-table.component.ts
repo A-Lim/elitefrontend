@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewChild, TemplateRef, ViewEncapsulation, Input, Optional } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, OnInit, OnDestroy, ViewChild, TemplateRef, ViewEncapsulation, Input, Optional, OnChanges, SimpleChanges } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { switchMap, filter, takeUntil, debounceTime } from 'rxjs/operators';
 import { Ability } from '@casl/ability';
-import { CellClickedEvent, ColDef, ColumnResizedEvent } from 'ag-grid-community';
+import { CellClickedEvent, ColDef, ColumnResizedEvent, ValueFormatterParams } from 'ag-grid-community';
 
 import { BaseAgGrid } from 'app/shared/components/baseaggrid.component';
 import { OrderService } from 'app/modules/orders/orders.service';
@@ -26,13 +26,13 @@ import { ModalOrdersStatusEditComponent } from 'app/modules/orders/modal-orders-
   styleUrls: ['./orders-list-table.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDestroy {
-  @ViewChild('processCell', { static: true }) processCell: TemplateRef<any>;
+export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDestroy, OnChanges {
   @ViewChild('statusCell', { static: true }) statusCell: TemplateRef<any>;
   @ViewChild('actionsCell', { static: true }) actionsCell: TemplateRef<any>;
   
   @Input()
   workflow: Workflow;
+
   isModalLayout: boolean = false;
 
   private _updateColumn = new Subject<ColumnSettingVm>();
@@ -72,6 +72,17 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
     }
 
     this.setDataSource();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.workflow) {
+      this.initGridOptions();
+      this.buildColumns();
+      this.dataSourceCallBack = (params: any) => {
+        params['status'] = 'equals:in progress';
+        return this.orderSvc.getOrders(this.workflow.id, params);
+      }
+    }
   }
 
   ngOnDestroy() {
@@ -115,9 +126,20 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
         cellClass: 'process-cell',
         headerClass: 'process-cell-header',
         pinned: process.pinned,
-        cellRendererFramework: TemplateRendererComponent,
-        cellRendererParams: {
-          ngTemplate: this.processCell
+        valueFormatter: (params: ValueFormatterParams) => {
+          switch (params.value) {
+            case 'Pending':
+              return 'PEND'
+
+            case 'None':
+              return 'NONE';
+
+            case 'Completed':
+              return 'CMPL';
+
+            case 'Urgent':
+              return 'UGNT';
+          }
         },
         onCellClicked: (event: CellClickedEvent) => {
           this.updateProcessStatus(event, process.code);
@@ -136,7 +158,7 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
             case 'Urgent':
               return { backgroundColor: '#FF5B5C' };
           }
-        }
+        },
       };
       processesDef.push(processColDef);
     }
@@ -161,6 +183,7 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
         sortable: true,
         width: 75,
         pinned: 'left',
+        cellClass: 'align-top',
       },
       {
         headerName: 'DESC',
@@ -169,6 +192,7 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
         sortable: true,
         width: 80,
         pinned: 'left',
+        cellClass: 'align-top'
       },
       {
         headerName: 'QTY',
@@ -194,6 +218,7 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
         sortable: false,
         pinned: 'right',
         width: 80,
+        cellClass: 'align-top'
       },
       {
         headerName: 'PIC',

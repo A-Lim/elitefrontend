@@ -39,9 +39,6 @@
   </ng-container>
 </ng-template>
 
-<ng-template #processCell let-row>
-</ng-template>
-
 <ng-template #statusCell let-row>
   <span *ngIf="row" class="badge badge-xs"
     [class.badge-light-primary]="row.status === 'in progress'"

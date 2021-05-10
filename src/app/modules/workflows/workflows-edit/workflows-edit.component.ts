@@ -42,7 +42,7 @@ export class WorkflowsEditComponent extends Base implements OnInit, OnDestroy {
     this.loadWorkflow();
     this.processVm = <ProcessVm> {
       statuses: ['Pending', 'Completed', 'Urgent', 'None'],
-      default: 'Pending',
+      default: 'None',
     };
   }
 

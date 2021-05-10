@@ -48,19 +48,23 @@
               <a *ngIf="workflow" class="btn btn-primary" 
                 [routerLink]="['/admin/orders', workflow.id, 'create']">Create Order
               </a>
+            </shared-authorized-content>
+            <shared-authorized-content [permissions]="['import.orders']" [type]="'hide'">
               <button class="btn btn-info ml-1" (click)="fileUpload.click()" [disabled]="isImporting">
                 <span *ngIf="isImporting" class="spinner-border spinner-border-sm"></span>
                 <i *ngIf="!isImporting" class="bx bx-upload"></i> Import Orders
-              </button>
+              </button>  
             </shared-authorized-content>
-              
+            
             <button class="btn btn-warning ml-1" (click)="fullScreenMode()">
               <i class="bx bx-expand"></i> Full Screen
             </button>
           </div>
           <div class="card-content">
             <div class="card-body">
-              <orders-list-table *ngIf="workflow; else loading" [workflow]="workflow"></orders-list-table>
+              <orders-list-table 
+                *ngIf="workflow; else loading" 
+                [workflow]="workflow"></orders-list-table>
             </div>
           </div>
         </div>

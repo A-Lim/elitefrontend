@@ -43,6 +43,10 @@
   height: 100%;
 }
 
+.align-top .ag-cell-value {
+  align-items: flex-start;
+}
+
 /*-------------------------*/
 /* ng-select               */
 /*-------------------------*/
