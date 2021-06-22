@@ -95,7 +95,7 @@
 
         <ng-container *ngFor="let workflow of sideMenuWorkflow$ | async">
           <li class="nav-item" routerLinkActive="active"> 
-            <a href="#" [routerLink]="['/admin/orders/', workflow.id]">
+            <a href="javascript:void(0)" (click)="routeTo('/admin/orders/', workflow.id)">
               <i class="bx bx-list-check"></i>
               <span class="menu-title">{{ workflow.name }}</span>
             </a>

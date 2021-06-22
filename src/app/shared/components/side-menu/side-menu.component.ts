@@ -63,4 +63,9 @@ export class SideMenuComponent extends Base implements OnInit, OnDestroy {
       this.renderer.addClass(document.body, 'menu-collapsed');
     }
   }
+
+  routeTo(path:string, id?: number) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.navigate([path, id]);
+  }
 }
