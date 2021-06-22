@@ -90,6 +90,9 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
   }
 
   initGridOptions() {
+    this.gridOptions.cacheBlockSize = 50;
+    this.gridOptions.paginationPageSize = 50;
+    
     this.gridOptions.onColumnResized = (params: ColumnResizedEvent) => {
       const columnSetting = <ColumnSettingVm> {
         code: params.column.getColDef().field,
@@ -134,8 +137,8 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
             case 'None':
               return 'NONE';
 
-            case 'Completed':
-              return 'CMPL';
+            case 'Done':
+              return 'DONE';
 
             case 'Urgent':
               return 'UGNT';
@@ -152,7 +155,7 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
             case 'None':
               return { backgroundColor: '#475F7B', color: '#FFFFFF' };
 
-            case 'Completed':
+            case 'Done':
               return { backgroundColor: '#39DA8A' };
 
             case 'Urgent':
@@ -303,5 +306,12 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
 
   close() {
     this.ref.close();
+  }
+
+  routeTo(path: string, id?: string) {
+    this.navigateTo(path, id);
+
+    if (this.isModalLayout)
+      this.close();
   }
 }

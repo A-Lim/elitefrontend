@@ -9,7 +9,7 @@
         [disabled]="isLoading"
         [class.btn-none]="status === 'None'"
         [class.btn-warning]="status === 'Pending'"
-        [class.btn-success]="status === 'Completed'"
+        [class.btn-success]="status === 'Done'"
         [class.btn-danger]="status === 'Urgent'" (click)="updateProcess(status)">{{ status }}</button>
     </ng-container>
   </div>

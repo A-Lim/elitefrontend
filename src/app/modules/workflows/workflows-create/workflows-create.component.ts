@@ -38,7 +38,7 @@ export class WorkflowsCreateComponent extends Base implements OnInit, OnDestroy 
     this.workflowVm = new WorkflowVm();
     this.workflowVm.status = 'active';
     this.processVm = <ProcessVm> {
-      statuses: ['Pending', 'Completed', 'Urgent', 'None'],
+      statuses: ['Pending', 'Done', 'Urgent', 'None'],
       default: 'None',
     };
   }

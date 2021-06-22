@@ -79,7 +79,7 @@ export class OrdersCompletedTabComponent extends BaseAgGrid implements OnInit, O
       {
         headerName: 'DESC',
         field: 'description',
-        filter: false,
+        filter: true,
         sortable: false,
       },
       {
@@ -98,7 +98,7 @@ export class OrdersCompletedTabComponent extends BaseAgGrid implements OnInit, O
       {
         headerName: 'REMARK',
         field: 'remark',
-        filter: false,
+        filter: true,
         sortable: false,
       },
       {

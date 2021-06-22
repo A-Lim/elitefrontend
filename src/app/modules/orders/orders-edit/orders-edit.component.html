@@ -48,7 +48,7 @@
                   class="text-white"
                   [ngClass]="{
                     'bg-danger': orderVm[process.code] === 'Urgent',
-                    'bg-success': orderVm[process.code] === 'Completed',
+                    'bg-success': orderVm[process.code] === 'Done',
                     'bg-warning': orderVm[process.code] === 'Pending',
                     'bg-secondary': orderVm[process.code] === 'None'
                   }">
@@ -180,10 +180,12 @@
                       <label class="text-bold-600" for="uploadFiles">Files</label>
                       <shared-fileinput
                         [(ngModel)]="orderVm.uploadFiles"
+                        [files]="orderVm.files"
                         #uploadFiles="ngModel"
                         [multiple]="true"
                         [fileTypes]="['.pdf']"
                         id="uploadFiles" name="uploadFiles"></shared-fileinput>
+                      
                       <div *ngIf="submitted || uploadFiles.dirty" class="help-block">
                         <ul role="alert">
                           <li *ngIf="uploadFiles.errors?.fileTypes" class="text-danger" role="alert">Invalid file type.</li>
@@ -200,8 +202,7 @@
                         #description="ngModel" 
                         [(ngModel)]="orderVm.description"
                         id="description" name="description" placeholder="Description"
-                        rows="3"
-                        required></textarea>
+                        rows="3"></textarea>
   
                       <div *ngIf="submitted || description.dirty" class="help-block">
                         <ul role="alert">
@@ -266,13 +267,13 @@
                     <span class="badge badge-xs"
                       [class.badge-light-default]="orderLog.from_status === 'None'"
                       [class.badge-light-warning]="orderLog.from_status === 'Pending'"
-                      [class.badge-light-success]="orderLog.from_status === 'Completed'"
+                      [class.badge-light-success]="orderLog.from_status === 'Done'"
                       [class.badge-light-danger]="orderLog.from_status === 'Urgent'">{{ orderLog.from_status | titlecase }}</span>
                     <i class="bx bx-right-arrow-circle align-middle"></i>
                     <span class="badge badge-xs"
                       [class.badge-light-default]="orderLog.to_status === 'None'"
                       [class.badge-light-warning]="orderLog.to_status === 'Pending'"
-                      [class.badge-light-success]="orderLog.to_status === 'Completed'"
+                      [class.badge-light-success]="orderLog.to_status === 'Done'"
                       [class.badge-light-danger]="orderLog.to_status === 'Urgent'">{{ orderLog.to_status | titlecase }}</span>
                   </ng-container>
                 </li>

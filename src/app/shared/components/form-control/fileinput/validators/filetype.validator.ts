@@ -20,7 +20,7 @@ export class FileTypesValidator implements Validator {
     const fileList: FileList = control.value;
 
     for (let i = 0; i < fileList.length; i++) {
-      const fileExt = fileList[i].name.split('.').pop(); 
+      const fileExt = fileList[i].name.split('.').pop().toLowerCase(); 
       
       if (!this.fileTypes.includes(`.${fileExt}`))
         return { fileTypes : true };
