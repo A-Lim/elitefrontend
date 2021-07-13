@@ -11,6 +11,11 @@ const routes: Routes = [
     component: DefaultLayoutComponent,
     loadChildren: () => import('app/modules/auth/auth.module').then(m => m.AuthModule), 
   },
+  { 
+    path: 'pdf', 
+    component: DefaultLayoutComponent,
+    loadChildren: () => import('app/modules/pdfviewer/pdfviewer.module').then(m => m.PdfViewerModule), 
+  },
   {
     path: '',
     component: AdminLayoutComponent,

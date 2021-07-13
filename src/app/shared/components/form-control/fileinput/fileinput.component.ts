@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Router, UrlSerializer } from '@angular/router';
 import { FileDetail } from 'app/shared/models/filedetail.model';
 
 @Component({
@@ -134,6 +135,16 @@ export class FileInputComponent implements OnInit, OnDestroy, ControlValueAccess
       this.fileName = 'Choose File';
     else
       this.fileName = total > 1 ? total + ' selected' : fileName;
+  }
+
+  viewServerFile(fileDetail: FileDetail) {
+    const fileType = fileDetail.name.split('.').pop();
+    let url = fileDetail.path;
+
+    if (fileType === 'pdf')
+      url = `${document.location.origin}/pdf?url=${fileDetail.path}`
+    
+    window.open(url, '_blank');
   }
 
   trackByFn(index: number) {

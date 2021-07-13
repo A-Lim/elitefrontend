@@ -1,9 +1,9 @@
 <ng-container *ngIf="isModalLayout">
-  <div class="modal-header">
+  <div class="modal-header order-modal-header">
     <h3 class="modal-title">{{ workflow.name }}</h3>
     <button type="button" class="close rounded-pill" aria-label="close" (click)="close()"><i class="bx bx-x"></i></button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body order-modal-body">
     <ng-container *ngTemplateOutlet="gridTable"></ng-container>
   </div>
 </ng-container>

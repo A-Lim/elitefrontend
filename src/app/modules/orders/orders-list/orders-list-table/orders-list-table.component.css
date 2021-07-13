@@ -17,6 +17,22 @@
   width: 100%;
 }
 
+.order-modal-header {
+  padding: 4px;
+}
+
+.order-modal-body {
+  padding: 0px;
+}
+
+.order-modal-body .ag-body-viewport {
+  overflow: auto;
+  /* 70px - modal header */
+  /* 40px - modal body padding */
+  /* 32px - pagination footer */
+  height: calc(100vh - 70px - 40px - 32px);
+}
+
 /* .process-cell-header {
   transform: rotate(-90deg);
   display: inline-block;

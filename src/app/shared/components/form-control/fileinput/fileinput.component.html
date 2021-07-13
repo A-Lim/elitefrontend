@@ -18,7 +18,7 @@
     <ng-container *ngIf="files">
       <li *ngFor="let file of files; let i = index; trackBy: trackByFn">
         <i class="bx bx-x text-danger" (click)="removeFile(i)"></i>
-        <a href="{{ file.path }}" target="_blank">{{ file.name }}</a>
+        <a href="javascript:void(0)" (click)="viewServerFile(file)">{{ file.name }}</a>
       </li>
     </ng-container>
   </ul>

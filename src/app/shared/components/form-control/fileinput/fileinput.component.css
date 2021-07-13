@@ -1,4 +1,8 @@
-.custom-file-label { height: 37px; }
+.custom-file-label { 
+  height: 37px; 
+  white-space: nowrap;
+  overflow: hidden;
+}
 
 .file-list > ul {
   margin-top: 5px;

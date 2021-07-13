@@ -66,9 +66,6 @@ export class OrdersCompletedTabComponent extends BaseAgGrid implements OnInit, O
         sortable: true,
         suppressMenu: true,
         width: 90,
-        onCellClicked: (event: CellClickedEvent) => {
-          this.showFiles(event.data);
-        },
       },
       {
         headerName: 'COMPANY',

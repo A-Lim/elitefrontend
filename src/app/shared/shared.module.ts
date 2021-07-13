@@ -40,7 +40,6 @@ import { PageNotFoundComponent } from 'app/shared/pages/pagenotfound/pagenotfoun
 import { ForbiddenComponent } from 'app/shared/components/forbidden/forbidden.component';
 import { AuthorizedContentComponent } from 'app/shared/components/authorized-content/authorized-content/authorized-content.component';
 
-
 @NgModule({
   declarations: [
     AlertComponent,
@@ -71,7 +70,7 @@ import { AuthorizedContentComponent } from 'app/shared/components/authorized-con
     MatchValueValidator,
     RequiredIfEitherNotEmptyValidator,
     AuthorizedContentComponent,
-    DateRequiredValidator
+    DateRequiredValidator,
   ],
   imports: [
     CommonModule,

@@ -91,8 +91,7 @@
                   <input type="text" class="form-control" 
                     #pic="ngModel" 
                     [(ngModel)]="orderVm.person_in_charge"
-                    id="pic" name="pic" placeholder="Person In Charge"
-                    required>
+                    id="pic" name="pic" placeholder="Person In Charge">
                   <div *ngIf="submitted || pic.dirty" class="help-block">
                     <ul role="alert">
                       <li *ngIf="pic.errors?.required" class="text-danger" role="alert">Person in charge is required.</li>
