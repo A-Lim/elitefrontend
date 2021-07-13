@@ -31,7 +31,8 @@
             "scripts": [
             ],
             "allowedCommonJsDependencies": [
-              "ag-grid-angular"
+              "ag-grid-angular",
+              "ng2-pdf-viewer"
            ]
           },
           "configurations": {
