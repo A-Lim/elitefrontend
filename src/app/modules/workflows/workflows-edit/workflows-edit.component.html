@@ -187,10 +187,13 @@
                     <input type="text" class="form-control" 
                       #processName="ngModel" 
                       [(ngModel)]="processVm.name" 
-                      id="processName" name="processName" placeholder="Name" required>
+                      id="processName" name="processName" placeholder="Name" 
+                      required
+                      pattern="^[a-zA-Z\s]*$">
                     <div *ngIf="pFormSubmitted || processName.dirty" class="help-block">
                       <ul role="alert">
                         <li *ngIf="processName.errors?.required" class="text-danger" role="alert">Name is required.</li>
+                        <li *ngIf="processName.errors?.pattern" class="text-danger" role="alert">Only alphabets and spaces allowed.</li>
                       </ul>
                     </div>
                   </div>
