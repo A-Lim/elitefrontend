@@ -180,6 +180,14 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
         },
       },
       {
+        headerName: 'I DATE',
+        field: 'created_at',
+        filter: 'agDateColumnFilter',
+        sortable: true,
+        width: 80,
+        pinned: 'left',
+      },
+      {
         headerName: 'COMPANY',
         field: 'company',
         filter: true,

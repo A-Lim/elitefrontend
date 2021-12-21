@@ -1,0 +1,19 @@
+.toolbar {
+  position: fixed;
+  bottom: 10px;
+  border-radius: 4px;
+  padding: 10px 15px;
+  background-color: rgba(0,0,0, 0.4);
+  transform: translate(calc(50vw - 50%));
+  display: flex;
+}
+
+.toolbar > button:not(:last-child) {
+  margin-right: 6px;
+}
+
+.toolbar > input {
+  margin-right: 6px;
+  text-align: center;
+  width: 70px;
+}

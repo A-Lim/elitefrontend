@@ -1,4 +1,19 @@
 <pdf-viewer [src]="url"
   [render-text]="true"
+  [rotation]="rotation"
+  [zoom]="zoom"
   style="display: block;"
 ></pdf-viewer>
+
+<div class="toolbar">
+  <input class="form-control" [value]="zoomPercentage" type="number" disabled />
+  <button type="button" class="btn btn-icon btn-primary" title="Zoom In" (click)="zoomIn()">
+    <i class="bx bx-plus"></i>
+  </button>
+  <button type="button" class="btn btn-icon btn-primary" title="Zoom Out" (click)="zoomOut()">
+    <i class="bx bx-minus"></i>
+  </button>
+  <button type="button" class="btn btn-icon btn-primary" title="Rotate" (click)="rotate()">
+    <i class="bx bx-rotate-right"></i>
+  </button>
+</div>
