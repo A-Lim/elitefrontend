@@ -179,14 +179,7 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
           this.showFiles(event.data);
         },
       },
-      {
-        headerName: 'I DATE',
-        field: 'created_at',
-        filter: 'agDateColumnFilter',
-        sortable: true,
-        width: 80,
-        pinned: 'left',
-      },
+      this.getDateColDef('I DATE', 'created_at', true, 80, 'left'),
       {
         headerName: 'COMPANY',
         field: 'company',
@@ -194,7 +187,7 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
         sortable: true,
         width: 75,
         pinned: 'left',
-        cellClass: 'align-top',
+        cellClass: 'align-center',
       },
       {
         headerName: 'DESC',
@@ -213,14 +206,7 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
         width: 40,
         pinned: 'left',
       },
-      {
-        headerName: 'D DATE',
-        field: 'delivery_date',
-        filter: 'agDateColumnFilter',
-        sortable: true,
-        width: 80,
-        pinned: 'left',
-      },
+      this.getDateColDef('D DATE', 'delivery_date', true, 80, 'left'),
       ...processesDef,
       {
         headerName: 'REMARK',

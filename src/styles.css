@@ -43,6 +43,10 @@
   height: 100%;
 }
 
+.align-center .ag-cell-value {
+  align-items: center;
+}
+
 .align-top .ag-cell-value {
   align-items: flex-start;
 }

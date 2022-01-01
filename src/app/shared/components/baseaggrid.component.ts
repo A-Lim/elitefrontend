@@ -2,11 +2,13 @@ import { OnInit, OnDestroy, Directive, TemplateRef, ViewChild } from '@angular/c
 import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AgGridAngular } from 'ag-grid-angular';
-import { GridOptions, IDatasource, ColDef, IGetRowsParams } from 'ag-grid-community';
+import { GridOptions, IDatasource, ColDef, IGetRowsParams, ValueFormatterParams } from 'ag-grid-community';
 
 import { Base } from 'app/shared/components/base.component';
 import { TemplateRendererComponent } from './template-renderer.component';
 import UrlQueryBuilder from 'app/shared/helpers/urlquerybuilder';
+import { formatDate } from '@angular/common';
+import { environment } from 'environments/environment';
 
 @Directive()
 export abstract class BaseAgGrid extends Base implements OnInit, OnDestroy {
@@ -123,15 +125,22 @@ export abstract class BaseAgGrid extends Base implements OnInit, OnDestroy {
     return colDef;
   }
 
-  getDateColDef(headerName: string, field: string) {
+  getDateColDef(headerName: string, field: string, sortable: boolean = false, width?: number, pinned: string | boolean = false) {
     let colDef = <ColDef> {
       headerName: headerName,
       field: field,
       filter: 'agDateColumnFilter',
       suppressMenu: true,
       floatingFilterComponentParams: { suppressFilterButton: true },
+      width: width,
+      pinned: pinned,
+      sortable: sortable,
       filterParams: {
         debounceMs: 500
+      },
+      valueFormatter: (params: ValueFormatterParams) => {
+        if (params.value)
+          return formatDate(params.value, environment.dateFormat, 'en-US');
       }
     }
     

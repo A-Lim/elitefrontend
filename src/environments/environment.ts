@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   name: 'Elite',
   apiUrl: 'http://127.0.0.1:8000',
-  apiVersion: 'v1'
+  apiVersion: 'v1',
+  dateFormat: 'dd/MM/yyyy'
 };
 
 /*

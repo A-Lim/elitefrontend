@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
-import { DateTime } from 'luxon';
 
 @Component({
   selector: 'shared-datepicker',
@@ -16,10 +15,6 @@ import { DateTime } from 'luxon';
   ]
 })
 export class DatepickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
-
-  @Input()
-  fromFormat: string = 'dd/MM/yyyy';
-
   @Input()
   setDefaultToday: boolean;
 
@@ -87,8 +82,7 @@ export class DatepickerComponent implements OnInit, OnDestroy, ControlValueAcces
 
   writeValue(value: string) {
     if (value) {
-      const date = DateTime.fromFormat(value, this.fromFormat);
-      this.model = { isRange: false, singleDate: { jsDate: date.toJSDate() }};
+      this.model = { isRange: false, singleDate: { jsDate: new Date(value) }};
     }
   }
 
@@ -107,6 +101,6 @@ export class DatepickerComponent implements OnInit, OnDestroy, ControlValueAcces
   // optional date changed callback
   onDateChanged(event: IMyDateModel) {
     this.onTouched();
-    this.onChanged(event.singleDate.formatted);
+    this.onChanged(event.singleDate.jsDate.toISOString());
   }
 }
