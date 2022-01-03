@@ -81,6 +81,7 @@ export class OrdersEditComponent extends Base implements OnInit, OnDestroy {
           remark: this.order.remark,
           status: this.order.status,
           delivery_date: this.order.delivery_date,
+          created_at: this.order.created_at,
           files: this.order.files,
           uploadFiles: [],
           person_in_charge: this.order.person_in_charge

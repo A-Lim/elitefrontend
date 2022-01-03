@@ -191,6 +191,22 @@
                         </ul>
                       </div>
                     </div>
+
+                    <!-- i date -->
+                    <div class="col-md-6 form-group mb-50" [class.error]="(submitted || createdAt.dirty) && createdAt.errors">
+                      <label class="text-bold-600" for="created_at">IWO Date</label>
+                      <shared-datepicker
+                        #createdAt="ngModel"
+                        [(ngModel)]="orderVm.created_at"
+                        id="created_at" name="created_at"
+                        required>
+                      </shared-datepicker>
+                      <div *ngIf="submitted || createdAt.dirty" class="help-block">
+                        <ul role="alert">
+                          <li *ngIf="createdAt.errors?.required" class="text-danger" role="alert">IWO Date is required.</li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
   
                   <div class="row">

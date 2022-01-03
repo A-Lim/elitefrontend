@@ -12,6 +12,7 @@ export class OrderVm {
   person_in_charge: string;
 
   delivery_date: string;
+  created_at: string;
   // file details
   files: FileDetail[];
   // file binary to be uploaded
