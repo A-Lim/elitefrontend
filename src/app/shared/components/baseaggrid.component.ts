@@ -2,7 +2,7 @@ import { OnInit, OnDestroy, Directive, TemplateRef, ViewChild } from '@angular/c
 import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AgGridAngular } from 'ag-grid-angular';
-import { GridOptions, IDatasource, ColDef, IGetRowsParams, ValueFormatterParams } from 'ag-grid-community';
+import { GridOptions, IDatasource, ColDef, IGetRowsParams, ValueFormatterParams, PaginationChangedEvent } from 'ag-grid-community';
 
 import { Base } from 'app/shared/components/base.component';
 import { TemplateRendererComponent } from './template-renderer.component';
@@ -251,5 +251,12 @@ export abstract class BaseAgGrid extends Base implements OnInit, OnDestroy {
           });
       }
     }
+  }
+
+  onPaginationChanged(event: PaginationChangedEvent) {
+    // if (event.newPage) {
+    //   const page = event.api.paginationGetCurrentPage() + 1;
+    //   console.log(page);
+    // }
   }
 }

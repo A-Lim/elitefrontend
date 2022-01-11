@@ -262,7 +262,7 @@
               <ul *ngIf="order" class="widget-timeline mb-0">
                 <li *ngFor="let orderLog of order.orderLogs" 
                   class="timeline-items timeline-icon-primary active">
-                  <div class="timeline-time"><small>{{ orderLog.created_at | date: 'dd/MM/y h:mm a' }}</small></div>
+                  <div class="timeline-time"><small>{{ orderLog.created_at | date: dateTimeFormat }}</small></div>
                   <!-- title -->
                   <ng-container *ngIf="orderLog.process">
                     <h6 class="timeline-title">{{ orderLog.process.name }}</h6>

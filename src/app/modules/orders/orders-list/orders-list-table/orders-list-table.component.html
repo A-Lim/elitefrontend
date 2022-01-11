@@ -16,7 +16,8 @@
   <ag-grid-angular #agGrid style="width: 100%;" domLayout='autoHeight' class="ag-theme-balham"
     (gridReady)="onGridReady($event)" 
     [gridOptions]="gridOptions" 
-    [columnDefs]="columnDefs">
+    [columnDefs]="columnDefs"
+    (paginationChanged)="onPaginationChanged($event)">
   </ag-grid-angular>
 </ng-template>
 
@@ -40,7 +41,7 @@
 </ng-template>
 
 <ng-template #statusCell let-row>
-  <span *ngIf="row" class="badge badge-xs"
+  <span *ngIf="row" class="badge badge-xs status-text"
     [class.badge-light-primary]="row.status === 'in progress'"
     [class.badge-light-success]="row.status === 'completed'">
     {{ row.status | titlecase }}

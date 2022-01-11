@@ -6,6 +6,7 @@ import { ModalSize } from 'app/shared/models/modalsize.enum';
 import { Order } from 'app/modules/orders/models/order.model';
 import { Workflow } from 'app/modules/workflows/models/workflow.model';
 import { ModalOrdersProcessEditComponent } from 'app/modules/orders/modal-orders-process-edit/modal-orders-process-edit.component';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-modal-orders-details',
@@ -47,4 +48,7 @@ export class ModalOrdersDetailsComponent implements OnInit {
     this.ref.close();
   }
 
+  get dateFormat() {
+    return environment.dateFormat;
+  }
 }

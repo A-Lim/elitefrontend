@@ -92,6 +92,7 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
   initGridOptions() {
     this.gridOptions.cacheBlockSize = 50;
     this.gridOptions.paginationPageSize = 50;
+    this.gridOptions.rowHeight = 70;
     
     this.gridOptions.onColumnResized = (params: ColumnResizedEvent) => {
       const columnSetting = <ColumnSettingVm> {
@@ -179,7 +180,7 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
           this.showFiles(event.data);
         },
       },
-      this.getDateColDef('I DATE', 'created_at', true, 80, 'left'),
+      this.getDateColDef('I DATE', 'created_at', true, 65, 'left'),
       {
         headerName: 'COMPANY',
         field: 'company',
@@ -206,7 +207,7 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
         width: 40,
         pinned: 'left',
       },
-      this.getDateColDef('D DATE', 'delivery_date', true, 80, 'left'),
+      this.getDateColDef('D DATE', 'delivery_date', true, 65, 'left'),
       ...processesDef,
       {
         headerName: 'REMARK',
@@ -231,7 +232,7 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
         sortable: false,
         filter: false,
         suppressMenu: true,
-        width: 80,
+        width: 60,
         pinned: 'right',
         cellRendererFramework: TemplateRendererComponent,
         cellRendererParams: {

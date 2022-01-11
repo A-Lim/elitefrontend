@@ -10,6 +10,7 @@ import { WorkflowService } from 'app/modules/workflows/workflows.service';
 import { Workflow } from 'app/modules/workflows/models/workflow.model';
 import { Order } from 'app/modules/orders/models/order.model';
 import { OrderVm } from 'app/modules/orders/models/order.model.vm';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-orders-edit',
@@ -93,5 +94,9 @@ export class OrdersEditComponent extends Base implements OnInit, OnDestroy {
 
         this.isLoading = false;
       }, _ => { this.isLoading = false; });
+  }
+
+  get dateTimeFormat() {
+    return environment.dateTimeFormat;
   }
 }

@@ -24,7 +24,7 @@
           <label class="text-bold-600">Delivery Date</label>
         </div>
         <div class="col-8 form-group">
-          <input type="text" class="form-control" [value]="order.delivery_date" disabled />
+          <input type="text" class="form-control" [value]="order.delivery_date | date: dateFormat" disabled />
         </div>
 
         <div class="col-4">
