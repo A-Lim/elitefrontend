@@ -48,10 +48,14 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
 
   ngOnInit() {
     super.ngOnInit();
+
     if (!this.workflow) {
       this.isModalLayout = true;
       this.workflow = this.ref.data;
     }
+
+    this.key = `${this.workflow.id}_tablestate`;
+    this.rememberState = true;
     
     this.updateColumn$.pipe(
       takeUntil(this.destroy$),
@@ -90,8 +94,8 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
   }
 
   initGridOptions() {
-    this.gridOptions.cacheBlockSize = 50;
-    this.gridOptions.paginationPageSize = 50;
+    this.gridOptions.cacheBlockSize = 5;
+    this.gridOptions.paginationPageSize = 5;
     this.gridOptions.rowHeight = 70;
     
     this.gridOptions.onColumnResized = (params: ColumnResizedEvent) => {

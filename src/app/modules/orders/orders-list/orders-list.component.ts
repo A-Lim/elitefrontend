@@ -18,6 +18,9 @@ import { OrdersListTableComponent } from './orders-list-table/orders-list-table.
 export class OrdersListComponent extends Base implements OnInit, OnDestroy {
   @ViewChild('fileUpload')
   fileUpload: ElementRef;
+
+  @ViewChild('ordersListTableComponent')
+  ordersListTableComponent: OrdersListTableComponent;
   
   workflow: Workflow;
   isImporting: boolean = false;
@@ -96,6 +99,10 @@ export class OrdersListComponent extends Base implements OnInit, OnDestroy {
 
     // reset file input
     this.fileUpload.nativeElement.value = null;
+  }
+
+  restoreState() {
+    this.ordersListTableComponent.restoreState();
   }
 
   private errorsHTMLTable(errors: string[]) {

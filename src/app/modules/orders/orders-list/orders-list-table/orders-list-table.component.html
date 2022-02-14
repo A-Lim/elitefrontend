@@ -14,10 +14,9 @@
 
 <ng-template #gridTable>
   <ag-grid-angular #agGrid style="width: 100%;" domLayout='autoHeight' class="ag-theme-balham"
-    (gridReady)="onGridReady($event)" 
+    (gridReady)="onGridReady($event)"
     [gridOptions]="gridOptions" 
-    [columnDefs]="columnDefs"
-    (paginationChanged)="onPaginationChanged($event)">
+    [columnDefs]="columnDefs">
   </ag-grid-angular>
 </ng-template>
 

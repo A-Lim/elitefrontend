@@ -1,14 +1,14 @@
-import { OnInit, OnDestroy, Directive, TemplateRef, ViewChild } from '@angular/core';
+import { OnInit, OnDestroy, Directive, TemplateRef, ViewChild, Input } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AgGridAngular } from 'ag-grid-angular';
-import { GridOptions, IDatasource, ColDef, IGetRowsParams, ValueFormatterParams, PaginationChangedEvent } from 'ag-grid-community';
+import { GridOptions, IDatasource, ColDef, IGetRowsParams, ValueFormatterParams, PaginationChangedEvent, SortChangedEvent, FilterChangedEvent, FirstDataRenderedEvent, ColumnState } from 'ag-grid-community';
 
 import { Base } from 'app/shared/components/base.component';
-import { TemplateRendererComponent } from './template-renderer.component';
 import UrlQueryBuilder from 'app/shared/helpers/urlquerybuilder';
-import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
+import { TemplateRendererComponent } from './template-renderer.component';
 
 @Directive()
 export abstract class BaseAgGrid extends Base implements OnInit, OnDestroy {
@@ -22,8 +22,6 @@ export abstract class BaseAgGrid extends Base implements OnInit, OnDestroy {
       floatingFilter: true,
       resizable: true,
       suppressMenu: true,
-      // wrapText: true,
-      // autoHeight: true,
       cellStyle: { 'white-space': 'normal', 'line-height': '14px' },
       floatingFilterComponentParams: {
         suppressFilterButton: true,
@@ -37,10 +35,23 @@ export abstract class BaseAgGrid extends Base implements OnInit, OnDestroy {
     paginationPageSize: 10,
     suppressCellSelection: true,
     enableCellTextSelection: true,
+    onPaginationChanged: (params: PaginationChangedEvent) => {
+      if (params.newPage) {
+        this.saveState();
+      }
+    },
+    onFilterChanged: (params: FilterChangedEvent) => {
+      this.saveState();
+    },
+    onSortChanged: (params: SortChangedEvent) => {
+      this.saveState();
+    },
   };
 
   public dataSource: IDatasource;
   public columnDefs: ColDef[];
+  public key?: string;
+  public rememberState = false;
 
   public dataSourceCallBack: (qParams: any) => Observable<any>;
 
@@ -253,10 +264,26 @@ export abstract class BaseAgGrid extends Base implements OnInit, OnDestroy {
     }
   }
 
-  onPaginationChanged(event: PaginationChangedEvent) {
-    // if (event.newPage) {
-    //   const page = event.api.paginationGetCurrentPage() + 1;
-    //   console.log(page);
-    // }
+  saveState() {
+    if (this.rememberState) {
+      const columnState = this.agGrid.columnApi.getColumnState();
+      const filterModel = this.agGrid.api.getFilterModel();
+      const currentPage = this.agGrid.api.paginationGetCurrentPage();
+      const data = { columnState, filterModel, currentPage };
+      localStorage.setItem(`${this.key}_tablestate`, JSON.stringify(data));
+    }
   }
+
+  restoreState() {
+    if (this.rememberState) {
+      const data = JSON.parse(localStorage.getItem(`${this.key}_tablestate`));
+
+      if (data) {
+        this.agGrid.columnApi.setColumnState(data.columnState);
+        this.agGrid.api.setFilterModel(data.filterModel);
+        this.agGrid.api.paginationGoToPage(data.currentPage);
+      }
+    }
+  }
+
 }

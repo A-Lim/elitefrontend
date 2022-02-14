@@ -43,26 +43,35 @@
     <div class="card">
       <div class="tab-content">
         <div class="tab-pane active" id="inprogress" role="tabpanel" aria-labelledby="inprogress-tab" aria-expanded="true">
-          <div class="card-header text-right">
-            <shared-authorized-content [permissions]="['create.orders']" [type]="'hide'">
-              <a *ngIf="workflow" class="btn btn-primary" 
-                [routerLink]="['/admin/orders', workflow.id, 'create']">Create Order
-              </a>
-            </shared-authorized-content>
-            <shared-authorized-content [permissions]="['import.orders']" [type]="'hide'">
-              <button class="btn btn-info ml-1" (click)="fileUpload.click()" [disabled]="isImporting">
-                <span *ngIf="isImporting" class="spinner-border spinner-border-sm"></span>
-                <i *ngIf="!isImporting" class="bx bx-upload"></i> Import Orders
-              </button>  
-            </shared-authorized-content>
-            
-            <button class="btn btn-warning ml-1" (click)="fullScreenMode()">
-              <i class="bx bx-expand"></i> Full Screen
-            </button>
+          <div class="card-header">
+            <div>
+              <button *ngIf="workflow" 
+                class="btn btn-info" 
+                (click)="restoreState()">
+                <i class="bx bx-reset"></i> Restore Previous State
+              </button>
+            </div>
+            <div>
+              <shared-authorized-content [permissions]="['create.orders']" [type]="'hide'">
+                <a *ngIf="workflow" class="btn btn-primary" 
+                  [routerLink]="['/admin/orders', workflow.id, 'create']">Create Order
+                </a>
+              </shared-authorized-content>
+              <shared-authorized-content [permissions]="['import.orders']" [type]="'hide'">
+                <button class="btn btn-info ml-1" (click)="fileUpload.click()" [disabled]="isImporting">
+                  <span *ngIf="isImporting" class="spinner-border spinner-border-sm"></span>
+                  <i *ngIf="!isImporting" class="bx bx-upload"></i> Import Orders
+                </button>  
+              </shared-authorized-content>
+              
+              <button class="btn btn-warning ml-1" (click)="fullScreenMode()">
+                <i class="bx bx-expand"></i> Full Screen
+              </button>
+            </div>
           </div>
           <div class="card-content">
             <div class="card-body">
-              <orders-list-table 
+              <orders-list-table #ordersListTableComponent
                 *ngIf="workflow; else loading" 
                 [workflow]="workflow"></orders-list-table>
             </div>
