@@ -94,8 +94,8 @@ export class OrdersListTableComponent extends BaseAgGrid implements OnInit, OnDe
   }
 
   initGridOptions() {
-    this.gridOptions.cacheBlockSize = 5;
-    this.gridOptions.paginationPageSize = 5;
+    this.gridOptions.cacheBlockSize = 50;
+    this.gridOptions.paginationPageSize = 50;
     this.gridOptions.rowHeight = 70;
     
     this.gridOptions.onColumnResized = (params: ColumnResizedEvent) => {
