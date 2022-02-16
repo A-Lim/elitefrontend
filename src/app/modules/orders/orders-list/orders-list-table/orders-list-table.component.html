@@ -1,7 +1,13 @@
 <ng-container *ngIf="isModalLayout">
   <div class="modal-header order-modal-header">
     <h3 class="modal-title">{{ workflow.name }}</h3>
-    <button type="button" class="close rounded-pill" aria-label="close" (click)="close()"><i class="bx bx-x"></i></button>
+    <div class="modal-actions">
+      <button type="button" class="btn-reset btn-info rounded-pill" style="opacity: 1;" title="Restore to previous state"
+        (click)="restoreState()">
+        <i class="bx bx-reset"></i>
+      </button>
+      <button type="button" class="close rounded-pill" aria-label="close" (click)="close()"><i class="bx bx-x"></i></button>
+    </div>
   </div>
   <div class="modal-body order-modal-body">
     <ng-container *ngTemplateOutlet="gridTable"></ng-container>
