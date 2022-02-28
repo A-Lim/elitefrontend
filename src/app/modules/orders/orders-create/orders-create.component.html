@@ -142,7 +142,7 @@
                     [(ngModel)]="orderVm.uploadFiles"
                     #uploadFiles="ngModel"
                     [multiple]="true"
-                    [fileTypes]="['.pdf']"
+                    [fileTypes]="['.pdf', '.jpg', '.jpeg']"
                     id="uploadFiles" name="uploadFiles"></shared-fileinput>
                   <div *ngIf="submitted || uploadFiles.dirty" class="help-block">
                     <ul role="alert">
