@@ -141,6 +141,8 @@ export class FileInputComponent implements OnInit, OnDestroy, ControlValueAccess
     const fileType = fileDetail.name.split('.').pop();
     let url = fileDetail.path;
 
+    console.log(fileType);
+
     if (fileType === 'pdf')
       url = `${document.location.origin}/pdf?url=${fileDetail.path}`
     

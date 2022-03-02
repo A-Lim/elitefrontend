@@ -68,10 +68,14 @@
         </div>
         <div class="col-8 form-group">
           <input *ngIf="order.files.length === 0" type="text" class="form-control" value="No Files" disabled />
-          <a class="d-block" *ngFor="let file of order.files" 
+          <!-- <a class="d-block" *ngFor="let file of order.files" 
             [routerLink]="['/pdf']"  
             [queryParams]="{ url: file.path }"
             target="_blank">
+            <i class="bx bxs-file"></i>{{ file.name }}
+          </a> -->
+          <a class="d-block" *ngFor="let file of order.files" 
+            href="javascript:void(0)" (click)="viewServerFile(file)">
             <i class="bx bxs-file"></i>{{ file.name }}
           </a>
         </div>

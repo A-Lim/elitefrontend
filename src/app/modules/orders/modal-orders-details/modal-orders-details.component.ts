@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomOverlayRef } from 'app/shared/helpers/customoverlayref';
-
-import { ModalService } from 'app/shared/services/modal.service';
-import { ModalSize } from 'app/shared/models/modalsize.enum';
 import { Order } from 'app/modules/orders/models/order.model';
 import { Workflow } from 'app/modules/workflows/models/workflow.model';
-import { ModalOrdersProcessEditComponent } from 'app/modules/orders/modal-orders-process-edit/modal-orders-process-edit.component';
 import { environment } from 'environments/environment';
+import { FileDetail } from 'app/shared/models/filedetail.model';
 
 @Component({
   selector: 'app-modal-orders-details',
@@ -17,8 +14,7 @@ export class ModalOrdersDetailsComponent implements OnInit {
   workflow: Workflow;
   order: Order;
 
-  constructor(private ref: CustomOverlayRef<void, { workflow: Workflow, order: Order }>,
-    private modalService: ModalService) {
+  constructor(private ref: CustomOverlayRef<void, { workflow: Workflow, order: Order }>) {
   }
 
   ngOnInit() {
@@ -26,23 +22,17 @@ export class ModalOrdersDetailsComponent implements OnInit {
     this.order = this.ref.data.order;
   }
 
-  // updateProcessStatus(processCode: string) {
-  //   // find process details
-  //   const process = this.workflow.processes.filter(x => x.code == processCode)[0];
-  //   const data = {
-  //     workflow: this.workflow,
-  //     order: this.order,
-  //     process: process
-  //   };
+  viewServerFile(fileDetail: FileDetail) {
+    const fileType = fileDetail.name.split('.').pop();
+    let url = fileDetail.path;
 
-  //   const modal = this.modalService.open(ModalOrdersProcessEditComponent, data, ModalSize.Small);
-  //   modal.afterClosed$.subscribe(res => {
-  //     if (res.data) {
-  //       // const rowNode = this.agGrid.api.getRowNode(event.node.id);
-  //       // rowNode.setDataValue(colId, res.data);
-  //     }
-  //   });
-  // }
+    console.log(fileType);
+
+    if (fileType === 'pdf')
+      url = `${document.location.origin}/pdf?url=${fileDetail.path}`
+    
+    window.open(url, '_blank');
+  }
 
   close() {
     this.ref.close();
